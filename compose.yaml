@@ -1,0 +1,10 @@
+services:
+  service1:
+    build:
+        context: .
+        args:
+            - NODE_ENV=local
+        dockerfile: frontend/dockerfile
+    ports:
+      - 80:80
+     
