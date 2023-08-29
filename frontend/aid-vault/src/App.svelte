@@ -3,7 +3,7 @@
 </script>
 
 <main>
-  <h1>AID-Vault</h1>
+  <h1 class="text-3xl font-bold underline text-amber-600">AID-Vault</h1>
 
   <div class="card">
     <Counter />
