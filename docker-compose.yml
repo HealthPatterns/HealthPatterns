@@ -7,7 +7,7 @@ services:
         dockerfile: frontend/Dockerfile
     ports:
       - 80:80
-  aid_backend:
+#  aid_backend:
 
-  aid_db:
+#  aid_db:
      
