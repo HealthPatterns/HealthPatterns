@@ -26,6 +26,11 @@ class AllData(Resource):
         DATA[data_id] = request.form["data"]
         return {data_id: DATA[data_id]}
 
+class Hello(Resource):
+    def get(self):
+        return "Hello World"
+
+api.add_resource(Hello, "/hello")
 api.add_resource(AllData, "/data")
 api.add_resource(Data, "/data/<string:data_id>")
 
