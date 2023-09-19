@@ -7,8 +7,6 @@ from sqlalchemy.orm import Mapped, mapped_column
 # init app
 app = Flask(__name__)
 
-# init api
-api = Api(app)
 
 # init db
 username = "name"
@@ -26,6 +24,9 @@ class User(db.Model):
 
 with app.app_context():
     db.create_all()
+
+# init api
+api = Api(app)
 
 # api resources
 class ListUsers(Resource):
