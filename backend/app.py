@@ -3,6 +3,7 @@ from flask_restful import Resource, Api
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import Integer, String
 from sqlalchemy.orm import Mapped, mapped_column
+from flask_marshmallow import Marshmallow
 
 # init app
 app = Flask(__name__)
@@ -25,37 +26,48 @@ class User(db.Model):
 with app.app_context():
     db.create_all()
 
+# init Marshmallow
+ma = Marshmallow()
+
+class UserSchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        model = User
+
 # init api
 api = Api(app)
 
 # api resources
 class ListUsers(Resource):
     def get(self):
-        users = db.session.execute(db.select(User).order_by(User.name)).scalars()
-        return users
+        schema = UserSchema(many=True)
+        users = db.session.execute(db.select(User).order_by(User.name))
+        return schema.dump(users)
 
 class CreateUser(Resource):
     def post(self):
+        schema = UserSchema()
         user = User(name=request.form["name"])
         db.session.add(user)
         db.session.commit()
-        return "", 201
+        return {"msg": "user created", "user": schema.dump(user)}
 
 class ModifyUser(Resource):
     def put(self, id):
+        schema = UserSchema()
         user = User(id=id, name=request.form["name"])
         db.session.add(user)
         db.session.commit()
-        return "", 201
+        return {"msg": "user updated", "user": schema.dump(user)}
     
     def get(self, id):
+        schema = UserSchema()
         user = db.get_or_404(User, id)
-        return user
+        return schema.dump(user)
     
     def delete(self, id):
         db.session.delete(User, id)
         db.session.commit()
-        return "", 204
+        return {"msg": "user deleted"}
     
 # api routes
 api.add_resource(ListUsers, "/users")
