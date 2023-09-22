@@ -14,10 +14,9 @@ services:
     build:
       context: ./backend
       dockerfile: backend.Dockerfile
-    volumes: 
+    volumes:
       - ./backend:/app
     ports:
       - 5000:5000
 
 #  aid_db:
-     
