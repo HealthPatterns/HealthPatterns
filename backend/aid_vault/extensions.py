@@ -5,3 +5,4 @@ from flask_migrate import Migrate
 db = SQLAlchemy()
 ma = Marshmallow()
 migrate = Migrate()
+
