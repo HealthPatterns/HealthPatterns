@@ -1,12 +1,19 @@
 <script lang="ts">
   import AddDetails from "./lib/AddDetails.svelte";
+  import HomeScreen from "./lib/HomeScreen.svelte";
   import "./font.css"
+
+  let enableAddDetails = false;
+  let enableHomeScreen = true;
 </script>
 
 <main>
-
-  <AddDetails></AddDetails>
-
+  {#if enableHomeScreen}
+  <HomeScreen></HomeScreen>
+  {/if}
+  {#if enableAddDetails}
+  <AddDetails ></AddDetails>
+  {/if}
 </main>
 
 <style>

@@ -7,24 +7,21 @@
         if (foodActive[index]) {
             return " tag-active"
         }
-    }
-
-    function changeActive (index:number) {
-        foodActive[index] = foodActive[index] ? false : true;
+        return ""
     }
 
 </script>
 
 <div id="Food">
-    <button on:click={() => {changeActive(0)}}><span class={"tag"+ isActive(0)}>Obst</span></button>
-    <button on:click={() => {changeActive(1)}}><span class={"tag"+ isActive(1)}>Gemüse</span></button>
-    <button on:click={() => {changeActive(2)}}><span class={"tag"+ isActive(2)}>Milchprodukte</span></button>
-    <button on:click={() => {changeActive(3)}}><span class={"tag"+ isActive(3)}>Fleisch</span></button>
-    <button on:click={() => {changeActive(4)}}><span class={"tag"+ isActive(4)}>Fisch</span></button>
-    <button on:click={() => {changeActive(5)}}><span class={"tag"+ isActive(5)}>Eier</span></button>
-    <button on:click={() => {changeActive(6)}}><span class={"tag"+ isActive(6)}>Weißmehl</span></button>
-    <button on:click={() => {changeActive(7)}}><span class={"tag"+ isActive(7)}>Vollkorn</span></button>
-    <button on:click={() => {changeActive(8)}}><span class={"tag"+ isActive(8)}>Soja</span></button>
+    <button on:click={() => foodActive[0] = !foodActive[0]}><span class={foodActive[0] ? "tag tag-active" : "tag"}>Obst</span></button>
+    <button on:click={() => foodActive[1] = !foodActive[1]}><span class={foodActive[1] ? "tag tag-active" : "tag"}>Gemüse</span></button>
+    <button on:click={() => foodActive[2] = !foodActive[2]}><span class={foodActive[2] ? "tag tag-active" : "tag"}>Milchprodukte</span></button>
+    <button on:click={() => foodActive[3] = !foodActive[3]}><span class={foodActive[3] ? "tag tag-active" : "tag"}>Fleisch</span></button>
+    <button on:click={() => foodActive[4] = !foodActive[4]}><span class={foodActive[4] ? "tag tag-active" : "tag"}>Fisch</span></button>
+    <button on:click={() => foodActive[5] = !foodActive[5]}><span class={foodActive[5] ? "tag tag-active" : "tag"}>Eier</span></button>
+    <button on:click={() => foodActive[6] = !foodActive[6]}><span class={foodActive[6] ? "tag tag-active" : "tag"}>Weißmehl</span></button>
+    <button on:click={() => foodActive[7] = !foodActive[7]}><span class={foodActive[7] ? "tag tag-active" : "tag"}>Vollkorn</span></button>
+    <button on:click={() => foodActive[8] = !foodActive[8]}><span class={foodActive[8] ? "tag tag-active" : "tag"}>Soja</span></button>
 </div>
 
 <style>
@@ -43,6 +40,7 @@
     font-size: 1em;
     border-radius: 8px;
     font-weight: 400;
+    border: 2px #f2f1e8 solid;
 }
 
 .tag-active {
