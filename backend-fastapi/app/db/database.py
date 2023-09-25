@@ -1,5 +1,7 @@
+from typing import Annotated
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, Session
+from fastapi import Depends
 
 SQLALCHEMY_DATABASE_URI = "postgresql://name:password@0.0.0.0:5432/aid-db"
 
@@ -12,3 +14,5 @@ def get_db():
         yield db
     finally:
         db.close()
+
+SessionDep = Annotated[Session, Depends(get_db)]
