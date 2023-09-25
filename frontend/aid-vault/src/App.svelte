@@ -1,10 +1,21 @@
 <script lang="ts">
-  import Counter from './lib/Counter.svelte'
+  import AddDetails from "./lib/AddDetails.svelte";
+  import "./font.css"
 </script>
 
 <main>
-  <h1 class="text-3xl font-bold underline text-amber-600">AID-Vault</h1>
+
+  <AddDetails></AddDetails>
+
 </main>
 
 <style>
+  main {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    font-family: 'Montserrat';
+    align-items: center;
+    justify-content: center;
+  }
 </style>
