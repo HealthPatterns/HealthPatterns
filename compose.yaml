@@ -1,10 +1,22 @@
 services:
-  service1:
+  aid-frontend:
+    container_name: aid-frontend
     build:
-        context: .
-        args:
+      context: ./frontend
+      args:
             - NODE_ENV=local
-        dockerfile: frontend/dockerfile
+      dockerfile: frontend.Dockerfile
     ports:
       - 80:80
-     
+
+  aid-backend:
+    container_name: aid-backend
+    build:
+      context: ./backend
+      dockerfile: backend.Dockerfile
+    volumes:
+      - ./backend:/app
+    ports:
+      - 5000:5000
+
+#  aid_db:
