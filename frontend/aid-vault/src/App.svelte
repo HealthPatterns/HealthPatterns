@@ -3,8 +3,8 @@
   import HomeScreen from "./lib/HomeScreen.svelte";
   import "./font.css"
 
-  let enableAddDetails = false;
-  let enableHomeScreen = true;
+  let enableAddDetails = true;
+  let enableHomeScreen = false;
 </script>
 
 <main>

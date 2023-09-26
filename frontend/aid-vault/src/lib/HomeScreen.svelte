@@ -97,7 +97,10 @@ function stopWatch() {
 <div id="HomeScreen">
     <h1 style="margin-top: 20px;">Guten Morgen {username}!</h1>
     <div class="time"><p style="margin-bottom: 0.6rem;">{hrString}:{minString}:{secString}</p></div>
-    <div style="display:flex; width:100%; margin-top: auto; ">
+    <div style="display:flex; align-items: center; flex-direction:column; width:100%; margin-top: auto; ">
+        {#if !isTracking}
+        <button class="details-button">Details hinzufügen</button>
+        {/if}
         <button on:click={() => {isTracking ? start() : stop_reset(); isTracking = !isTracking;}} class={isTracking ? "tracking-button" : "tracking-button tracking-active" }>
             {#if isTracking}
             <svg style="margin-right: 0.5rem;" xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-player-play-filled" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -161,6 +164,19 @@ h2 {
     align-items: center;
     justify-content: center;
     display: flex;
+}
+
+.details-button {
+    border: 0;
+    border-radius: 2rem;
+    background-color: #c2d3db;
+    font-size: medium;
+    margin-bottom: 1.3rem;
+    width: fit-content;
+    padding: 0.3rem;
+    padding-left: 3rem;
+    padding-right: 3rem;
+    font-size: 0.9rem;
 }
 
 .tracking-active {
