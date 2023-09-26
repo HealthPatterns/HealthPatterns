@@ -15,4 +15,4 @@ def get_db():
     finally:
         db.close()
 
-SessionDep = Annotated[Session, Depends(get_db)]
+SessionInstance = Annotated[Session, Depends(get_db)]
