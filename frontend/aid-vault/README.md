@@ -1,9 +1,9 @@
-# Frontend 
+# Frontend
 
-Responsive, schnell und modern!! Die Zugänglichkeit muss bei der Nutzergruppe die höchste Priorität sein. 
+Responsive, schnell und modern!! Die Zugänglichkeit muss bei der Nutzergruppe die höchste Priorität sein.
 
 **Sollte nicht vorkommen:**
-* Grelle Farben 
+* Grelle Farben
 * Zu kleine Schrift
 * Zu viele Inhalte auf einem "Screen"
 
