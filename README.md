@@ -5,4 +5,4 @@ Soll Nutzern eine sichere und vollständig anonyme Möglichkeit zum Aufzeichnen 
 Das Frontend basiert auf Svelte und Tailwind CSS. Analysen müssen theoretisch hier durchgeführt werden um die Integrität der Daten zu erhalten.
 
 ## Backend
-Das Backend basiert auf dem Python Framework Flask und der Extension Flask-Restful. Als Datenbank wird PostgreSQL genutzt, zur Verbindung dieser mit Python werden psycopg2 und Flask-SQLAlchemy genutzt.
+Das Backend basiert auf dem Python-Framework FastAPI und der SQL-Datenbank PostgreSQL. Als ORM wird zusätzlich SQLAlchemy benutzt.
