@@ -1,8 +1,9 @@
-from aid_vault.extensions import db
+from sqlalchemy import Column, Integer, String, Boolean
 
-class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String, unique=True, nullable=False)
+from ..db.base_class import Base
 
-    # id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    # name: Mapped[str] = mapped_column(String, unique=False, nullable=False)
+class User(Base):
+    id = Column(Integer, primary_key=True)
+    name = Column(String, unique=False, nullable=True)
+    email = Column(String, unique=True, nullable=False)
+    is_active = Column(Boolean, default=True)

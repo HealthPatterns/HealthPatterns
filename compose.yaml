@@ -15,7 +15,7 @@ services:
       context: ./backend
       dockerfile: backend.Dockerfile
     volumes: 
-      - ./backend/aid_vault:/aid_vault
+      - ./backend/aid_vault:/code/aid_vault
     ports:
       - 5000:5000
     depends_on:

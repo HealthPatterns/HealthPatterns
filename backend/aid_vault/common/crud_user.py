@@ -12,7 +12,7 @@ def read_user_by_email(db: Session, email: str) -> User:
 def read_users(db: Session, skip: int = 0, limit: int = 100):
     return db.query(User).offset(skip).limit(limit).all()
 
-def create_user(db: Session, user: UserCreate) -> User:
+def create_user(db: Session, user: UserCreate | UserSchema) -> User:
     user_in_db = User(**user.model_dump())
     db.add(user_in_db)
     db.commit()
@@ -20,17 +20,10 @@ def create_user(db: Session, user: UserCreate) -> User:
     return user_in_db
 
 def update_user(db: Session, user: UserSchema) -> User:
-    user_in_db = read_user(db, user.id)
-    if user_in_db:
-        user_in_db.email = user.email
-        user_in_db.name = user.name
-        user_in_db.is_active = user.is_active
-    else:
-        user_in_db = User(**user.model_dump())
-    db.add(user_in_db)
+    updated_user = User(**user.model_dump())
+    db.merge(updated_user)
     db.commit()
-    db.refresh(user_in_db)
-    return user_in_db
+    return updated_user
 
 def delete_user(db: Session, user_id: int) -> None:
     user_in_db = read_user(db, user_id)
