@@ -40,11 +40,13 @@
     font-size: 1em;
     border-radius: 8px;
     font-weight: 400;
-    border: 2px #f2f1e8 solid;
+    border: 2px #e6f0f3 solid;
+    background-color: #e6f0f3;
 }
 
 .tag-active {
     border: 2px #0D698B solid;
+    background-color: #fff;
 }
 
 

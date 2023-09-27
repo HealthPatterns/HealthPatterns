@@ -1,7 +1,4 @@
 <script lang="ts">
-    import BodyForm from "./BodyForm.svelte";
-    import Food from "./Food.svelte";
-    import Slider from "./Slider.svelte";
 
     let username = "Random Username";
     let isTracking = true;
@@ -96,7 +93,7 @@ function stopWatch() {
 
 <div id="HomeScreen">
     <h1 style="margin-top: 20px;">Guten Morgen {username}!</h1>
-    <div class="time"><p style="margin-bottom: 0.6rem;">{hrString}:{minString}:{secString}</p></div>
+    <div class="time"><p style="margin-bottom: 0.6rem; heigth: 10rem; width: 10rem; border-radius:100%; background-color: #f2f1e8;;">{hrString}:{minString}:{secString}</p></div>
     <div style="display:flex; align-items: center; flex-direction:column; width:100%; margin-top: auto; ">
         {#if !isTracking}
         <button class="details-button">Details hinzufügen</button>

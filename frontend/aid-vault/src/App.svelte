@@ -7,7 +7,7 @@
   let enableHomeScreen = false;
 </script>
 
-<main>
+<main style="background-color: {enableAddDetails ? "#F2F1E8" : "#fff" }">
   {#if enableHomeScreen}
   <HomeScreen></HomeScreen>
   {/if}
@@ -24,5 +24,6 @@
     font-family: 'Montserrat';
     align-items: center;
     justify-content: center;
+    background-color: #fff;
   }
 </style>
