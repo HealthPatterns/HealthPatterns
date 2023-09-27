@@ -17,7 +17,7 @@ services:
     volumes: 
       - ./backend/aid_vault:/code/aid_vault
     ports:
-      - 5000:5000
+      - 3000:3000
     depends_on:
       aid-db: 
         condition: service_healthy
