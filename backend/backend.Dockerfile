@@ -1,15 +1,11 @@
-# backend Dockerfile
+FROM python:3.11.5
 
-FROM python:3
+WORKDIR /code
 
-WORKDIR /app
+COPY ./requirements.txt /code/requirements.txt
 
-COPY requirements.txt ./
+RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
 
-RUN pip install --no-cache-dir -r requirements.txt
+COPY ./aid_vault /code/aid_vault
 
-COPY . .
-
-EXPOSE 5000
-
-CMD ["flask", "run", "--host=0.0.0.0"]
+CMD uvicorn aid_vault.main:app --host 0.0.0.0 --port 3000 --reload

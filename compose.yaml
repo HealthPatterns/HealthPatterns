@@ -14,9 +14,31 @@ services:
     build:
       context: ./backend
       dockerfile: backend.Dockerfile
-    volumes:
-      - ./backend:/app
+    volumes: 
+      - ./backend/aid_vault:/code/aid_vault
     ports:
-      - 3000:5000
+      - 3000:3000
+    depends_on:
+      aid-db: 
+        condition: service_healthy
 
-#  aid_db:
+  aid-db:
+    container_name: aid-db
+    image: postgres
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_USER=name
+      - POSTGRES_DB=aid-db
+    volumes:
+      - postgresql:/db
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d aid-db -U name"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  postgresql: {}
