@@ -3,8 +3,8 @@
   import HomeScreen from "./lib/HomeScreen.svelte";
   import "./font.css"
 
-  let enableAddDetails = true;
-  let enableHomeScreen = false;
+  let enableAddDetails = false;
+  let enableHomeScreen = true;
 </script>
 
 <main style="background-color: {enableAddDetails ? "#F2F1E8" : "#fff" }">
@@ -17,7 +17,7 @@
 </main>
 
 <style>
-  main {
+main {
     display: flex;
     height: 100%;
     width: 100%;
@@ -25,5 +25,6 @@
     align-items: center;
     justify-content: center;
     background-color: #fff;
-  }
+}
+
 </style>

@@ -93,8 +93,30 @@ function stopWatch() {
 
 <div id="HomeScreen">
     <h1 style="margin-top: 20px;">Guten Morgen {username}!</h1>
-    <div class="time"><p style="margin-bottom: 0.6rem; heigth: 10rem; width: 10rem; border-radius:100%; background-color: #f2f1e8;;">{hrString}:{minString}:{secString}</p></div>
+    <div class="time"> 
+        <!-- <p class="circle">{hrString}:{minString}:{secString}</p> -->
+        <div class="x0">
+            <div class="x1">
+                <div class="x2">
+                    <div class="x3">
+                        <!-- BEG Content -->
+                        <div class="x4">
+                        </div>
+                        <div class="x6">
+                            <div style="display: flex; height:100%; align-items:center; justify-content:center"><p>{hrString}:{minString}:{secString}</p></div>
+                        </div>                
+                        <div class="x5">
+                        </div>
+                        <!-- END Content -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
     <div style="display:flex; align-items: center; flex-direction:column; width:100%; margin-top: auto; ">
+
+
         {#if !isTracking}
         <button class="details-button">Details hinzufügen</button>
         {/if}
@@ -136,6 +158,85 @@ h2 {
     font-size: large;
     font-weight: 500;
 }
+
+@media (max-width: 320px)
+{
+    .x2 {padding: 50%;}
+}
+
+@media (min-width: 321px) and (max-width: 800px)
+{
+    .x2 {padding: 25%;}
+}
+
+@media (min-width: 801px)
+{
+    .x1 {width:800px}
+    .x2 {padding: 12.5%;}
+}
+.x0 {
+    float:left;
+    width:fit-content;
+}
+.x1 {
+    margin:0px auto;
+}
+.x2 {
+    overflow:hidden;
+    display:block;
+    float:left;
+    width:auto;
+    height:auto;
+    position: relative;
+    border-radius:50%;
+    -moz-border-radius:50%;
+    -webkit-border-radius:50%;
+    -khtml-border-radius: 50%;
+    background:#eee;
+
+}
+.x3 {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top:0;
+    font-size: 100%;
+    float:left;
+    height:100%;
+    background-color:red;
+}
+/* BEG Content */
+.x3 div{float:left;}
+.x4,.x5,.x6 {
+    width:100%;
+}
+.x7,.x8 {
+    width:50%;
+    float:left;
+    height:100%;
+}
+.x4,.x5,.x7,.x8 {
+    text-align:center;
+}
+.x4 {
+    background-color:blue;
+    height:20%;
+}
+.x5 {
+    background-color:yellow;
+    height:20%;
+}
+.x6 {
+    height:60%;
+}
+.x7 {
+    background-color:green;
+}
+.x8 {
+    background-color:orange;
+}
+/* END Content */
+
 
 .time {
     display: flex;
