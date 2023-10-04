@@ -3,17 +3,21 @@
   import HomeScreen from "./lib/HomeScreen.svelte";
   import "./font.css"
 
+  let username = "Finn";
+
   let enableAddDetails = false;
   let enableHomeScreen = true;
+
+  function toggleDetails () {
+    enableAddDetails = !enableAddDetails;
+    enableHomeScreen = !enableHomeScreen;
+  }
+
 </script>
 
 <main style="background-color: {enableAddDetails ? "#F2F1E8" : "#fff" }">
-  {#if enableHomeScreen}
-  <HomeScreen></HomeScreen>
-  {/if}
-  {#if enableAddDetails}
-  <AddDetails ></AddDetails>
-  {/if}
+  <HomeScreen on:toggle={toggleDetails} enabled={enableHomeScreen} username={username} ></HomeScreen>
+  <AddDetails on:toggle={toggleDetails} enabled={enableAddDetails}></AddDetails>
 </main>
 
 <style>
