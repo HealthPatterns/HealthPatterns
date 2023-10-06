@@ -1,32 +1,36 @@
 <script lang="ts">
 
-    let unixtime : Number;
+    import { onMount } from "svelte";
 
-    let timer : any;
+    export let unixtime : number = 1696579823 * 1000;
+    export let isRunning : boolean = false;
 
-    let count = 0, hour = 0;
-    let minute = 0;
-    let second = 0;
+    var deltaTime = new Date(Math.abs(new Date().getTime() - new Date(unixtime).getTime()));
 
-    let hrString : string, minString : string, secString : string, countString : string;
+    let count = deltaTime.getMilliseconds(), hour = deltaTime.getUTCHours(), minute = deltaTime.getMinutes(), second = deltaTime.getSeconds();
+    let hrString : string, minString : string, secString : string;
 
     createStrings();
 
+    onMount (() => {
+        if (isRunning) {
+            stopWatch();
+        }
+    }) 
+
+
     export function start () {
-        timer = true;
+        isRunning = true;
+        //console.log(isRunning);
         stopWatch();
     }
 
     function stop () {
-        timer = false;
+        isRunning = false;
     }
 
     function reset () {
-        timer = false;
-        hour = 0;
-        minute = 0;
-        second = 0;
-        count = 0
+        unixtime = new Date().getTime() / 1000;
     };
 
     export function stop_reset() {
@@ -35,48 +39,15 @@
     }
 
     function createStrings() {
-        hrString = hour.toString();
-        minString = minute.toString();
-        secString = second.toString();
-        countString = count.toString();
-
-        if (hour < 10) {
-            hrString = "0" + hrString;
-        }
-
-        if (minute < 10) {
-            minString = "0" + minString;
-        }
-
-        if (second < 10) {
-            secString = "0" + secString;
-        }
-
-        if (count < 10) {
-            countString = "0" + countString;
-        }
+        hrString = hour < 10 ? "0" + hour.toString() : hour.toString();
+        minString = minute < 10 ? "0" + minute.toString() : minute.toString();
+        secString = second < 10 ? "0" + second.toString() : second.toString();
     }
 
     function stopWatch() {
-        if (timer) {
-            count++;
-
-            if (count == 100) {
-                second++;
-                count = 0;
-            }
-
-            if (second == 60) {
-                minute++;
-                second = 0;
-            }
-
-            if (minute == 60) {
-                hour++;
-                minute = 0;
-                second = 0;
-            }
-
+        if (isRunning) {
+            deltaTime = new Date(Math.abs(new Date().getTime() - new Date(unixtime).getTime()));
+            count = deltaTime.getMilliseconds(), hour = deltaTime.getUTCHours(), minute = deltaTime.getMinutes(), second = deltaTime.getSeconds();
             createStrings();
 
             setTimeout(stopWatch, 10);
