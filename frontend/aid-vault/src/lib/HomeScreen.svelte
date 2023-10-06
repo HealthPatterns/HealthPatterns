@@ -6,8 +6,9 @@
 
     export let username : string;
     export let enabled : boolean;
+    //export let isTimerRunning : boolean;
     
-    let isTracking = true;
+    export let isTracking = false;
     let timerComponet : Timer;
 
     function toggle() {
@@ -38,24 +39,24 @@
     <h1 style="margin-top: 1.4rem;">Guten Morgen {username}!</h1>
     <div class="time"> 
         
-        <Timer bind:this={timerComponet}></Timer>
+        <Timer bind:this={timerComponet} bind:isRunning={isTracking}></Timer>
 
     </div>
     
     <div style="display:flex; align-items: center; flex-direction:column; width:100%; margin-top: auto; ">
 
-        {#if !isTracking}
+        {#if isTracking}
         <button class="details-button" on:click={toggle}>Details hinzufügen</button>
         {/if}
-        <button on:click={() => {isTracking ? timerComponet.start() : timerComponet.stop_reset(); isTracking = !isTracking;}} class={isTracking ? "tracking-button" : "tracking-button tracking-active" }>
-            {#if isTracking}
+        <button on:click={() => {isTracking ? timerComponet.stop_reset() : timerComponet.start()}} class={isTracking ? "tracking-button tracking-active" : "tracking-button"}>
+            {#if !isTracking}
             <svg style="margin-right: 0.5rem;" xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-player-play-filled" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                 <path d="M6 4v16a1 1 0 0 0 1.524 .852l13 -8a1 1 0 0 0 0 -1.704l-13 -8a1 1 0 0 0 -1.524 .852z" stroke-width="0" fill="currentColor"></path>
             </svg>
             Schmerz tracken
             {/if}
-            {#if isTracking == false}
+            {#if isTracking}
             <svg style="margin-right: 0.5rem;" xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-player-stop-filled" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                 <path d="M17 4h-10a3 3 0 0 0 -3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3 -3v-10a3 3 0 0 0 -3 -3z" stroke-width="0" fill="currentColor"></path>
