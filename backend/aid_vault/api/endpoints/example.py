@@ -7,16 +7,16 @@ from ...db.database import SessionInstance
 # declare router with default values
 router = APIRouter(
     prefix="/example",
-    tags=["example"] # -> makes endpoints show up in its own category in the documentation
+    tags=["Example"] # -> makes endpoints show up in its own category in the documentation
 )
 
-@router.post("/", response_model=UserSchema, status_code=status.HTTP_201_CREATED)
+@router.post("", response_model=UserSchema, status_code=status.HTTP_201_CREATED)
 def create_user(db: SessionInstance, user: UserCreate):
     if crud_example.read_user_by_email(db, email=user.email):
         raise HTTPException(status_code=400, detail="Email already registered.")
     return crud_example.create_user(db=db, user=user)
 
-@router.get("/", response_model=list[UserSchema])
+@router.get("", response_model=list[UserSchema])
 def get_users(db: SessionInstance, skip: int = 0, limit: int = 100):
     users = crud_example.read_users(db, skip, limit)
     return users
