@@ -9,7 +9,7 @@
 
   let enableAddDetails = false;
   let enableHomeScreen = true;
-  let enableNavbar = true;
+  let enableNavbar = false;
 
   // Speichern der Tracking 
   // Speichern des Nutzers ( Cookie )

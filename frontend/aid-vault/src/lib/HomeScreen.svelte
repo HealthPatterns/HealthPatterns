@@ -3,6 +3,7 @@
     const dispatch = createEventDispatcher();
 
     import Timer from "./Timer.svelte"
+    import ButtomCard from './ButtomCard.svelte';
 
     export let username : string;
     export let enabled : boolean;
@@ -65,6 +66,8 @@
             {/if}
         </button>
     </div>
+
+    <ButtomCard enable={true}></ButtomCard>
 
 </div>
 {/if}

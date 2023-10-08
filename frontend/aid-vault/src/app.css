@@ -50,3 +50,12 @@ html ,body {
     background-color: #f9f9f9;
   }
 }
+
+.BackgroundFilter {
+  background-color: rgba(77, 77, 77, 0.184);
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
