@@ -7,7 +7,6 @@
     export let username : string;
     export let enabled : boolean;
     export let navbarEnabled : boolean;
-    //export let isTimerRunning : boolean;
     
     export let isTracking = false;
     let timerComponet : Timer;
@@ -20,7 +19,7 @@
 
 {#if enabled}
 <div id="HomeScreen">
-    <div style="display: flex; width:100%; justify-content:space-between; flex-direction:row;">
+    <div style="display: flex; width:100%; justify-content:space-between; flex-direction:row; margin-top:1rem">
         <!-- svelte-ignore a11y-click-events-have-key-events -->
         <!-- svelte-ignore a11y-no-static-element-interactions-->
         <svg on:click={()=>{navbarEnabled = !navbarEnabled}} xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-menu-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
