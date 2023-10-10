@@ -38,7 +38,7 @@
       if (statusCode === 200) {
         console.log("API call 'getUsername' successful.");
         const data = await response.json();
-        return data.username;
+        return data.full_name;
       } else {
         console.log("Error during API call 'GetUsername'.");
       }
