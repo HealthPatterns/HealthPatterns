@@ -21,6 +21,19 @@
     console.log(isTracking);
   }
 
+  async function fetchData() {
+    try {
+      const user_id = 1;
+      username = await apiGetUsername(user_id);
+      console.log(username);
+    } catch (error) {
+      console.error("Error fetchData:", error);
+    }
+  }
+
+  fetchData();
+
+
   //API
   async function apiGetUsername(user_id) {
     const url = `http://localhost:3000/users/${user_id}`;
