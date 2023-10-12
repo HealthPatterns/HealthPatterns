@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from .endpoints import example, users, auth
+from .endpoints import example, users, auth, trackings
 
 # init api
 api = APIRouter()
@@ -9,3 +9,4 @@ api = APIRouter()
 api.include_router(example.router)
 api.include_router(users.router)
 api.include_router(auth.router)
+api.include_router(trackings.router)
