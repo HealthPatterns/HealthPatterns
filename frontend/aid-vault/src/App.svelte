@@ -41,7 +41,7 @@
     const options = {
       method: 'GET',
       headers: {
-        'accept': 'application/json'
+        'Content-Type': 'application/json'
       }
     };
 
@@ -60,20 +60,15 @@
     }
   }
 
-  async function apiStartTracking(apiToken) {
-    const url = "http://localhost:3000/tracking";
-
-    const requestData = {
-      "currentTime": new Date().toISOString()
-    };
+  async function apiStartTracking() {
+    const current_time = Math.floor(Date.now() / 1000);
+    const url = `http://localhost:3000/trackings?s_time=${current_time}`;
 
     const options = {
       method: 'POST',
       headers: {
-        'Authorization': 'Bearer ' + apiToken,
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(requestData)
     };
 
     try {
@@ -89,13 +84,76 @@
     }
   }
 
+  async function apiStopTracking (tracking_id) {
+    const current_time = Math.floor(Date.now() / 1000);
+    const url = `http://localhost:3000/trackings/${tracking_id}?time=${current_time}`;
 
-  function apiStopTracking () {
-    
+    const options = {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    };
+
+    try {
+      const response = await fetch(url, options);
+      const statusCode = response.status;
+      if (statusCode === 200) {
+        console.log("API call 'StopTracking' successful.");
+      } else {
+        console.log("Error during API call 'StopTracking'.");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
   }
 
-  function apiDetails () {
-    
+  async function apiGetDetails (tracking_id) {
+    const url = `http://localhost:3000/trackings/${tracking_id}/details`;
+
+    const options = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    };
+
+    try {
+      const response = await fetch(url, options);
+      const statusCode = response.status;
+      if (statusCode === 200) {
+        console.log("API call 'GetDetails' successful.");
+        const data = await response.json();
+        return data;
+      } else {
+        console.log("Error during API call 'GetDetails'.");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  }
+
+  async function apiSetDetails (tracking_id, attribute, value) {
+    const url = `http://localhost:3000/trackings/${tracking_id}/details?attribute=${attribute}&value=${value}`;
+
+    const options = {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    };
+
+    try {
+      const response = await fetch(url, options);
+      const statusCode = response.status;
+      if (statusCode === 200) {
+        console.log("API call 'GetDetails' successful.");
+      } else {
+        console.log("Error during API call 'GetDetails'.");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
   }
 
 
