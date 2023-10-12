@@ -3,11 +3,17 @@
     const dispatch = createEventDispatcher();
 
     import Timer from "./Timer.svelte"
-    import ButtomCard from './ButtomCard.svelte';
+    import ButtomCard from './TrackingCard.svelte';
+    import TrackingCard from './TrackingCard.svelte';
+    import ErrorCard from './ErrorCard.svelte';
 
     export let username : string;
     export let enabled : boolean;
     export let navbarEnabled : boolean;
+    export let enableMessage : boolean;
+    export let enableError : boolean;
+
+    export let errorMessage : string;
     
     export let isTracking = false;
     let timerComponet : Timer;
@@ -67,7 +73,8 @@
         </button>
     </div>
 
-    <ButtomCard enable={true}></ButtomCard>
+    <TrackingCard enable={enableMessage}></TrackingCard>
+    <ErrorCard enable={enableError} message={errorMessage}></ErrorCard>
 
 </div>
 {/if}
