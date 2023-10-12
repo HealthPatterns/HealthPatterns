@@ -10,10 +10,10 @@
   let enableAddDetails = false;
   let enableHomeScreen = true;
   let enableNavbar = false;
-
-  // Speichern der Tracking 
-  // Speichern des Nutzers ( Cookie )
-  // Exception Handler
+  let enableMessage = false;
+  
+  let enableError : boolean;
+  let errorMessage : string;
 
   function toggleDetails () {
     enableAddDetails = !enableAddDetails;
@@ -103,7 +103,18 @@
 
 <main style="background-color: { enableAddDetails ? "#F2F1E8" : "#fff" }">
   <Navbar bind:enable={enableNavbar}></Navbar>
-  <HomeScreen on:toggle={toggleDetails} bind:navbarEnabled={enableNavbar} bind:isTracking={isTracking} enabled={enableHomeScreen} username={username}></HomeScreen>
+  
+  <HomeScreen 
+    bind:enableMessage={enableMessage} 
+    on:toggle={toggleDetails} 
+    bind:navbarEnabled={enableNavbar} 
+    bind:isTracking={isTracking} 
+    enabled={enableHomeScreen} 
+    username={username} 
+    bind:enableError={enableError} 
+    errorMessage={errorMessage}>
+  </HomeScreen>
+
   <AddDetails on:toggle={toggleDetails} enabled={enableAddDetails}></AddDetails>
 </main>
 
