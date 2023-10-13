@@ -4,7 +4,7 @@ from ...schemas.trackings import TrackingBase, TrackingOptionals, TrackingSchema
 from ...common import crud_trackings
 
 router = APIRouter(
-    prefix="/db",
+    prefix="/trackings",
     tags=["Trackings"]
 )
 
