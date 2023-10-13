@@ -5,7 +5,6 @@ class TrackingBase(BaseModel):
 
 class TrackingStart(TrackingBase):
     start_time: int
-    is_active: bool
 
 class TrackingStop(TrackingStart):
     end_time: int | None = None
@@ -17,8 +16,14 @@ class TrackingOptionals(TrackingBase):
     diet: str | None = None
 
 class TrackingSchema(TrackingStop):
+    is_active: bool
     pass
 
     class Config:
         orm_mode = True
 
+class TrackingComplete(TrackingSchema):
+    region: str | None = None
+    intensity: str | None = None
+    sleep: str | None = None
+    diet: str | None = None
