@@ -1,10 +1,9 @@
 from fastapi import APIRouter, HTTPException, status, Response
 from fastapi.encoders import jsonable_encoder
 
-
-from sqlalchemy import insert, select
-from ...models.example import *
-from ...common import crud_example
+from ...models.users import Users
+from ...schemas.users_new import UserComplete
+from ...common import crud_users
 from ...db.database import SessionInstance
 
 # declare router with default values
@@ -14,18 +13,16 @@ router = APIRouter(
 )
 
 @router.get("/")
-def test(db: SessionInstance):
-    #insert(Users).values(id=1, name='Finn', email='test@gmail.com', is_active=True)
-
-    #for row in result:
-    #    print(f"{row.name}  {row.email}")
-
-    #user = Users(201, "Test", "tessdt@gmail.com", True)
-    tracking = Trackings(1, 1, 20, 30)
-    db.add(tracking)
-    db.commit()
-
-    result = db.query(Trackings).all()
-    for row in result:
-        print(jsonable_encoder(row))
+def get_user(db: SessionInstance, user_id: int):
+    if not crud_users.user_exists_by_id(db=db, user_id=user_id):
+        raise HTTPException(status_code=400, detail="User does not exist")
     
+    return crud_users.read_user(db=db, user_id=user_id)
+
+@router.post("/")
+def create_user(db: SessionInstance, user: UserComplete):
+
+    if crud_users.user_exists(db, email=user.email):
+        raise HTTPException(status_code=400, detail="User already registered.")
+    
+    return crud_users.create_user(db=db, user=user)
