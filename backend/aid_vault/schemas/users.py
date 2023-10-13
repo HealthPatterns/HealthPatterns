@@ -10,7 +10,7 @@ class UserOptionals(UserBase):
 
 class UserCreate(UserOptionals): 
     # this is only used for creation of a new user, and only as payload from the client
-    password: str
+    plain_password: str
 
 class UserComplete(UserOptionals):
     id: int
@@ -18,3 +18,6 @@ class UserComplete(UserOptionals):
 
     class Config:
         orm_mode = True
+
+class UserFakeDB(UserComplete):
+    hashed_password: str

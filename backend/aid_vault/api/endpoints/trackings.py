@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, status, Response
 
 from ...schemas.trackings import TrackingBase, TrackingOptionals, TrackingSchema, TrackingStart, TrackingStop
-from ...common import crud_users
+from ...crud import users
 
 import uuid
 
