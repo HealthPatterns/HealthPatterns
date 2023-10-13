@@ -3,7 +3,7 @@ from fastapi import APIRouter, HTTPException, status, Response
 
 from ..models.users import Users
 from ..db.database import SessionInstance
-from ..schemas.users_new import UserComplete
+from ..schemas.users_new import UserComplete, UserForUpdate
 
 def user_exists_by_email(db: SessionInstance, email: str) -> bool:
     result = db.query(Users).filter_by(email=email).first() is not None
@@ -26,16 +26,28 @@ def create_user(db: SessionInstance, user: UserComplete) -> Users:
 
     return new_user
 
-def read_user(db: SessionInstance, user_id: int):
-    result = db.query(Users).get(user_id)
+def read_all_users(db: SessionInstance):
+    return db.query(Users).all()
 
-    return jsonable_encoder(result)
+def read_user_id(db: SessionInstance, user_id: int):
+    return db.query(Users).filter(Users.id == user_id).first()
 
-def update_user(db: SessionInstance, user: UserComplete):
-    return
+def read_user_email(db: SessionInstance, email: str):
+    return db.query(Users).filter(Users.email == email).first()
+
+def update_user(db: SessionInstance, update_data: UserForUpdate, user_id: int):
+    ### Update any element in a row by entering the column/-s in json format (UserForUpdate)###
+    for key, value in update_data:
+        if value != None:
+            db.query(Users).filter(Users.id == user_id).update({key: value})
+            db.commit()
+
+    return read_user_id(db=db, user_id=user_id)
 
 def delete_user(db: SessionInstance, user_id: int):
-    return
+    user = read_user_id(db=db, user_id=user_id);
+    db.delete(user)
+    db.commit()
 
 def delete_trackings_from_user(db: SessionInstance, user_id: int):
     return
