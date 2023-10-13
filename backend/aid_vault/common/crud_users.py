@@ -29,10 +29,10 @@ def create_user(db: SessionInstance, user: UserComplete) -> Users:
 def read_all_users(db: SessionInstance):
     return db.query(Users).all()
 
-def read_user_id(db: SessionInstance, user_id: int):
+def read_user_by_id(db: SessionInstance, user_id: int):
     return db.query(Users).filter(Users.id == user_id).first()
 
-def read_user_email(db: SessionInstance, email: str):
+def read_user_by_email(db: SessionInstance, email: str):
     return db.query(Users).filter(Users.email == email).first()
 
 def update_user(db: SessionInstance, update_data: UserForUpdate, user_id: int):
@@ -42,10 +42,15 @@ def update_user(db: SessionInstance, update_data: UserForUpdate, user_id: int):
             db.query(Users).filter(Users.id == user_id).update({key: value})
             db.commit()
 
-    return read_user_id(db=db, user_id=user_id)
+    return read_user_by_id(db=db, user_id=user_id)
 
-def delete_user(db: SessionInstance, user_id: int):
-    user = read_user_id(db=db, user_id=user_id);
+def delete_user_by_id(db: SessionInstance, user_id: int):
+    user = read_user_by_id(db=db, user_id=user_id);
+    db.delete(user)
+    db.commit()
+
+def delete_user_by_email(db: SessionInstance, email: str):
+    user = read_user_by_id(db=db, email=email);
     db.delete(user)
     db.commit()
 

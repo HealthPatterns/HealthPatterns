@@ -44,5 +44,5 @@ def delete_user(db: SessionInstance, user_id: int):
     if not crud_users.user_exists_by_id(db=db, user_id=user_id):
         raise HTTPException(status_code=400, detail="User does not exist.")
     
-    crud_users.delete_user(db=db, user_id=user_id)
+    crud_users.delete_user_by_id(db=db, user_id=user_id)
     return
