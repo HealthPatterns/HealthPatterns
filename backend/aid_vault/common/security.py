@@ -1,7 +1,3 @@
-from typing import Annotated
-from datetime import datetime, timedelta
-
-from fastapi.security import OAuth2PasswordBearer
 from passlib.context import CryptContext
 
 from .oauth2 import get_user_by_name

@@ -9,11 +9,15 @@ from ..schemas.users import UserComplete, UserFakeDB
 from ..schemas.token import TokenData
 from ..db.fake_db import fake_users_db
 
+"""
+This is used as a dependency in 'get_current_user()' so the function knows what
+OAuth2 flow we are using and from what endpoint the JWT originates.
+"""
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth/login")
 
 """
-this data is to be put into a config.py file eventually
-and SECRET_KEY will have to be stored in a safe way
+This data is to be put into a config.py file eventually.
+Also SECRET_KEY will have to be stored in a safe way.
 """
 SECRET_KEY = "3e7cde7fed126b5f15eefe7aac3895ac14c6c8cfa171743e9aefe29cd135579c"
 ALGORITHM = "HS256"
@@ -35,6 +39,10 @@ def create_access_token(data: dict, expires_delta: timedelta | None = None):
     encoded_jwt = jwt.encode(data_to_encode, SECRET_KEY, ALGORITHM)
     return encoded_jwt
 
+"""
+Two crud functions for reading the user from the fake database.
+These will both be replaced with actual crud functions when the database is ready.
+"""
 def get_user(db: [UserFakeDB], user_id: int):
     mock_user = next((user for user in db if user.id == user_id), None)
     if mock_user:
@@ -61,14 +69,18 @@ async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]):
         payload = jwt.decode(token, SECRET_KEY, ALGORITHM)
         user_id: int = int(payload.get("sub"))
         if user_id is None:
+            credentials_exception.detail += " - no subject in token"
             raise credentials_exception
         token_data = TokenData(user_id=user_id)
     except JWTError as err:
         print(err)
+        credentials_exception.detail += " - token decode error"
         raise credentials_exception
     
     user = get_user(fake_users_db, user_id=token_data.user_id)
     if user is None:
+        credentials_exception.status_code=status.HTTP_404_NOT_FOUND
+        credentials_exception.detail += " - unknown user"
         raise credentials_exception
     
     return user

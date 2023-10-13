@@ -16,7 +16,7 @@ from ...db.fake_db import fake_users_db
 
 router = APIRouter(
     prefix="/auth",
-    tags=["Login"]
+    tags=["Authentication"]
 )
 
 
@@ -45,9 +45,9 @@ async def login_for_access_token(
     return token
 
 
-@router.get("/test-token", response_model=schemas.UserComplete)
+@router.get("/test-token", response_model=schemas.Message)
 async def test_access_token(current_user: CurrentUserToken):
     """
     Checks if the access token is valid by decoding it and returning the user attached to it.
     """
-    return current_user
+    return {"message": f"Valid token for user: {current_user.nickname}"}
