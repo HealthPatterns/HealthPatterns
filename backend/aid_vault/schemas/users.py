@@ -15,13 +15,8 @@ class UserCreate(UserOptionals):
     # this is only used for creation of a new user, and only as payload from the client
     plain_password: str
 
-<<<<<<< HEAD
-class UserComplete(UserCreate):
-    id: int
-=======
 class UserComplete(UserOptionals):
     id: UUID
->>>>>>> 46e08e5790f0aa5e85d899d6d810ed09aad77f25
     is_active: bool
 
     class Config:
