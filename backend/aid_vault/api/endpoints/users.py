@@ -1,5 +1,8 @@
+from uuid import uuid4, UUID
+
 from fastapi import APIRouter, HTTPException, status, Response
 from fastapi.encoders import jsonable_encoder
+from pydantic import UUID4
 
 from aid_vault import crud, schemas, models
 from ...db.database import SessionInstance
@@ -19,12 +22,12 @@ def register_user(input: schemas.UserCreate):
     the user into the database.
     The user still has to login afterwards.
     """
-    fake_db.user_id_increment += 1
+
     user = schemas.UserFakeDB(
         nickname=input.nickname,
         full_name=input.full_name,
         age=input.age,
-        id=fake_db.user_id_increment,
+        id=uuid4(),
         is_active=True,
         hashed_password=get_password_hash(input.plain_password)
     )
@@ -50,7 +53,7 @@ def update_user_data(current_user: CurrentUserToken, input_data: schemas.UserCom
     """
     Update currently logged in user.
     """
-    if input_data.id is not current_user.id:
+    if input_data.id.int != current_user.id.int:
         raise HTTPException(
             status_code=400,
             detail="Bad Request: User ID in body does not match currently logged in user."

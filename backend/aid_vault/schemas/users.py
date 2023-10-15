@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+from uuid import UUID
 
 class UserBase(BaseModel):
     nickname: str
@@ -13,7 +14,7 @@ class UserCreate(UserOptionals):
     plain_password: str
 
 class UserComplete(UserOptionals):
-    id: int
+    id: UUID
     is_active: bool
 
     class Config:

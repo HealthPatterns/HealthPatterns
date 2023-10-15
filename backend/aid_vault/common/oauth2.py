@@ -1,5 +1,6 @@
 from typing import Annotated
 from datetime import datetime, timedelta
+from uuid import UUID
 
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
@@ -43,7 +44,7 @@ def create_access_token(data: dict, expires_delta: timedelta | None = None):
 Two crud functions for reading the user from the fake database.
 These will both be replaced with actual crud functions when the database is ready.
 """
-def get_user(db: [UserFakeDB], user_id: int):
+def get_user(db: [UserFakeDB], user_id: UUID):
     mock_user = next((user for user in db if user.id == user_id), None)
     if mock_user:
         return mock_user
@@ -67,7 +68,7 @@ async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]):
 
     try:
         payload = jwt.decode(token, SECRET_KEY, ALGORITHM)
-        user_id: int = int(payload.get("sub"))
+        user_id: UUID = payload.get("sub")
         if user_id is None:
             credentials_exception.detail += " - no subject in token"
             raise credentials_exception
