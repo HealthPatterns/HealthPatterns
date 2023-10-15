@@ -1,9 +1,8 @@
-from sqlalchemy import ForeignKey, Column, Integer, String, Boolean
+from sqlalchemy import ForeignKey, Column, Integer, String, Boolean, UUID, text
 
 from ..db.base_class import Base
 
 class Users(Base):
-    __tablename__ = "users"
     id = Column(Integer, primary_key=True)
     nickname = Column(String, unique=True, nullable=False)
     full_name = Column(String, unique=False, nullable=True)

@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+from uuid import UUID
 
 class UserBase(BaseModel):
     nickname: str
@@ -12,10 +13,15 @@ class UserOptionals(UserBase):
 
 class UserCreate(UserOptionals): 
     # this is only used for creation of a new user, and only as payload from the client
-    password: str
+    plain_password: str
 
+<<<<<<< HEAD
 class UserComplete(UserCreate):
     id: int
+=======
+class UserComplete(UserOptionals):
+    id: UUID
+>>>>>>> 46e08e5790f0aa5e85d899d6d810ed09aad77f25
     is_active: bool
 
     class Config:
@@ -27,5 +33,7 @@ class UserForUpdate(BaseModel):
     age: int | None = None
     gender: str | None = None
     email: str | None = None
-    password: str | None = None
     is_active: bool | None = None
+
+class UserFakeDB(UserComplete):
+    hashed_password: str

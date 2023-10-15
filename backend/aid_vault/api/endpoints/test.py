@@ -4,7 +4,7 @@ from ...models.users import Users
 from ...schemas.users import UserComplete, UserForUpdate
 from ...common import crud_users
 from ...db.database import SessionInstance
-
+#NOT FUNCTIONAL FILE
 # declare router with default values
 router = APIRouter(
     prefix="/test",
