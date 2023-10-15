@@ -1,9 +1,9 @@
-from fastapi import APIRouter, HTTPException, status, Response
+from fastapi import APIRouter, HTTPException, status
 
-from ...schemas.trackings import TrackingBase, TrackingOptionals, TrackingSchema, TrackingStart, TrackingStop
-from ...crud import users
-
-import uuid
+from ...schemas.trackings import *
+from ...common import crud_trackings
+from ...db.fake_db_details import fake_trackings_db
+from ...common.oauth2 import CurrentUserToken
 
 router = APIRouter(
     prefix="/trackings",
@@ -16,107 +16,101 @@ def create_tracking(tracking: TrackingStart):
     crud_users.create_user(tracking)
     return
 """
-trackings = [
-        TrackingSchema(id="1", start_time=1697115011, is_active=True),
-        TrackingSchema(id="2", start_time=1697115011, end_time=1697115015, is_active=False),
-        TrackingSchema(id="3", start_time=1697115011, is_active=True),
-        TrackingSchema(id="4", start_time=1697115011, is_active=True)
-    ]
-tracking_details = [
-    TrackingOptionals(id="1", region="head", intensity="5", sleep="7", diet="omnivore"),
-    TrackingOptionals(id="2", region="stomach", intensity="9", sleep="3", diet="burgers, pizza"),
-    TrackingOptionals(id="3", region="foot", intensity="3", sleep="8", diet="vegan"),
-    TrackingOptionals(id="4")
-]
-
 #get all trackings
-@router.get("", response_model=list[TrackingSchema])
-def get_all_trackings():#skip: int = 0, limit: int = 10):
-    #all_trackings = crud_trackings.read_trackings(db, skip, limit)
-    return trackings
+@router.get("", response_model=list[TrackingComplete])
+def get_all_trackings(current_user: CurrentUserToken):#skip: int = 0, limit: int = 10):
+    all_trackings = crud_trackings.read_trackings(fake_trackings_db)
+    return all_trackings
 
 # create new tracking and post time
-@router.post("", response_model=TrackingSchema, status_code=status.HTTP_201_CREATED)
-def start_tracking(s_time: int):
-    new_uuid=uuid.uuid4()
-    new_tracking = TrackingSchema(id=str(new_uuid), start_time=s_time, is_active=True)
-    trackings.append(new_tracking)
+@router.post("", response_model=TrackingBase, status_code=status.HTTP_201_CREATED)
+def start_tracking(current_user: CurrentUserToken, input_data: TrackingStart):
+    new_tracking = crud_trackings.start_tracking(fake_trackings_db, input_data.start_time)
     return new_tracking
 
-#get active trackings, 
-@router.get("/active", response_model=list[TrackingSchema])
-def get_active_trackings():#skip: int = 0, limit: int = 10):
-    #active_trackings = crud_trackings.read_trackings(db, skip, limit)
-    active_trackings = [tracking for tracking in trackings if tracking.is_active]
+#get all active trackings, 
+@router.get("/active", response_model=list[TrackingActive])
+def get_active_trackings(current_user: CurrentUserToken):#skip: int = 0, limit: int = 10):
+    active_trackings = crud_trackings.read_active_tracking(fake_trackings_db)
     return active_trackings
 
 # get tracking by ID
-@router.get("/{tracking_id}", response_model=TrackingSchema)
-def get_tracking(tracking_id: str):
-    mock_tracking = next((tracking for tracking in trackings if tracking.id == tracking_id), None)
-    if not mock_tracking:
+@router.get("/tracking", response_model=TrackingSchema)
+def get_tracking(current_user: CurrentUserToken, tracking_input_id: str):
+    tracking = crud_trackings.read_tracking(fake_trackings_db, tracking_input_id)
+    if not tracking:
         raise HTTPException(status_code=404, detail="Resource not found")
-    
-    #crud_trackings.read_trackings(db, tracking_id)
-    return mock_tracking
+    return tracking
 
 # put end time to specific tracking by ID
-@router.put("/{tracking_id}", response_model=TrackingSchema)
-def set_tracking_end(tracking_id: str, time: str):
-    mock_tracking = next((tracking for tracking in trackings if tracking.id == tracking_id), None)
-    if not mock_tracking:
+@router.put("/tracking", response_model=TrackingSchema)
+def set_tracking_end(current_user: CurrentUserToken, tracking_input: TrackingStop):
+    tracking = crud_trackings.set_tracking_end(fake_trackings_db, tracking_input)
+    if not tracking:
         raise HTTPException(status_code=404, detail="Resource not found")
-    mock_tracking.end_time = time
-    mock_tracking.is_active = False
-    return mock_tracking
+    return tracking
 
 # delete tracking by ID
-@router.delete("/{tracking_id}", status_code=status.HTTP_200_OK)
-def delete_tracking(tracking_id: str):
-    mock_tracking = next((tracking for tracking in trackings if tracking.id == tracking_id), None)
-    if not mock_tracking:
-        raise HTTPException(status_code=404, detail="Resource not found")
-    else: trackings.remove(mock_tracking)
+@router.delete("/tracking", status_code=status.HTTP_200_OK)
+def delete_tracking(current_user: CurrentUserToken, tracking_id: str):
+    crud_trackings.delete_tracking(fake_trackings_db, tracking_id)
+    #if not mock_tracking:
+    #    raise HTTPException(status_code=404, detail="Resource not found")
+    #else: db.remove(mock_tracking)
     return "tracking deleted"
 
 # get all details of tracking with specific ID
-@router.get("/{tracking_id}/details", response_model=TrackingOptionals)
-def get_all_tracking_details(tracking_id: str):
-    mock_tracking = next((tracking for tracking in tracking_details if tracking.id == tracking_id), None)
-    if not mock_tracking:
+@router.get("/tracking/details", response_model=TrackingOptionals)
+def get_all_tracking_details(current_user: CurrentUserToken, tracking_id: str):
+    tracking = crud_trackings.read_tracking(fake_trackings_db, tracking_id)
+    if not tracking:
         raise HTTPException(status_code=404, detail="Resource not found")
-    return mock_tracking
+    return tracking
 
 # put details to specific tracking by ID    
-@router.put("/{tracking_id}/details", response_model=TrackingOptionals)
-def put_tracking_detail(tracking_id: str, attribute: str, value: str ):
-    mock_tracking = next((tracking for tracking in tracking_details if tracking.id == tracking_id), None)
-    if not mock_tracking:
+@router.put("/tracking/details", response_model=TrackingOptionals)
+def put_tracking_detail(current_user: CurrentUserToken, tracking_input: TrackingOptionals):
+    tracking = crud_trackings.put_tracking_detail(fake_trackings_db, tracking_input)
+    if not tracking:
         raise HTTPException(status_code=404, detail="Resource not found")
-    match attribute:
-        case "region":
-            mock_tracking.region=value
-        case "intensity":
-            mock_tracking.intensity=value
-        case "sleep":
-            mock_tracking.sleep=value
-        case "diet":
-            mock_tracking.diet=value
-    return mock_tracking
+    return tracking
 
-# get specific detail of tracking with specific ID
-@router.get("/{tracking_id}/details/{attribute}", response_model=TrackingOptionals)
-def get_specific_tracking_details(tracking_id: str, attribute: str):
-    mock_track = next((tracking for tracking in tracking_details if tracking.id == tracking_id), None)
-    if not mock_track:
+# get front region details of tracking with specific ID
+@router.get("/tracking_id/details_front", response_model=TrackingFrontRegions)
+def get_front_regions(current_user: CurrentUserToken, tracking_id: str):
+    tracking = crud_trackings.read_tracking(fake_trackings_db, tracking_id)
+    if not tracking:
         raise HTTPException(status_code=404, detail="Resource not found")
-    match attribute:
-        case "region":
-            mock_tracking = TrackingOptionals(id=tracking_id, region=mock_track.region)
-        case "intensity":
-            mock_tracking = TrackingOptionals(id=tracking_id, intensity=mock_track.intensity)
-        case "sleep":
-            mock_tracking = TrackingOptionals(id=tracking_id, sleep=mock_track.sleep)
-        case "diet":
-            mock_tracking = TrackingOptionals(id=tracking_id, diet=mock_track.diet)
-    return mock_tracking
+    return tracking
+
+# get back region details of tracking with specific ID
+@router.get("/tracking_id/details_back", response_model=TrackingBackRegions)
+def get_back_regions(current_user: CurrentUserToken, tracking_id: str):
+    tracking = crud_trackings.read_tracking(fake_trackings_db, tracking_id)
+    if not tracking:
+        raise HTTPException(status_code=404, detail="Resource not found")
+    return tracking
+
+# get intensity details of tracking with specific ID
+@router.get("/tracking_id/details_intensity", response_model=TrackingIntensity)
+def get_intensity(current_user: CurrentUserToken, tracking_id: str):
+    tracking = crud_trackings.read_tracking(fake_trackings_db, tracking_id)
+    if not tracking:
+        raise HTTPException(status_code=404, detail="Resource not found")
+    return tracking
+
+# get sleep details of tracking with specific ID
+@router.get("/tracking_id/details_sleep", response_model=TrackingSleep)
+def get_sleep(current_user: CurrentUserToken, tracking_id: str):
+    tracking = crud_trackings.read_tracking(fake_trackings_db, tracking_id)
+    if not tracking:
+        raise HTTPException(status_code=404, detail="Resource not found")
+    return tracking
+
+# get sleep details of tracking with specific ID
+@router.get("/tracking_id/details_diet", response_model=TrackingDiet)
+def get_diet(current_user: CurrentUserToken, tracking_id: str):
+    tracking = crud_trackings.read_tracking(fake_trackings_db, tracking_id)
+    if not tracking:
+        raise HTTPException(status_code=404, detail="Resource not found")
+    return tracking
