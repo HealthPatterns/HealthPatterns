@@ -3,41 +3,47 @@ from pydantic import BaseModel
 class TrackingBase(BaseModel):
     id: str
 
-class TrackingStart(TrackingBase):
+class TrackingStart(BaseModel):
     start_time: int
 
-class TrackingStop(TrackingStart):
+class TrackingActive(TrackingBase):
+    start_time: int
+
+class TrackingStop(TrackingBase):
     end_time: int | None = None
 
-"""
-class TrackingRegion(TrackingBase):
-    region: str | None = None
+class TrackingFrontRegions(BaseModel):
+    front_regions: list[bool] | None = None
 
-class TrackingIntensity(TrackingBase):
-    intensity: str | None = None
+class TrackingBackRegions(BaseModel):
+    back_regions: list[bool] | None = None
 
-class TrackingSleep(TrackingBase):
+class TrackingIntensity(BaseModel):
+    intensity: int | None = None
+
+class TrackingSleep(BaseModel):
     sleep: str | None = None
 
-class TrackingDiet(TrackingBase):
+class TrackingDiet(BaseModel):
     diet: str | None = None
-"""
 
 class TrackingOptionals(TrackingBase):
-    region: str | None = None
-    intensity: str | None = None
+    front_regions: list[bool] | None = None
+    back_regions: list[bool] | None = None
+    intensity: int | None = None
     sleep: str | None = None
     diet: str | None = None
 
 class TrackingSchema(TrackingStop):
-    is_active: bool
+    start_time: int
     pass
 
     class Config:
         orm_mode = True
 
 class TrackingComplete(TrackingSchema):
-    region: str | None = None
-    intensity: str | None = None
+    front_regions: list[bool] | None = None
+    back_regions: list[bool] | None = None
+    intensity: int | None = None
     sleep: str | None = None
     diet: str | None = None
