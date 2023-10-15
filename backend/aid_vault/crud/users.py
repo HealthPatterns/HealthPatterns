@@ -41,12 +41,12 @@ def update_user(db: SessionInstance, update_data: UserForUpdate, user_id: int) -
     return read_user_by_id(db=db, user_id=user_id)
 
 def delete_user_by_id(db: SessionInstance, user_id: int) -> None:
-    user = read_user_by_id(db=db, user_id=user_id);
+    user = read_user_by_id(db=db, user_id=user_id)
     db.delete(user)
     db.commit()
 
 def delete_user_by_email(db: SessionInstance, email: str) -> None:
-    user = read_user_by_id(db=db, email=email);
+    user = read_user_by_id(db=db, email=email)
     db.delete(user)
     db.commit()
 
