@@ -35,13 +35,14 @@
 
 
   //API
-  async function apiGetUsername(user_id) {
-    const url = `http://localhost:3000/users/${user_id}`;
+  async function apiGetUsername(api_token) {
+    const url = "http://localhost:3000/user";
 
     const options = {
       method: 'GET',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + api_token,
       }
     };
 
@@ -60,15 +61,19 @@
     }
   }
 
-  async function apiStartTracking() {
+  async function apiStartTracking(api_token) {
     const current_time = Math.floor(Date.now() / 1000);
-    const url = `http://localhost:3000/trackings?s_time=${current_time}`;
+    const url = "http://localhost:3000/trackings";
 
     const options = {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + api_token,
       },
+      body: JSON.stringify({
+        'start_time': current_time
+      })
     };
 
     try {
@@ -76,6 +81,8 @@
       const statusCode = response.status;
       if (statusCode === 201) {
         console.log("API call 'StartTracking' successful.");
+        const data = await response.json();
+        return data.id;
       } else {
         console.log("Error during API call 'StartTracking'.");
       }
@@ -84,15 +91,20 @@
     }
   }
 
-  async function apiStopTracking (tracking_id) {
+  async function apiStopTracking (api_token, tracking_id) {
     const current_time = Math.floor(Date.now() / 1000);
-    const url = `http://localhost:3000/trackings/${tracking_id}?time=${current_time}`;
+    const url = "http://localhost:3000/trackings/tracking";
 
     const options = {
       method: 'PUT',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + api_token,
       },
+      body: JSON.stringify({
+        'id': tracking_id,
+        'end_time': current_time
+      })
     };
 
     try {
@@ -108,14 +120,15 @@
     }
   }
 
-  async function apiGetDetails (tracking_id) {
-    const url = `http://localhost:3000/trackings/${tracking_id}/details`;
+  async function apiGetDetails (api_token, tracking_id) {
+    const url = `http://localhost:3000/trackings/tracking/details?tracking_id=${tracking_id}`;
 
     const options = {
       method: 'GET',
       headers: {
-        'Content-Type': 'application/json'
-      },
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + api_token,
+      }
     };
 
     try {
@@ -133,14 +146,27 @@
     }
   }
 
-  async function apiSetDetails (tracking_id, attribute, value) {
-    const url = `http://localhost:3000/trackings/${tracking_id}/details?attribute=${attribute}&value=${value}`;
+  async function apiSetDetails (api_token, tracking_id, front_regions, back_regions, intensity, sleep, diet) {
+    const url = "http://localhost:3000/trackings/tracking/details";
 
     const options = {
       method: 'PUT',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + api_token,
       },
+      body: JSON.stringify({
+        'id': tracking_id,
+        'front_regions': [
+          front_regions
+        ],
+        'back_regions': [
+          back_regions
+        ],
+        'intensity': intensity,
+        'sleep': sleep,
+        'diet': diet
+      })
     };
 
     try {
