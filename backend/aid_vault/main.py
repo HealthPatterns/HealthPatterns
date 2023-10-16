@@ -4,14 +4,14 @@ from fastapi.middleware.cors import CORSMiddleware
 from .db.base_class import Base
 from .db.database import engine, SessionLocal
 from .api.api import api
-from .pre_start import create_admin
+from .pre_start import create_test_user
 
 # create db tables
 Base.metadata.create_all(bind=engine)
 
 # create admin user for testing
 db = SessionLocal()
-print(create_admin(db))
+print(create_test_user(db))
 
 # init app
 app = FastAPI()
