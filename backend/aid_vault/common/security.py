@@ -1,6 +1,7 @@
 from passlib.context import CryptContext
+from sqlalchemy.orm import Session
 
-from .oauth2 import get_user_by_name
+from ..crud import read_user_by_nickname
 
 hash_context = CryptContext(schemes=["bcrypt"], deprecated= "auto")
 
@@ -10,10 +11,10 @@ def verify_password(plain_password, hashed_password):
 def get_password_hash(plain_password):
     return hash_context.hash(plain_password)
 
-def authenticate_user(db, username: str, password: str):
-    user = get_user_by_name(db, username)
+def authenticate_user(db: Session, username: str, password: str):
+    user = read_user_by_nickname(db, username)
     if not user:
         return False
-    if not verify_password(password, user.hashed_password):
+    if not verify_password(password, user.password):
         return False
     return user

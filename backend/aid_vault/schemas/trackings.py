@@ -39,7 +39,7 @@ class TrackingSchema(TrackingStop):
     pass
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 class TrackingComplete(TrackingSchema):
     front_regions: list[bool] | None = None
