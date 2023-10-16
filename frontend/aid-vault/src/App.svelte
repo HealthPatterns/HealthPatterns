@@ -6,6 +6,7 @@
 
   let username = "Finn";
   let isTracking = false;
+  let accessToken = null;
 
   let enableAddDetails = false;
   let enableHomeScreen = true;
@@ -21,19 +22,17 @@
     console.log(isTracking);
   }
 
-  async function fetchData(api_token) {
-    try {;
-      username = await apiGetUsername(api_token);
+  async function fetchData() {
+    try {
+      await apiLogin("admin", "admin"); //Testdata
+      username = await apiGetUsername(accessToken);
       console.log(username);
     } catch (error) {
       console.error("Error fetchData:", error);
     }
   }
 
-  //Testdata
-  const api_token = apiLogin("admin", "admin");
-  fetchData(api_token);
-
+  fetchData();
 
   //API
   async function apiLogin(username, password) {
@@ -62,7 +61,7 @@
       if (statusCode === 200) {
         console.log("API call 'Login' successful.");
         const data = await response.json();
-        return data.access_token;
+        accessToken = data.access_token;
       } else {
         console.log("Error during API call 'Login'.");
       }
