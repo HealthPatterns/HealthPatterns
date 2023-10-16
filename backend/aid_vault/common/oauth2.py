@@ -6,9 +6,8 @@ from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from jose import jwt, JWTError
 
-from ..schemas.users import UserComplete, UserFakeDB
-from ..schemas.token import TokenData
-from ..db.fake_db import fake_users_db
+from aid_vault import crud, models, schemas
+from ..db.database import SessionInstance
 
 """
 This is used as a dependency in 'get_current_user()' so the function knows what
@@ -41,25 +40,14 @@ def create_access_token(data: dict, expires_delta: timedelta | None = None):
     return encoded_jwt
 
 """
-Two crud functions for reading the user from the fake database.
-These will both be replaced with actual crud functions when the database is ready.
-"""
-def get_user(db: [UserFakeDB], user_id: UUID):
-    mock_user = next((user for user in db if user.id == user_id), None)
-    if mock_user:
-        return mock_user
-
-def get_user_by_name(db: [UserFakeDB], username: str):
-    mock_user = next((user for user in db if user.nickname == username), None)
-    if mock_user:
-        return mock_user
-
-"""
 Returns the user attached to the jwt by decoding the token, checking if the sub is valid
 and reading the user identified by the sub from the database.
 Will throw errors if any step fails. 
 """    
-async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]):
+async def get_current_user(
+        db: SessionInstance, token: Annotated[str, Depends(oauth2_scheme)]
+) -> models.Users:
+    
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Could not validate credentials",
@@ -72,13 +60,13 @@ async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]):
         if user_id is None:
             credentials_exception.detail += " - no subject in token"
             raise credentials_exception
-        token_data = TokenData(user_id=user_id)
+        token_data = schemas.TokenData(user_id=user_id)
     except JWTError as err:
         print(err)
         credentials_exception.detail += " - token decode error"
         raise credentials_exception
     
-    user = get_user(fake_users_db, user_id=token_data.user_id)
+    user = crud.read_user_by_id(db, user_id=token_data.user_id)
     if user is None:
         credentials_exception.status_code=status.HTTP_404_NOT_FOUND
         credentials_exception.detail += " - unknown user"
@@ -90,8 +78,8 @@ async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]):
 Checks if the user attached to the jwt is active.
 """
 async def get_current_active_user(
-        current_user: Annotated[UserComplete, Depends(get_current_user)]
-):
+        current_user: Annotated[schemas.UserComplete, Depends(get_current_user)]
+) -> models.Users:
     if not current_user.is_active:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
@@ -104,4 +92,4 @@ Putting this as a type-hint into a path operation function will start the
 dependency injection cascade of token auth functions ending with the data
 of the currently logged in user (or an auth error).
 """
-CurrentUserToken = Annotated[UserComplete, Depends(get_current_active_user)]
+CurrentUserToken = Annotated[schemas.UserComplete, Depends(get_current_active_user)]
