@@ -21,20 +21,56 @@
     console.log(isTracking);
   }
 
-  async function fetchData() {
-    try {
-      const user_id = 1;
-      username = await apiGetUsername(user_id);
+  async function fetchData(api_token) {
+    try {;
+      username = await apiGetUsername(api_token);
       console.log(username);
     } catch (error) {
       console.error("Error fetchData:", error);
     }
   }
 
-  fetchData();
+  //Testdata
+  const api_token = apiLogin("admin", "admin");
+  fetchData(api_token);
 
 
   //API
+  async function apiLogin(username, password) {
+    const url = "http://localhost:3000/auth/login";
+
+    const formData = new URLSearchParams();
+    formData.append('grant_type', '');
+    formData.append('username', username);
+    formData.append('password', password);
+    formData.append('scope', '');
+    formData.append('client_id', '');
+    formData.append('client_secret', '');
+
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'accept': 'application/json'
+      },
+      body: formData
+    };
+
+    try {
+      const response = await fetch(url, options);
+      const statusCode = response.status;
+      if (statusCode === 200) {
+        console.log("API call 'Login' successful.");
+        const data = await response.json();
+        return data.access_token;
+      } else {
+        console.log("Error during API call 'Login'.");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  }
+
   async function apiGetUsername(api_token) {
     const url = "http://localhost:3000/user";
 
@@ -42,6 +78,7 @@
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
+        'accept': 'application/json',
         'Authorization': 'Bearer ' + api_token,
       }
     };
@@ -69,6 +106,7 @@
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'accept': 'application/json',
         'Authorization': 'Bearer ' + api_token,
       },
       body: JSON.stringify({
@@ -99,6 +137,7 @@
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
+        'accept': 'application/json',
         'Authorization': 'Bearer ' + api_token,
       },
       body: JSON.stringify({
@@ -127,6 +166,7 @@
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
+        'accept': 'application/json',
         'Authorization': 'Bearer ' + api_token,
       }
     };
@@ -153,6 +193,7 @@
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
+        'accept': 'application/json',
         'Authorization': 'Bearer ' + api_token,
       },
       body: JSON.stringify({
