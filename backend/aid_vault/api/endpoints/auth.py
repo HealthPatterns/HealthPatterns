@@ -13,7 +13,6 @@ from ...common.oauth2 import (
     ACCESS_TOKEN_EXPIRE_MINUTES
 )
 from ...db.database import SessionInstance
-from ...db.fake_db import fake_users_db
 
 router = APIRouter(
     prefix="/auth",
