@@ -42,6 +42,7 @@ class TrackingSchema(TrackingStop):
         orm_mode = True
 
 class TrackingComplete(TrackingSchema):
+    user_id: int
     front_regions: list[bool] | None = None
     back_regions: list[bool] | None = None
     intensity: int | None = None
