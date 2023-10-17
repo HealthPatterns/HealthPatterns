@@ -4,6 +4,9 @@ from uuid import UUID
 class UserBase(BaseModel):
     nickname: str
 
+class UserFullName(BaseModel):
+    full_name: str
+
 class UserOptionals(UserBase):
     full_name: str | None = None
     age: int | None = None
