@@ -1,4 +1,4 @@
-from sqlalchemy import ForeignKey, Column, Integer, String, Boolean, UUID, text, ARRAY, JSON
+from sqlalchemy import ForeignKey, Column, BigInteger, String, Boolean, UUID, text, ARRAY, JSON, Integer
 
 from ..db.base_class import Base
 
@@ -9,8 +9,8 @@ class Trackings(Base):
         server_default=text("gen_random_uuid()")
     )
     user_id = Column(UUID, ForeignKey("users.id"), nullable=False)
-    time_start = Column(Integer, unique=False, nullable=False)
-    time_end = Column(Integer, unique=False, nullable=True)
+    time_start = Column(BigInteger, unique=False, nullable=False)
+    time_end = Column(BigInteger, unique=False, nullable=True)
     front_regions = Column(ARRAY(Boolean), nullable = True)
     back_regions = Column(ARRAY(Boolean), nullable = True)
     intensity = Column(Integer, nullable = True)
