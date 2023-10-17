@@ -1,16 +1,21 @@
 from pydantic import BaseModel
+from typing import Any, Dict
+from uuid import UUID
 
 class TrackingBase(BaseModel):
-    id: str
+    id: UUID
 
-class TrackingStart(BaseModel):
-    start_time: int
+class TrackingStart(TrackingBase):
+    time_start: int
+
+class TrackingSetStart(BaseModel):
+    time_start: int
 
 class TrackingActive(TrackingBase):
-    start_time: int
+    time_start: int
 
-class TrackingStop(TrackingBase):
-    end_time: int | None = None
+class TrackingStop(BaseModel):
+    time_end: int | None = None
 
 class TrackingFrontRegions(BaseModel):
     front_regions: list[bool] | None = None
@@ -21,30 +26,27 @@ class TrackingBackRegions(BaseModel):
 class TrackingIntensity(BaseModel):
     intensity: int | None = None
 
-class TrackingSleep(BaseModel):
-    sleep: str | None = None
-
 class TrackingDiet(BaseModel):
-    diet: str | None = None
+    diet: Dict[str, Any] | None = None
 
-class TrackingOptionals(TrackingBase):
+class TrackingOptionals(BaseModel):
     front_regions: list[bool] | None = None
     back_regions: list[bool] | None = None
     intensity: int | None = None
-    sleep: str | None = None
-    diet: str | None = None
+    diet: Dict[str, Any] | None = None
 
-class TrackingSchema(TrackingStop):
-    start_time: int
-    pass
+class TrackingSchema(BaseModel):
+    time_start: int
+    time_end: int | None = None
+
+class TrackingComplete(TrackingBase):
+    #user_id: UUID
+    time_start: int
+    time_end: int | None = None
+    front_regions: list[bool] | None = None
+    back_regions: list[bool] | None = None
+    intensity: int | None = None
+    diet: Dict[str, Any] | None = None
 
     class Config:
         from_attributes = True
-
-class TrackingComplete(TrackingSchema):
-    user_id: int
-    front_regions: list[bool] | None = None
-    back_regions: list[bool] | None = None
-    intensity: int | None = None
-    sleep: str | None = None
-    diet: str | None = None
