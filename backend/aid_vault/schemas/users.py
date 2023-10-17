@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+from uuid import UUID
 
 class UserBase(BaseModel):
     nickname: str
@@ -6,6 +7,8 @@ class UserBase(BaseModel):
 class UserOptionals(UserBase):
     full_name: str | None = None
     age: int | None = None
+    gender: str | None = None
+    email: str | None = None
     # other optional user-details
 
 class UserCreate(UserOptionals): 
@@ -13,8 +16,19 @@ class UserCreate(UserOptionals):
     password: str
 
 class UserComplete(UserOptionals):
-    id: int
+    id: UUID
     is_active: bool
 
     class Config:
-        orm_mode = True
+        from_attributes = True
+
+class UserForUpdate(BaseModel):
+    nickname: str | None = None
+    full_name: str | None = None
+    age: int | None = None
+    gender: str | None = None
+    email: str | None = None
+    is_active: bool | None = None
+
+class UserFakeDB(UserComplete):
+    hashed_password: str

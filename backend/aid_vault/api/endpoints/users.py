@@ -1,65 +1,72 @@
-"""
-crud functions from crud_users.py don't do anything, as there is no db model yet.
-They are just placeholders.
-"""
-from fastapi import APIRouter, HTTPException, status, Response
+from fastapi import APIRouter, HTTPException, status
 
+from aid_vault import crud, schemas, models
 from ...db.database import SessionInstance
-from ...schemas.users import UserComplete, UserCreate, UserBase
-from ...common import crud_users
+from ...common.security import get_password_hash
+from ...common.oauth2 import CurrentUserToken
 
 router = APIRouter(
-    prefix="/users",
+    prefix="/user",
     tags=["Users"]
 )
 
-@router.post("", response_model=UserComplete, status_code=status.HTTP_201_CREATED)
-def create_user(db: SessionInstance, user: UserCreate):
-    crud_users.create_user(db, user)
-    return
-
-@router.get("/{user_id}", response_model=UserComplete)
-def get_user(db: SessionInstance, user_id: int):
-    mock_user = UserComplete(
-        nickname=f"maxi{user_id}",
-        full_name="Maxi Mustermensch",
-        age=42,
-        id=user_id,
-        is_active=True
-    )
-    if not mock_user:
-        raise HTTPException(status_code=404, detail="Resource not found")
-    
-    crud_users.read_user(db, user_id)
-    return mock_user
-
-@router.get("/{user_id}/name", response_model=UserBase)
-def get_user_nickname(db: SessionInstance, user_id: int):
-    mock_user = UserBase(nickname=f"maxi{user_id}")
-    if not mock_user:
-        raise HTTPException(status_code=404, detail="Resource not found")
-    return mock_user
-
-@router.put("/{user_id}", response_model=UserComplete)
-def update_user_data(db: SessionInstance, user_id: int, user: UserComplete):
-    if user_id is not user.id:
+@router.post(
+        "/register",
+        response_model=schemas.UserComplete,
+        status_code=status.HTTP_201_CREATED
+)
+def register_user(db: SessionInstance, user_in: schemas.UserCreate) -> models.Users:
+    """
+    Creates a user from the input data, hashes the plaintext password and saves
+    the user into the database. Returns the new user from the database.
+    The user still has to login afterwards.
+    """
+    if crud.users.user_exists_by_nickname(db, user_in.nickname):
         raise HTTPException(
             status_code=400,
-            detail="Bad Request: User ID's do not match in Path and Payload."
+            detail="User with this username already exists."
         )
-    user_exists = True
-    if not user_exists:
-        raise HTTPException(status_code=404, detail="Resource not found")
-    
-    crud_users.update_user(db, user)
-    return user
 
-@router.delete("/{user_id}", status_code=status.HTTP_204_NO_CONTENT)
-def delete_user(db: SessionInstance, user_id: int):
-    user_exists = True
-    if not user_exists:
-        raise HTTPException(status_code=404, detail="Resource not found")
-    
-    crud_users.delete_trackings_from_user(db, user_id)
-    crud_users.delete_user(db, user_id)
+    hashed_password = get_password_hash(user_in.password)
+    user_in.password = hashed_password
+    print(user_in.password)
+    new_user = crud.users.create_user(db=db, user=user_in)
+    return new_user
+
+@router.get("", response_model=schemas.UserComplete)
+def get_user(current_user: CurrentUserToken) -> models.Users:
+    """
+    Returns currently logged in user.
+    """   
+    return current_user
+
+@router.get("/name", response_model=schemas.UserBase)
+def get_user_nickname(current_user: CurrentUserToken) -> models.Users:
+    """
+    Returns currently logged in user's nickname.
+    """
+    return current_user
+
+@router.put("", response_model=schemas.UserComplete)
+def update_user_data(
+    db: SessionInstance,
+    current_user: CurrentUserToken,
+    input_data: schemas.UserForUpdate
+) -> models.Users:
+    """
+    Updates currently logged in user.
+    """
+    updated_user = crud.users.update_user(
+        db,
+        update_data=input_data,
+        user_id=current_user.id
+    )
+    return updated_user
+
+@router.delete("", status_code=status.HTTP_204_NO_CONTENT)
+def delete_user(db: SessionInstance, current_user: CurrentUserToken):
+    """
+    Deletes currently logged in user.
+    """
+    crud.users.delete_user_by_id(db=db, user_id=current_user.id)
     return
