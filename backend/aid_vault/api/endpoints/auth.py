@@ -12,7 +12,7 @@ from ...common.oauth2 import (
     CurrentUserToken, 
     ACCESS_TOKEN_EXPIRE_MINUTES
 )
-from ...db.fake_db import fake_users_db
+from ...db.database import SessionInstance
 
 router = APIRouter(
     prefix="/auth",
@@ -22,13 +22,14 @@ router = APIRouter(
 
 @router.post("/login", response_model=schemas.Token)
 async def login_for_access_token(
+    db: SessionInstance,
     form_data: Annotated[OAuth2PasswordRequestForm, Depends()]
 ):
     """
     Takes username and password as form data and returns an access token with the 
     user-id as subject.
     """
-    user = authenticate_user(fake_users_db, form_data.username, form_data.password)
+    user = authenticate_user(db, form_data.username, form_data.password)
     if not user:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
@@ -38,7 +39,7 @@ async def login_for_access_token(
     
     access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
     access_token = create_access_token(
-        data={"sub": str(user.id)}, expires_delta=access_token_expires
+        data={"sub": user.id.hex}, expires_delta=access_token_expires
     )
     
     token = schemas.Token(access_token=access_token, token_type="bearer")

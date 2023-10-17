@@ -1,9 +1,7 @@
-from fastapi import APIRouter, HTTPException, status, Response
-from fastapi.encoders import jsonable_encoder
+from fastapi import APIRouter, HTTPException, status
 
 from aid_vault import crud, schemas, models
 from ...db.database import SessionInstance
-from ...db import fake_db
 from ...common.security import get_password_hash
 from ...common.oauth2 import CurrentUserToken
 
@@ -12,64 +10,63 @@ router = APIRouter(
     tags=["Users"]
 )
 
-@router.post("/register", response_model=schemas.UserComplete, status_code=status.HTTP_201_CREATED)
-def register_user(input: schemas.UserCreate):
+@router.post(
+        "/register",
+        response_model=schemas.UserComplete,
+        status_code=status.HTTP_201_CREATED
+)
+def register_user(db: SessionInstance, user_in: schemas.UserCreate) -> models.Users:
     """
     Creates a user from the input data, hashes the plaintext password and saves
-    the user into the database.
+    the user into the database. Returns the new user from the database.
     The user still has to login afterwards.
     """
-    fake_db.user_id_increment += 1
-    user = schemas.UserFakeDB(
-        nickname=input.nickname,
-        full_name=input.full_name,
-        age=input.age,
-        id=fake_db.user_id_increment,
-        is_active=True,
-        hashed_password=get_password_hash(input.plain_password)
-    )
-    fake_db.fake_users_db.append(user)
-    return user
+    if crud.users.user_exists_by_nickname(db, user_in.nickname):
+        raise HTTPException(
+            status_code=400,
+            detail="User with this username already exists."
+        )
+
+    hashed_password = get_password_hash(user_in.password)
+    user_in.password = hashed_password
+    print(user_in.password)
+    new_user = crud.users.create_user(db=db, user=user_in)
+    return new_user
 
 @router.get("", response_model=schemas.UserComplete)
-def get_user(current_user: CurrentUserToken):
+def get_user(current_user: CurrentUserToken) -> models.Users:
     """
     Returns currently logged in user.
     """   
     return current_user
 
 @router.get("/name", response_model=schemas.UserBase)
-def get_user_nickname(current_user: CurrentUserToken):
+def get_user_nickname(current_user: CurrentUserToken) -> models.Users:
     """
     Returns currently logged in user's nickname.
     """
     return current_user
 
 @router.put("", response_model=schemas.UserComplete)
-def update_user_data(current_user: CurrentUserToken, input_data: schemas.UserComplete):
+def update_user_data(
+    db: SessionInstance,
+    current_user: CurrentUserToken,
+    input_data: schemas.UserForUpdate
+) -> models.Users:
     """
-    Update currently logged in user.
+    Updates currently logged in user.
     """
-    if input_data.id is not current_user.id:
-        raise HTTPException(
-            status_code=400,
-            detail="Bad Request: User ID in body does not match currently logged in user."
-        )
-    if input_data.nickname is not None:
-        current_user.nickname = input_data.nickname
-    if input_data.full_name is not None:
-        current_user.full_name = input_data.full_name
-    if input_data.age is not None:
-        current_user.age = input_data.age
-    if input_data.is_active is not None:
-        current_user.is_active = input_data.is_active    
-
-    return current_user
+    updated_user = crud.users.update_user(
+        db,
+        update_data=input_data,
+        user_id=current_user.id
+    )
+    return updated_user
 
 @router.delete("", status_code=status.HTTP_204_NO_CONTENT)
-def delete_user(current_user: CurrentUserToken):
+def delete_user(db: SessionInstance, current_user: CurrentUserToken):
     """
     Deletes currently logged in user.
     """
-    fake_db.fake_users_db.remove(current_user)
+    crud.users.delete_user_by_id(db=db, user_id=current_user.id)
     return

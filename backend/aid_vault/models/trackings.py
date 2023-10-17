@@ -1,11 +1,10 @@
-from sqlalchemy import ForeignKey, Column, Integer, String, Boolean
+from sqlalchemy import ForeignKey, Column, Integer, String, Boolean, UUID, text
 
 from ..db.base_class import Base
 
 class Trackings(Base):
-    __tablename__ = "trackings"
     id = Column(Integer, primary_key=True)
-    user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+    user_id = Column(UUID, ForeignKey("users.id"), nullable=False)
     time_start = Column(String, unique=False, nullable=False)
     time_end = Column(String, unique=False, nullable=True)
     front_regions = Column(Boolean[19], nullable = True)
