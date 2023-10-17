@@ -34,11 +34,10 @@ def read_user_by_nickname(db: SessionInstance, nickname: str) -> Users:
     return db.query(Users).filter(Users.nickname == nickname).first()
 
 def update_user(db: SessionInstance, update_data: UserForUpdate, user_id: UUID) -> Users:
-    ### Update any element in a row by entering the column/-s in json format (UserForUpdate)###
+    print(update_data)
     for key, value in update_data:
-        if value != None:
-            db.query(Users).filter(Users.id == user_id).update({key: value})
-            db.commit()
+        db.query(Users).filter(Users.id == user_id).update({key: value})
+        db.commit()
 
     return read_user_by_id(db=db, user_id=user_id)
 
