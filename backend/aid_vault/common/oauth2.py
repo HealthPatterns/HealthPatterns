@@ -78,7 +78,7 @@ async def get_current_user(
 Checks if the user attached to the jwt is active.
 """
 async def get_current_active_user(
-        current_user: Annotated[schemas.UserComplete, Depends(get_current_user)]
+        current_user: Annotated[models.Users, Depends(get_current_user)]
 ) -> models.Users:
     if not current_user.is_active:
         raise HTTPException(
@@ -92,4 +92,4 @@ Putting this as a type-hint into a path operation function will start the
 dependency injection cascade of token auth functions ending with the data
 of the currently logged in user (or an auth error).
 """
-CurrentUserToken = Annotated[schemas.UserComplete, Depends(get_current_active_user)]
+CurrentUserToken = Annotated[models.Users, Depends(get_current_active_user)]

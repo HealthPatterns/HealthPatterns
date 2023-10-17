@@ -29,7 +29,6 @@ def register_user(db: SessionInstance, user_in: schemas.UserCreate) -> models.Us
 
     hashed_password = get_password_hash(user_in.password)
     user_in.password = hashed_password
-    print(user_in.password)
     new_user = crud.users.create_user(db=db, user=user_in)
     return new_user
 
@@ -40,11 +39,15 @@ def get_user(current_user: CurrentUserToken) -> models.Users:
     """   
     return current_user
 
-@router.get("/name", response_model=schemas.UserBase)
-def get_user_nickname(current_user: CurrentUserToken) -> models.Users:
+@router.get("/name", response_model=schemas.UserBase | schemas.UserFullName)
+def get_user_name(current_user: CurrentUserToken) -> models.Users:
     """
-    Returns currently logged in user's nickname.
+    Returns currently logged in user's full name, or nickname if the full name is null.
     """
+    if current_user.full_name is not None:
+        name = schemas.UserFullName(full_name=current_user.full_name)
+        return name
+
     return current_user
 
 @router.put("", response_model=schemas.UserComplete)
@@ -54,7 +57,7 @@ def update_user_data(
     input_data: schemas.UserForUpdate
 ) -> models.Users:
     """
-    Updates currently logged in user.
+    Updates currently logged in user. Fields that get put in as null or omitted will be set to null.
     """
     updated_user = crud.users.update_user(
         db,
