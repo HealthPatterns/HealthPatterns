@@ -2,16 +2,18 @@
   import AddDetails from "./lib/AddDetails.svelte";
   import HomeScreen from "./lib/HomeScreen.svelte";
   import Navbar from "./lib/Navbar.svelte";
+  import { onMount } from "svelte";
+  import Loader from "./lib/Loader.svelte";
   import "./font.css"
 
-  let username = "Finn";
-  let isTracking = false;
-  let accessToken = null;
+  let username : string = "";
+  let isTracking : boolean = false;
+  let accessToken : string =  "";
 
-  let enableAddDetails = false;
-  let enableHomeScreen = true;
-  let enableNavbar = false;
-  let enableMessage = false;
+  let enableAddDetails : boolean = false;
+  let enableHomeScreen : boolean = false;
+  let enableNavbar : boolean = false;
+  let enableMessage :boolean = false;
   
   let enableError : boolean;
   let errorMessage : string;
@@ -32,10 +34,8 @@
     }
   }
 
-  fetchData();
-
   //API
-  async function apiLogin(username, password) {
+  async function apiLogin(username : string, password : string) {
     const url = "http://localhost:3000/auth/login";
 
     const formData = new URLSearchParams();
@@ -70,7 +70,7 @@
     }
   }
 
-  async function apiGetUsername(api_token) {
+  async function apiGetUsername(api_token : string) {
     const url = "http://localhost:3000/user";
 
     const options = {
@@ -97,7 +97,7 @@
     }
   }
 
-  async function apiStartTracking(api_token) {
+  async function apiStartTracking(api_token : string) {
     const current_time = Math.floor(Date.now() / 1000);
     const url = "http://localhost:3000/trackings";
 
@@ -126,9 +126,16 @@
     } catch (error) {
       console.error("Error:", error);
     }
+
+    onMount(() => {
+
+      fetchData();
+
+	  });
+
   }
 
-  async function apiStopTracking (api_token, tracking_id) {
+  async function apiStopTracking (api_token : string, tracking_id : string) {
     const current_time = Math.floor(Date.now() / 1000);
     const url = "http://localhost:3000/trackings/tracking";
 
@@ -158,7 +165,7 @@
     }
   }
 
-  async function apiGetDetails (api_token, tracking_id) {
+  async function apiGetDetails (api_token : string, tracking_id : string) {
     const url = `http://localhost:3000/trackings/tracking/details?tracking_id=${tracking_id}`;
 
     const options = {
@@ -185,7 +192,7 @@
     }
   }
 
-  async function apiSetDetails (api_token, tracking_id, front_regions, back_regions, intensity, sleep, diet) {
+  async function apiSetDetails (api_token : string, tracking_id : string, front_regions, back_regions, intensity, sleep, diet) {
     const url = "http://localhost:3000/trackings/tracking/details";
 
     const options = {
@@ -222,6 +229,11 @@
     }
   }
 
+  onMount(() => {
+      fetchData().then(() => {
+        enableHomeScreen = true;
+      });
+	});
 
 </script>
 
@@ -240,6 +252,9 @@
   </HomeScreen>
 
   <AddDetails on:toggle={toggleDetails} enabled={enableAddDetails}></AddDetails>
+  {#if !enableAddDetails && !enableHomeScreen }
+    <Loader></Loader>
+  {/if}
 </main>
 
 <style>

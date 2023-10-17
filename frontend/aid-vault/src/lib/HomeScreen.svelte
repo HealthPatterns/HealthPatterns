@@ -3,7 +3,6 @@
     const dispatch = createEventDispatcher();
 
     import Timer from "./Timer.svelte"
-    import ButtomCard from './TrackingCard.svelte';
     import TrackingCard from './TrackingCard.svelte';
     import ErrorCard from './ErrorCard.svelte';
 
