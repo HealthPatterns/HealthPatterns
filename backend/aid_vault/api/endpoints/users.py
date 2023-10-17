@@ -29,7 +29,6 @@ def register_user(db: SessionInstance, user_in: schemas.UserCreate) -> models.Us
 
     hashed_password = get_password_hash(user_in.password)
     user_in.password = hashed_password
-    print(user_in.password)
     new_user = crud.users.create_user(db=db, user=user_in)
     return new_user
 
