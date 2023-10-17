@@ -40,7 +40,7 @@ def get_user(current_user: CurrentUserToken) -> models.Users:
     return current_user
 
 @router.get("/name", response_model=schemas.UserBase | schemas.UserFullName)
-def get_user_nickname(current_user: CurrentUserToken) -> models.Users:
+def get_user_name(current_user: CurrentUserToken) -> models.Users:
     """
     Returns currently logged in user's full name, or nickname if the full name is null.
     """
