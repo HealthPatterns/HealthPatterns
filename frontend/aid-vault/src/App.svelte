@@ -10,17 +10,14 @@
   let isTracking : boolean = false;
   let accessToken : string =  "";
 
-  let enableAddDetails : boolean = false;
-  let enableHomeScreen : boolean = false;
-  let enableNavbar : boolean = false;
-  let enableMessage :boolean = false;
+  let enableAddDetails : boolean = false, enableHomeScreen : boolean = false, enableNavbar : boolean = false;
   
-  let enableError : boolean;
-  let errorMessage : string;
+  let enableMessage :boolean = false, enableError : boolean, errorMessage : string;
 
   function toggleDetails () {
     enableAddDetails = !enableAddDetails;
     enableHomeScreen = !enableHomeScreen;
+
     console.log(isTracking);
   }
 
@@ -91,74 +88,6 @@
         return data.full_name;
       } else {
         console.log("Error during API call 'GetUsername'.");
-      }
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  }
-
-  async function apiStartTracking(api_token : string) {
-    const current_time = Math.floor(Date.now() / 1000);
-    const url = "http://localhost:3000/trackings";
-
-    const options = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'accept': 'application/json',
-        'Authorization': 'Bearer ' + api_token,
-      },
-      body: JSON.stringify({
-        'start_time': current_time
-      })
-    };
-
-    try {
-      const response = await fetch(url, options);
-      const statusCode = response.status;
-      if (statusCode === 201) {
-        console.log("API call 'StartTracking' successful.");
-        const data = await response.json();
-        return data.id;
-      } else {
-        console.log("Error during API call 'StartTracking'.");
-      }
-    } catch (error) {
-      console.error("Error:", error);
-    }
-
-    onMount(() => {
-
-      fetchData();
-
-	  });
-
-  }
-
-  async function apiStopTracking (api_token : string, tracking_id : string) {
-    const current_time = Math.floor(Date.now() / 1000);
-    const url = "http://localhost:3000/trackings/tracking";
-
-    const options = {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        'accept': 'application/json',
-        'Authorization': 'Bearer ' + api_token,
-      },
-      body: JSON.stringify({
-        'id': tracking_id,
-        'end_time': current_time
-      })
-    };
-
-    try {
-      const response = await fetch(url, options);
-      const statusCode = response.status;
-      if (statusCode === 200) {
-        console.log("API call 'StopTracking' successful.");
-      } else {
-        console.log("Error during API call 'StopTracking'.");
       }
     } catch (error) {
       console.error("Error:", error);
