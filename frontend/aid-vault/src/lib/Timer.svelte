@@ -4,6 +4,7 @@
 
     export let unixtime : number = 1696579823 * 1000;
     export let isRunning : boolean = false;
+    export let tracking_id : string;
 
     var deltaTime = new Date(Math.abs(new Date().getTime() - new Date(unixtime).getTime()));
 
@@ -19,9 +20,10 @@
     }) 
 
 
-    export function start () {
+    export function start (accessToken : string) {
         isRunning = true;
         //console.log(isRunning);
+        apiStartTracking(accessToken);
         stopWatch();
     }
 
@@ -33,9 +35,9 @@
         unixtime = new Date().getTime() / 1000;
     };
 
-    export function stop_reset() {
+    export function stop_reset(accessToken : string) {
         stop();
-        apiStopTracking();
+        apiStopTracking(accessToken, tracking_id);
         reset();
     }
 
@@ -67,7 +69,7 @@
         'Authorization': 'Bearer ' + api_token,
       },
       body: JSON.stringify({
-        'start_time': current_time
+        'time_start': current_time
       })
     };
 
@@ -77,6 +79,7 @@
       if (statusCode === 201) {
         console.log("API call 'StartTracking' successful.");
         const data = await response.json();
+        tracking_id = data.id;
         return data.id;
       } else {
         console.log("Error during API call 'StartTracking'.");
@@ -89,18 +92,18 @@
 
   async function apiStopTracking (api_token : string, tracking_id : string) {
     const current_time = Math.floor(Date.now() / 1000);
-    const url = "http://localhost:3000/trackings/tracking";
+    const url = `http://localhost:3000/trackings/${tracking_id}`;
 
     const options = {
       method: 'PUT',
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json', 
         'accept': 'application/json',
         'Authorization': 'Bearer ' + api_token,
       },
       body: JSON.stringify({
-        'id': tracking_id,
-        'end_time': current_time
+        //'id': tracking_id,
+        'time_end': current_time
       })
     };
 

@@ -175,7 +175,8 @@
     bind:navbarEnabled={enableNavbar} 
     bind:isTracking={isTracking} 
     enabled={enableHomeScreen} 
-    username={username} 
+    username={username}
+    accessToken={accessToken}
     bind:enableError={enableError} 
     errorMessage={errorMessage}>
   </HomeScreen>
