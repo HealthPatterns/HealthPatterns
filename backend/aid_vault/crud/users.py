@@ -17,6 +17,11 @@ def user_exists_by_nickname(db: SessionInstance, nickname: str) -> bool:
 
     return True if result else False
 
+def user_exists_by_email(db: Session, email: str) -> bool:
+    result = db.query(Users).filter_by(email=email).first() is not None
+
+    return True if result else False
+
 def create_user(db: SessionInstance, user: UserCreate) -> Users:
     new_user = Users(**jsonable_encoder(user))
     db.add(new_user)
