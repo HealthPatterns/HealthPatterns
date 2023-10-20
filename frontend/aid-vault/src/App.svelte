@@ -141,10 +141,12 @@
       if (statusCode === 200) {
           console.log("API call 'GetDetails' successful.");
           const data = await response.json();
-          $trackingData.front_regions = data.front_regions;
-          $trackingData.back_regions = data.back_regions;
-          $trackingData.intensity = data.intensity;
-          $trackingData.diet = data.diet;
+          if (data && data.front_regions !== null){
+            $trackingData.front_regions = data.front_regions;
+            $trackingData.back_regions = data.back_regions;
+            $trackingData.intensity = data.intensity;
+            $trackingData.diet = data.diet;
+          }
       } else {
           console.log("Error during API call 'GetDetails'.");
       }
