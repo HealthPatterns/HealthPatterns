@@ -10,8 +10,18 @@ export const trackingData = writable({
     isTracking: false,
     tracking_id: "",
     count: 0,
-    front_regions: true,
-    back_regions: true,
+    front_regions: [false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false],
+    back_regions: [false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false],
     intensity: 0,
-    diet: {},
+    diet: {
+        "Obst": false,
+        "Gemüse": false,
+        "Milchprodukte": false,
+        "Fleisch": false,
+        "Fisch": false,
+        "Eier": false,
+        "Weißmehl": false,
+        "Vollkorn": false,
+        "Soja": false
+    },
   });
