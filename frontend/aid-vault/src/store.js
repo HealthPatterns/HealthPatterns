@@ -10,4 +10,8 @@ export const trackingData = writable({
     isTracking: false,
     tracking_id: "",
     count: 0,
+    front_regions: true,
+    back_regions: true,
+    intensity: 0,
+    diet: {},
   });

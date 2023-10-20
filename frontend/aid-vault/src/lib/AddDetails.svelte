@@ -5,12 +5,77 @@
     import BodyForm from "./BodyForm.svelte";
     import Food from "./Food.svelte";
     import Slider from "./Slider.svelte";
+    import { trackingData } from '../store.js';
+    import { loginData } from '../store.js';
 
     export let enabled : boolean;
 
     function toggle() {
         dispatch('toggle')
+        apiSetDetails ($loginData.accessToken, $trackingData.tracking_id, $trackingData.front_regions, $trackingData.back_regions, $trackingData.intensity, $trackingData.diet)
     }
+
+    async function apiGetDetails (api_token : string, tracking_id : string) {
+    const url = `http://localhost:3000/trackings/tracking/details?tracking_id=${tracking_id}`;
+
+    const options = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'accept': 'application/json',
+        'Authorization': 'Bearer ' + api_token,
+      }
+    };
+
+    try {
+      const response = await fetch(url, options);
+      const statusCode = response.status;
+      if (statusCode === 200) {
+        console.log("API call 'GetDetails' successful.");
+        const data = await response.json();
+        return data;
+      } else {
+        console.log("Error during API call 'GetDetails'.");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  }
+
+  async function apiSetDetails (api_token : string, tracking_id : string, front_regions, back_regions, intensity, diet) {
+    const url = `http://localhost:3000/trackings/${tracking_id}/details`;
+
+    const options = {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'accept': 'application/json',
+        'Authorization': 'Bearer ' + api_token,
+      },
+      body: JSON.stringify({
+        'front_regions': [
+          front_regions
+        ],
+        'back_regions': [
+          back_regions
+        ],
+        'intensity': intensity,
+        'diet': diet
+      })
+    };
+
+    try {
+      const response = await fetch(url, options);
+      const statusCode = response.status;
+      if (statusCode === 200) {
+        console.log("API call 'SetDetails' successful.");
+      } else {
+        console.log("Error during API call 'SetDetails'.");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  }
 
 </script>
 

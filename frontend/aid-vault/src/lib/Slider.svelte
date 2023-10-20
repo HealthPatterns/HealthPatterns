@@ -1,6 +1,9 @@
+<script>
+    import { trackingData } from '../store.js'; // Import the store
+  </script>
 
 <div id="Slider">
-    <input type="range" min="1" max="10" value="0" class="slider" id="myRange">
+    <input type="range" min="1" max="10" bind:value={$trackingData.intensity} class="slider" id="myRange">
 </div>
 
 <style>
