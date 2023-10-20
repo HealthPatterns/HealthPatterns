@@ -1,7 +1,6 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import { trackingData } from '../store.js';
-  import { loginData } from '../store.js';
+  import { loginData, trackingData, defaultTrackingData } from '../store.js';
   
   let hour: number = 0, minute: number = 0, second: number = 0;
   let hrString: string, minString: string, secString: string;
@@ -21,20 +20,13 @@
     stopWatch();
   }
 
-  function stop() {
+  export function stop_reset() {
     $trackingData.isTracking = false;
-  }
-
-  function reset() {
+    apiStopTracking($loginData.accessToken, $trackingData.tracking_id);
+    $trackingData = $defaultTrackingData
     $trackingData.unixtime = Math.floor(Date.now() / 1000);
     $trackingData.count = hour = minute = second = 0;
     createStrings();
-  }
-
-  export function stop_reset() {
-    stop();
-    apiStopTracking($loginData.accessToken, $trackingData.tracking_id);
-    reset();
   }
 
   function createStrings() {
