@@ -5,10 +5,7 @@
   import { onMount } from "svelte";
   import Loader from "./lib/Loader.svelte";
   import "./font.css"
-
-  let username : string = "";
-  let isTracking : boolean = false;
-  let accessToken : string =  "";
+  import { loginData } from './store.js';
 
   let enableAddDetails : boolean = false, enableHomeScreen : boolean = false, enableNavbar : boolean = false;
   
@@ -17,15 +14,12 @@
   function toggleDetails () {
     enableAddDetails = !enableAddDetails;
     enableHomeScreen = !enableHomeScreen;
-
-    console.log(isTracking);
   }
 
   async function fetchData() {
     try {
       await apiLogin("admin", "admin"); //Testdata
-      username = await apiGetUsername(accessToken);
-      console.log(username);
+      await apiGetUsername($loginData.accessToken);
     } catch (error) {
       console.error("Error fetchData:", error);
     }
@@ -58,7 +52,7 @@
       if (statusCode === 200) {
         console.log("API call 'Login' successful.");
         const data = await response.json();
-        accessToken = data.access_token;
+        $loginData.accessToken = data.access_token;
       } else {
         console.log("Error during API call 'Login'.");
       }
@@ -68,7 +62,7 @@
   }
 
   async function apiGetUsername(api_token : string) {
-    const url = "http://localhost:3000/user";
+    const url = "http://localhost:3000/user/name";
 
     const options = {
       method: 'GET',
@@ -85,7 +79,7 @@
       if (statusCode === 200) {
         console.log("API call 'getUsername' successful.");
         const data = await response.json();
-        return data.full_name;
+        $loginData.username =  data.full_name;
       } else {
         console.log("Error during API call 'GetUsername'.");
       }
@@ -173,10 +167,7 @@
     bind:enableMessage={enableMessage} 
     on:toggle={toggleDetails} 
     bind:navbarEnabled={enableNavbar} 
-    bind:isTracking={isTracking} 
     enabled={enableHomeScreen} 
-    username={username}
-    accessToken={accessToken}
     bind:enableError={enableError} 
     errorMessage={errorMessage}>
   </HomeScreen>

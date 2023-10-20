@@ -1,42 +1,39 @@
 <script lang="ts">
-
   import { onMount } from "svelte";
-
-  export let unixtime : number = 1696579823 * 1000;
-  export let isRunning : boolean = false;
-  export let tracking_id : string;
-
-  let count: number = 0, hour: number = 0, minute: number = 0, second: number = 0;
+  import { trackingData } from '../store.js';
+  import { loginData } from '../store.js';
+  
+  let hour: number = 0, minute: number = 0, second: number = 0;
   let hrString: string, minString: string, secString: string;
 
   createStrings();
 
   onMount(() => {
-    if (isRunning) {
+    if ($trackingData.isTracking) {
       stopWatch();
     }
   })
 
-  export function start(accessToken: string) {
-    isRunning = true;
-    unixtime = Math.floor(Date.now() / 1000);
-    apiStartTracking(accessToken);
+  export function start() {
+    $trackingData.unixtime = Math.floor(Date.now() / 1000);
+    $trackingData.isTracking = true;
+    apiStartTracking($loginData.accessToken);
     stopWatch();
   }
 
   function stop() {
-    isRunning = false;
+    $trackingData.isTracking = false;
   }
 
   function reset() {
-    unixtime = Math.floor(Date.now() / 1000);
-    count = hour = minute = second = 0;
+    $trackingData.unixtime = Math.floor(Date.now() / 1000);
+    $trackingData.count = hour = minute = second = 0;
     createStrings();
   }
 
-  export function stop_reset(accessToken: string) {
+  export function stop_reset() {
     stop();
-    apiStopTracking(accessToken, tracking_id);
+    apiStopTracking($loginData.accessToken, $trackingData.tracking_id);
     reset();
   }
 
@@ -47,13 +44,13 @@
   }
 
   function stopWatch() {
-    if (isRunning) {
+    if ($trackingData.isTracking) {
       const currentTime = Math.floor(Date.now() / 1000);
-      count = currentTime - unixtime;
-      hour = Math.floor(count / 3600);
-      count -= hour * 3600;
-      minute = Math.floor(count / 60);
-      second = count - minute * 60;
+      $trackingData.count = currentTime - $trackingData.unixtime;
+      hour = Math.floor($trackingData.count / 3600);
+      $trackingData.count -= hour * 3600;
+      minute = Math.floor($trackingData.count / 60);
+      second = $trackingData.count - minute * 60;
       createStrings();
 
       setTimeout(stopWatch, 1000);
@@ -82,8 +79,7 @@
       if (statusCode === 201) {
         console.log("API call 'StartTracking' successful.");
         const data = await response.json();
-        tracking_id = data.id;
-        return data.id;
+        $trackingData.tracking_id = data.id;
       } else {
         console.log("Error during API call 'StartTracking'.");
       }
@@ -104,7 +100,6 @@
         'Authorization': 'Bearer ' + api_token,
       },
       body: JSON.stringify({
-        //'id': tracking_id,
         'time_end': current_time
       })
     };
