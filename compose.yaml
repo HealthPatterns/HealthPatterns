@@ -33,7 +33,7 @@ services:
       - POSTGRES_USER=name
       - POSTGRES_DB=aid-db
     volumes:
-      - postgresql:/db
+      - postgresql:/var/lib/postgresql/data
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -d aid-db -U name"]
       interval: 5s
@@ -41,4 +41,4 @@ services:
       retries: 10
 
 volumes:
-  postgresql: {}
+  postgresql:
