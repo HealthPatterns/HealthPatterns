@@ -26,6 +26,11 @@ def register_user(db: SessionInstance, user_in: schemas.UserCreate) -> models.Us
             status_code=400,
             detail="User with this username already exists."
         )
+    if crud.users.user_exists_by_email(db, user_in.email):
+        raise HTTPException(
+            status_code=400,
+            detail="This email-address is already registered."
+        )
 
     hashed_password = get_password_hash(user_in.password)
     user_in.password = hashed_password

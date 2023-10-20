@@ -10,15 +10,8 @@ router = APIRouter(
     tags=["Trackings"]
 )
 
-"""
-@router.post("", response_model=TrackingSchema, status_code=status.HTTP_201_CREATED)
-def create_tracking(tracking: TrackingStart):
-    users.create_user(tracking)
-    return
-"""
-
 @router.get("", response_model=list[TrackingComplete])
-def get_all_trackings(db: SessionInstance, current_user: CurrentUserToken):#skip: int = 0, limit: int = 10):
+def get_all_trackings(db: SessionInstance, current_user: CurrentUserToken):
     """
     Get all trackings owned by current user.
     """
@@ -32,7 +25,7 @@ def start_tracking(db: SessionInstance, current_user: CurrentUserToken, input_da
     return trackings.start_tracking(db, input_data.time_start, current_user.id)
 
 @router.get("/active", response_model=list[TrackingActive])
-def get_active_trackings(db: SessionInstance, current_user: CurrentUserToken):#skip: int = 0, limit: int = 10):
+def get_active_trackings(db: SessionInstance, current_user: CurrentUserToken):
     """
     Get all active trackings for current user.
     """
