@@ -1,2 +1,2 @@
-from .example import *
+from .trackings import *
 from .users import *

@@ -5,7 +5,7 @@ from fastapi import Depends, APIRouter, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
 
 
-from aid_vault import crud, models, schemas
+from aid_vault import schemas
 from ...common.security import authenticate_user
 from ...common.oauth2 import (
     create_access_token, 
@@ -18,7 +18,6 @@ router = APIRouter(
     prefix="/auth",
     tags=["Authentication"]
 )
-
 
 @router.post("/login", response_model=schemas.Token)
 async def login_for_access_token(
