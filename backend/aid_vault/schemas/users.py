@@ -15,7 +15,9 @@ class UserOptionals(UserBase):
     # other optional user-details
 
 class UserCreate(UserOptionals): 
-    # this is only used for creation of a new user, and only as payload from the client
+    """
+    Contains password, so this is only used for creation of a new user and should NEVER be used as a response_model!
+    """
     password: str
 
 class UserComplete(UserOptionals):
@@ -32,6 +34,3 @@ class UserForUpdate(BaseModel):
     gender: str | None = None
     email: str | None = None
     is_active: bool | None = None
-
-class UserFakeDB(UserComplete):
-    hashed_password: str

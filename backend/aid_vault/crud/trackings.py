@@ -1,6 +1,4 @@
 from fastapi import HTTPException, status
-from fastapi.encoders import jsonable_encoder
-from sqlalchemy import update
 from sqlalchemy.orm import Session
 
 from ..schemas.trackings import *

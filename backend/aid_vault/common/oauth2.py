@@ -24,12 +24,12 @@ ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
 
-"""
-Creates an access-token. The jwt payload should be fed as data: dict.
-Main purpose is for creating an access-token after the "/auth/login" endpoint
-has been called.
-"""
-def create_access_token(data: dict, expires_delta: timedelta | None = None):
+def create_access_token(data: dict, expires_delta: timedelta | None = None) -> str:
+    """
+    Creates an access-token. The jwt payload should be fed as data: dict.
+    Main purpose is for creating an access-token after the "/auth/login" endpoint
+    has been called.
+    """
     data_to_encode = data.copy()
     if expires_delta:
         expire = datetime.utcnow() + expires_delta
@@ -39,15 +39,15 @@ def create_access_token(data: dict, expires_delta: timedelta | None = None):
     encoded_jwt = jwt.encode(data_to_encode, SECRET_KEY, ALGORITHM)
     return encoded_jwt
 
-"""
-Returns the user attached to the jwt by decoding the token, checking if the sub is valid
-and reading the user identified by the sub from the database.
-Will throw errors if any step fails. 
-"""    
+ 
 async def get_current_user(
         db: SessionInstance, token: Annotated[str, Depends(oauth2_scheme)]
 ) -> models.Users:
-    
+    """
+    Returns the user attached to the jwt by decoding the token, checking if the sub is valid
+    and reading the user identified by the sub from the database.
+    Will throw errors if any step fails. 
+    """   
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Could not validate credentials",
@@ -58,28 +58,28 @@ async def get_current_user(
         payload = jwt.decode(token, SECRET_KEY, ALGORITHM)
         user_id: UUID = payload.get("sub")
         if user_id is None:
-            credentials_exception.detail += " - no subject in token"
+            credentials_exception.detail += ": no subject in token."
             raise credentials_exception
         token_data = schemas.TokenData(user_id=user_id)
     except JWTError as err:
         print(err)
-        credentials_exception.detail += " - token decode error"
+        credentials_exception.detail += ": token decode error."
         raise credentials_exception
     
     user = crud.read_user_by_id(db, user_id=token_data.user_id)
     if user is None:
         credentials_exception.status_code=status.HTTP_404_NOT_FOUND
-        credentials_exception.detail += " - unknown user"
+        credentials_exception.detail += ": unknown user."
         raise credentials_exception
     
     return user
 
-"""
-Checks if the user attached to the jwt is active.
-"""
 async def get_current_active_user(
         current_user: Annotated[models.Users, Depends(get_current_user)]
 ) -> models.Users:
+    """
+    Checks if the user attached to the jwt is active.
+    """
     if not current_user.is_active:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,

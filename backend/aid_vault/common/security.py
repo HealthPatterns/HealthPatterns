@@ -15,6 +15,6 @@ def authenticate_user(db: Session, username: str, password: str):
     user = read_user_by_nickname(db, username)
     if not user:
         return False
-    if not verify_password(password, user.password):
+    if not verify_password(plain_password=password, hashed_password=user.password):
         return False
     return user
