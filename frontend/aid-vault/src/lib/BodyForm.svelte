@@ -162,7 +162,7 @@
     z"/>
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <!-- svelte-ignore a11y-no-static-element-interactions-->
-    <path on:click={() => change_color(8, false)} fill={$trackingData.front_regions[9] ? "#0D698B" : "#C2D3DB"} opacity="1.000000" stroke="none" d="
+    <path on:click={() => change_color(8, false)} fill={$trackingData.front_regions[8] ? "#0D698B" : "#C2D3DB"} opacity="1.000000" stroke="none" d="
       M406.860626,288.203979
       C406.065582,286.232452 404.417572,284.973236 404.807190,282.537842
       C409.971191,283.282043 414.291901,286.305328 419.206940,287.501862
