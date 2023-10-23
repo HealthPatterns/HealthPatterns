@@ -44,16 +44,16 @@ def get_user(current_user: CurrentUserToken) -> models.Users:
     """   
     return current_user
 
-@router.get("/name", response_model=schemas.UserBase | schemas.UserFullName)
+@router.get("/name", response_model=schemas.UserDisplayName)
 def get_user_name(current_user: CurrentUserToken) -> models.Users:
     """
-    Returns currently logged in user's full name, or nickname if the full name is null.
+    Returns currently logged in user's display name. The display name is the full name, or nickname if the full name is null.
     """
     if current_user.full_name is not None:
-        name = schemas.UserFullName(full_name=current_user.full_name)
+        name = schemas.UserDisplayName(display_name=current_user.full_name)
         return name
-
-    return current_user
+    name = schemas.UserDisplayName(display_name=current_user.nickname)
+    return name
 
 @router.put("", response_model=schemas.UserComplete)
 def update_user_data(
