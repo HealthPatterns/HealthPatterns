@@ -1,6 +1,15 @@
+<script>
+    import { trackingData, loginData } from '../store.js';
+    import { apiSetDetails } from './ApiSetDetails.svelte';
+
+    function updateIntensity() {
+        apiSetDetails ($loginData.accessToken, $trackingData.tracking_id, $trackingData.front_regions, $trackingData.back_regions, $trackingData.intensity, $trackingData.diet)
+    }
+
+</script>
 
 <div id="Slider">
-    <input type="range" min="1" max="10" value="0" class="slider" id="myRange">
+    <input type="range" min="1" max="10" bind:value={$trackingData.intensity} on:input={updateIntensity} class="slider" id="myRange">
 </div>
 
 <style>
