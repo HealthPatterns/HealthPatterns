@@ -83,7 +83,7 @@
       if (statusCode === 200) {
         console.log("API call 'GetUsername' successful.");
         const data = await response.json();
-        $loginData.username =  data.full_name;
+        $loginData.username =  data.display_name;
       } else {
         console.log("Error during API call 'GetUsername'.");
       }
