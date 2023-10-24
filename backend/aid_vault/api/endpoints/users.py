@@ -74,7 +74,8 @@ def update_user_data(
 @router.delete("", status_code=status.HTTP_204_NO_CONTENT)
 def delete_user(db: SessionInstance, current_user: CurrentUserToken):
     """
-    Deletes currently logged in user.
+    Deletes currently logged in user and their corresponding trackings, if there are any.
     """
+    crud.trackings.delete_user_trackings(db=db, current_user_id=current_user.id)
     crud.users.delete_user_by_id(db=db, user_id=current_user.id)
     return

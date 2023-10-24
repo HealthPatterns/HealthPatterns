@@ -72,3 +72,10 @@ def put_tracking_detail(db: Session, tracking_id: UUID, tracking_input: Tracking
             db.query(Trackings).filter(Trackings.id == tracking_id).update({key: value})
     db.commit()
     return read_tracking(db, tracking_id)
+
+def delete_user_trackings(db:Session, current_user_id: UUID) -> None:
+    """
+    Deletes trackings that belong to the current user.
+    """
+    db.query(Trackings).filter(Trackings.user_id == current_user_id).delete()
+    db.commit()
