@@ -24,7 +24,7 @@
   export function stop_reset() {
     $trackingData.isTracking = false;
     apiStopTracking($loginData.accessToken, $trackingData.tracking_id);
-    $trackingData = JSON.parse(JSON.stringify($defaultTrackingData));
+    $trackingData = structuredClone($defaultTrackingData);
     $trackingData.unixtime = Math.floor(Date.now() / 1000);
     $trackingData.count = hour = minute = second = 0;
     createStrings();
