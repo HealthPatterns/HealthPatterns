@@ -1,5 +1,6 @@
 from uuid import UUID
 
+from fastapi import HTTPException
 from fastapi.encoders import jsonable_encoder
 from sqlalchemy.orm import Session
 
@@ -22,6 +23,16 @@ def user_exists_by_email(db: Session, email: str) -> bool:
     return True if result else False
 
 def create_user(db: Session, user: UserCreate) -> Users:
+    if user_exists_by_nickname(db, user.nickname):
+        raise HTTPException(
+            status_code=400,
+            detail="User with this username already exists."
+        )
+    if user_exists_by_email(db, user.email):
+        raise HTTPException(
+            status_code=400,
+            detail="This email-address is already registered."
+        )
     new_user = Users(**jsonable_encoder(user))
     db.add(new_user)
     db.commit()
@@ -38,7 +49,18 @@ def read_user_by_nickname(db: Session, nickname: str) -> Users:
     return db.query(Users).filter(Users.nickname == nickname).first()
 
 def update_user(db: Session, update_data: UserForUpdate, user_id: UUID) -> Users:
-    print(update_data)
+    if update_data.nickname is not None:
+        if user_exists_by_nickname(db, update_data.nickname):
+            raise HTTPException(
+                status_code=400,
+                detail="User with this username already exists."
+            )
+    if update_data.email is not None:
+        if user_exists_by_email(db, update_data.email):
+            raise HTTPException(
+                status_code=400,
+                detail="This email-address is already registered."
+            )   
     for key, value in update_data:
         db.query(Users).filter(Users.id == user_id).update({key: value})
         db.commit()
