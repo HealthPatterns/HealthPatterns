@@ -4,6 +4,9 @@ from sqlalchemy.ext.declarative import as_declarative, declared_attr
 
 @as_declarative()
 class Base:
+    """
+    Base class for SQLAlchemy models. Autogenerates table-name as model-name in lowercase.
+    """
     id: Any
     __name__: str
     # autogenerate tablename

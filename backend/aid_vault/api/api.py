@@ -1,11 +1,12 @@
 from fastapi import APIRouter
 
-from .endpoints import example, users
+from .endpoints import users, auth, trackings
 
-# init api
 api = APIRouter()
 
-# include user endpoints
-api.include_router(example.router)
+"""
+Routers for different functionalities/endpoint categories go below.
+"""
+api.include_router(auth.router)
 api.include_router(users.router)
-### include more endpoints here
+api.include_router(trackings.router)
