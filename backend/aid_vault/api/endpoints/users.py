@@ -1,4 +1,4 @@
-from fastapi import APIRouter, status
+from fastapi import APIRouter, status, HTTPException
 
 from aid_vault import crud, schemas, models
 from ...db.database import SessionInstance
@@ -56,8 +56,20 @@ def update_user_data(
     if input_data.nickname is None:
         input_data.nickname = current_user.nickname
 
+    if input_data.nickname != current_user.nickname:
+        if crud.user_exists_by_nickname(db, input_data.nickname):
+            raise HTTPException(
+                status_code=400,
+                detail="User with this username already exists."
+            )
+    if input_data.email != current_user.email:
+        if crud.user_exists_by_email(db, input_data.email):
+            raise HTTPException(
+                status_code=400,
+                detail="This email-address is already registered."
+            )
     updated_user = crud.users.update_user(
-        db,
+        db=db,
         update_data=input_data,
         user_id=current_user.id
     )

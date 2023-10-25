@@ -49,18 +49,6 @@ def read_user_by_nickname(db: Session, nickname: str) -> Users:
     return db.query(Users).filter(Users.nickname == nickname).first()
 
 def update_user(db: Session, update_data: UserForUpdate, user_id: UUID) -> Users:
-    if update_data.nickname is not None:
-        if user_exists_by_nickname(db, update_data.nickname):
-            raise HTTPException(
-                status_code=400,
-                detail="User with this username already exists."
-            )
-    if update_data.email is not None:
-        if user_exists_by_email(db, update_data.email):
-            raise HTTPException(
-                status_code=400,
-                detail="This email-address is already registered."
-            )   
     for key, value in update_data:
         db.query(Users).filter(Users.id == user_id).update({key: value})
         db.commit()
