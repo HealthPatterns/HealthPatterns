@@ -17,5 +17,7 @@ def create_test_user(db: Session) -> str:
         full_name="Mister Admin",
         gender="male",
         password=get_password_hash("admin"))
+    if crud.user_exists_by_email(db, admin.email):
+        admin.email = None
     crud.create_user(db, admin)
     return "Test-user creation: User 'admin' with password 'admin' created."
