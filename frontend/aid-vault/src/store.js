@@ -1,4 +1,4 @@
-import { writable } from 'svelte/store';
+import { writable, readable } from 'svelte/store';
 
 export const loginData = writable({
     username: "",
@@ -26,7 +26,7 @@ export const trackingData = writable({
     },
   });
 
-export const defaultTrackingData = writable({
+export const defaultTrackingData = readable({
     unixtime: 0,
     isTracking: false,
     tracking_id: "",

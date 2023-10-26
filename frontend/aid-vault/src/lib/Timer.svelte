@@ -1,6 +1,7 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import { loginData, trackingData, defaultTrackingData } from '../store.js';
+  import { writable } from 'svelte/store';
   
   let hour: number = 0, minute: number = 0, second: number = 0;
   let hrString: string, minString: string, secString: string;
@@ -23,7 +24,7 @@
   export function stop_reset() {
     $trackingData.isTracking = false;
     apiStopTracking($loginData.accessToken, $trackingData.tracking_id);
-    $trackingData = $defaultTrackingData
+    $trackingData = structuredClone($defaultTrackingData);
     $trackingData.unixtime = Math.floor(Date.now() / 1000);
     $trackingData.count = hour = minute = second = 0;
     createStrings();
