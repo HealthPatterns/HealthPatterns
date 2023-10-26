@@ -1,12 +1,22 @@
 # HealthPatterns
 
-> [!NOTE]  
+> [!IMPORTANT]  
 > Not all features described are implemented. Please have a look at the roadmap section.
 
-Health Patterns is designed to allow users to easily track pain. Details can be provided for further analysis through Health Patterns and export as a PDF for doctors, for example. The user system is completely anonymous if desired. Encryption will also be possible at a later date.
+Health Patterns is designed to allow users to easily track pain. Details can be provided for further analysis through Health Patterns and export as a PDF for doctors, for example. The user system is completely anonymous if desired. It should also be possible to encrypt one's own data.
 
 
-##
+## Roadmap
+
+| **Feature**   | **Frontend**                    | **Backend**                      |
+|---------------|---------------------------------|----------------------------------|
+| Pain tracking | :white_check_mark: implemented  | :white_check_mark: implemented   |
+| Analysis      | :x: not implemented             | :x: not  implemented             |
+| PDF export    | :x: not  implemented            | :x: not  implemented             |
+| Encryption    | :x: not  implemented            | :x: not  implemented             |
+| User System   | :hammer: Partially implemented  | :white_check_mark: implemented   |
+
+
 
 ## Installation
 
