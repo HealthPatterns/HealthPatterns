@@ -50,6 +50,10 @@ If you would like to view our backend documentation, please use this link:
 http://localhost:3000/docs
 ```
 
+Stop Health Patterns with:
 
+```bash
+docker compose down
+```
 
 ## License
