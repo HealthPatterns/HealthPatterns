@@ -1,7 +1,7 @@
 # HealthPatterns
 
-[!NOTE]
-Test
+> [!NOTE]  
+> Not all features described are implemented. Please have a look at the roadmap section.
 
 Health Patterns is designed to allow users to easily track pain. Details can be provided for further analysis through Health Patterns and export as a PDF for doctors, for example. The user system is completely anonymous if desired. Encryption will also be possible at a later date.
 
