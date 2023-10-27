@@ -1,4 +1,4 @@
-# HealthPatterns
+# Health Patterns
 
 > [!IMPORTANT]  
 > Not all features described are implemented. Please have a look at the roadmap section.
