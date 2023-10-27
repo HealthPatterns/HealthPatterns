@@ -44,7 +44,7 @@ Once all the Docker containers are running, open your browser and check out your
 http://localhost
 ```
 
-If you would like to view our backend documentation, please use this link:
+If you would like to view our api-documentation or test endpoints that have no frontend yet, please use this link:
 
 ```bash
 http://localhost:3000/docs
