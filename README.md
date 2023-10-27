@@ -3,7 +3,7 @@
 > [!IMPORTANT]  
 > Not all features described are implemented. Please have a look at the roadmap section.
 
-Health Patterns is designed to allow users to easily track pain. Details can be provided for further analysis through Health Patterns and export as a PDF for doctors, for example. The user system is completely anonymous if desired. It should also be possible to encrypt one's own data.
+Health Patterns is designed to allow users to easily track pain events. Details can be provided for further analysis and to discover the user's own patterns. Data can be exported as a PDF for offline storage or to show to healthcare professionals. The user system is completely anonymous if desired and it's possible to encrypt one's data.
 
 
 ## Roadmap
