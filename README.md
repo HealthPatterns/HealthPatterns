@@ -10,11 +10,11 @@ Health Patterns is designed to allow users to easily track pain. Details can be 
 
 | **Feature**   | **Frontend**                    | **Backend**                      |
 |---------------|---------------------------------|----------------------------------|
-| Pain tracking | :white_check_mark: implemented  | :white_check_mark: implemented   |
-| Analysis      | :x: not implemented             | :x: not  implemented             |
-| PDF export    | :x: not  implemented            | :x: not  implemented             |
-| Encryption    | :x: not  implemented            | :x: not  implemented             |
-| User System   | :hammer: Partially implemented  | :white_check_mark: implemented   |
+| Pain tracking | :white_check_mark: Implemented  | :white_check_mark: Implemented   |
+| Analysis      | :x: Not implemented             | :x: Not  implemented             |
+| PDF export    | :x: Not  implemented            | :x: Not  implemented             |
+| Encryption    | :x: Not  implemented            | :x: Not  implemented             |
+| User System   | :hammer: Partially implemented  | :white_check_mark: Implemented   |
 
 
 
