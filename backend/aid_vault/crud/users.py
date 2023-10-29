@@ -18,9 +18,9 @@ def user_exists_by_nickname(db: Session, nickname: str) -> bool:
     return True if result else False
 
 def user_exists_by_email(db: Session, email: str) -> bool:
-    result = db.query(Users).filter_by(email=email).first() is not None
+    result = db.query(Users.email).filter_by(email=email).first() is not None
 
-    return True if result else False
+    return result if email is not None else False
 
 def create_user(db: Session, user: UserCreate) -> Users:
     if user_exists_by_nickname(db, user.nickname):
