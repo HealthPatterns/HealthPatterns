@@ -95,7 +95,7 @@ Since all dependencies are installed in the containers there will be error-messa
 
 1. Backend requirements:
     - [Python 3.11.5](https://www.python.org/downloads/release/python-3115/)
-    - dependencies:
+    - dependencies (it is recommended to install those in a [virtual environment](https://docs.python.org/3/library/venv.html)):
     ```bash
     pip install -r backend/requirements_local.txt
     ```
