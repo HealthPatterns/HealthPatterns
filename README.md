@@ -22,13 +22,26 @@ Health Patterns is designed to allow users to easily track pain events. Details 
 
 Make sure you have [docker](https://docs.docker.com/engine/install/) and [docker compose](https://docs.docker.com/compose/install/) installed on your system.
 
-1. Clone the repostory
+### Via GitHub
+
+1. Clone the repository
     ```bash
-    git clone https://github.com/wmneco/aid-vault.git
+    git clone https://github.com/wmneco/HealthPatterns.git
     ```
 2. Go into the folder
     ```bash
-    cd aid-vault
+    cd HealthPatterns
+    ```
+
+### With a project-ZIP
+
+1. Unzip the project-ZIP with a tool like 7zip
+
+2. Open the unzipped folder in the terminal
+
+3. Make sure you are in the correct directory
+    ```bash
+    pwd #should return 'HealthPatterns'
     ```
 
 ## Usage
@@ -56,4 +69,44 @@ Stop Health Patterns with:
 docker compose down
 ```
 
-## License
+The database is persistent between container up/down. To reset the database do the following:
+
+1. Stop the app:
+    ```bash
+    docker compose down
+    ```
+
+2. Remove the database container:
+    ```bash
+    docker rm aid-db
+    ```
+
+3. Remove the database volume:
+    ```bash
+    docker volume rm aid-vault_postgresql
+    ```
+
+4. Restart the app:
+    ```bash
+    docker compose up
+    ```
+
+### Code suggestions
+
+Since all dependencies are installed in the containers there will be error-messages and no code suggestions in the local IDE. To remove the errors and get suggestions install the requirements on your local machine.
+
+- Backend requirements:
+    - [Python 3.11.5](https://www.python.org/downloads/release/python-3115/)
+    - dependencies (it is recommended to install those in a [virtual environment](https://docs.python.org/3/library/venv.html)):
+        ```bash
+        pip install -r backend/requirements_local.txt
+        ```
+
+- Frontend requirements:
+    + Please install the [Svelte for VS Code](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode) extension.
+    + *Optional*: Install [Node](https://nodejs.org/en)
+    + dependencies installation:
+      ```bash
+      cd frontend/aid-vault
+      npm install
+      ```
