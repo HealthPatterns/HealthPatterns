@@ -103,9 +103,9 @@ Since all dependencies are installed in the containers there will be error-messa
         ```
 
 - Frontend requirements:
-    + Please install for vs code the [Svelte for VS Code](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode) extension.
-    + Optional: Install [Node](https://nodejs.org/en)
-    + dependencies installtion:
+    + Please install the [Svelte for VS Code](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode) extension.
+    + *Optional*: Install [Node](https://nodejs.org/en)
+    + dependencies installation:
       ```bash
       cd frontend/aid-vault
       npm install
