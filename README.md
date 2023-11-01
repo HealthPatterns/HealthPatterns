@@ -91,14 +91,22 @@ The database is persistent between container up/down. To reset the database do t
     docker compose up
     ```
 
+### Code suggestions
+
 Since all dependencies are installed in the containers there will be error-messages and no code suggestions in the local IDE. To remove the errors and get suggestions install the requirements on your local machine.
 
-1. Backend requirements:
+- Backend requirements:
     - [Python 3.11.5](https://www.python.org/downloads/release/python-3115/)
     - dependencies (it is recommended to install those in a [virtual environment](https://docs.python.org/3/library/venv.html)):
-    ```bash
-    pip install -r backend/requirements_local.txt
-    ```
+        ```bash
+        pip install -r backend/requirements_local.txt
+        ```
 
-2. Frontend requirements:
-    - Nico bitte ergänzen
+- Frontend requirements:
+    + Please install for vs code the [Svelte for VS Code](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode) extension.
+    + Optional: Install [Node](https://nodejs.org/en)
+    + dependencies installtion:
+      ```bash
+      cd frontend/aid-vault
+      npm install
+      ```
