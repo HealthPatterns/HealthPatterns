@@ -6,8 +6,9 @@
   import Loader from "./lib/Loader.svelte";
   import "./font.css"
   import { loginData, trackingData } from './store.js';
+  import LoginScreen from "./lib/LoginScreen.svelte";
 
-  let enableAddDetails : boolean = false, enableHomeScreen : boolean = false, enableNavbar : boolean = false;
+  let enableAddDetails : boolean = false, enableHomeScreen : boolean = false, enableLoginScreen : boolean = false, enableNavbar : boolean = false;
   
   let enableMessage :boolean = false, enableError : boolean, errorMessage : string;
 
@@ -18,7 +19,7 @@
 
   async function fetchData() {
     try {
-      await apiLogin("admin", "admin"); //Testdata
+      //await apiLogin("admin", "admin"); //Testdata
       await apiGetUsername($loginData.accessToken);
       await apiGetActiveTracking($loginData.accessToken);
       if ($trackingData.isTracking){
@@ -30,41 +31,6 @@
   }
 
   //API
-  async function apiLogin(username : string, password : string) {
-    const url = "http://localhost:3000/auth/login";
-
-    const formData = new URLSearchParams();
-    formData.append('grant_type', '');
-    formData.append('username', username);
-    formData.append('password', password);
-    formData.append('scope', '');
-    formData.append('client_id', '');
-    formData.append('client_secret', '');
-
-    const options = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'accept': 'application/json'
-      },
-      body: formData
-    };
-
-    try {
-      const response = await fetch(url, options);
-      const statusCode = response.status;
-      if (statusCode === 200) {
-        console.log("API call 'Login' successful.");
-        const data = await response.json();
-        $loginData.accessToken = data.access_token;
-      } else {
-        console.log("Error during API call 'Login'.");
-      }
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  }
-
   async function apiGetUsername(api_token : string) {
     const url = "http://localhost:3000/user/name";
 
@@ -83,7 +49,7 @@
       if (statusCode === 200) {
         console.log("API call 'GetUsername' successful.");
         const data = await response.json();
-        $loginData.username =  data.display_name;
+        $loginData.username =  data.full_name;
       } else {
         console.log("Error during API call 'GetUsername'.");
       }
@@ -156,14 +122,17 @@
     }
 
   onMount(() => {
-      fetchData().then(() => {
-        enableHomeScreen = true;
-      });
+    enableLoginScreen = true;
 	});
 
 </script>
 
 <main style="background-color: { enableAddDetails ? "#F2F1E8" : "#fff" }">
+  <LoginScreen 
+    bind:enabled={enableLoginScreen}
+    bind:homeEnabled={enableHomeScreen}>
+  </LoginScreen>
+
   <Navbar bind:enable={enableNavbar}></Navbar>
   
   <HomeScreen 
@@ -176,7 +145,7 @@
   </HomeScreen>
 
   <AddDetails on:toggle={toggleDetails} enabled={enableAddDetails}></AddDetails>
-  {#if !enableAddDetails && !enableHomeScreen }
+  {#if !enableAddDetails && !enableHomeScreen && !enableLoginScreen}
     <Loader></Loader>
   {/if}
 </main>
