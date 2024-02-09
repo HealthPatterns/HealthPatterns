@@ -1,5 +1,5 @@
 <script>
-    import { trackingData, loginData } from '../store.js';
+    import { trackingData, loginData } from '../../../store.js';
     import { apiSetDetails } from './ApiSetDetails.svelte';
 
     function updateIntensity() {

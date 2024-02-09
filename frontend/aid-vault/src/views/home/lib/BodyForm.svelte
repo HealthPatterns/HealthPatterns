@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { trackingData, loginData } from '../store.js';
+  import { trackingData, loginData } from '../../../store.js';
   import { apiSetDetails } from './ApiSetDetails.svelte';
 
   function change_color(index:number, back:boolean)  {

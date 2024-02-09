@@ -1,12 +1,11 @@
 <script lang="ts">
-    import "../app.css"
+    import "../../../app.css"
     export let enable : boolean;
-    export let message : string;
 </script>
 
 {#if enable}
     <div class="BackgroundFilter">
-        <div id="ErrorCard">
+        <div id="TrackingCard">
             <!-- svelte-ignore a11y-click-events-have-key-events -->
             <!-- svelte-ignore a11y-no-static-element-interactions-->
             <div style="width: 100%; display:flex; justify-content:flex-end;"> 
@@ -20,15 +19,15 @@
                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                 <path d="M17 3.34a10 10 0 1 1 -14.995 8.984l-.005 -.324l.005 -.324a10 10 0 0 1 14.995 -8.336zm-1.293 5.953a1 1 0 0 0 -1.32 -.083l-.094 .083l-3.293 3.292l-1.293 -1.292l-.094 -.083a1 1 0 0 0 -1.403 1.403l.083 .094l2 2l.094 .083a1 1 0 0 0 1.226 0l.094 -.083l4 -4l.083 -.094a1 1 0 0 0 -.083 -1.32z" stroke-width="0" fill="#0d698b"></path>
             </svg>
-            <p class="card-title">Ohh da ist was schief gegangen...</p>
-            <p class="card-message">{message}</p>
+            <p class="card-title">Tracking gespeichert</p>
+            <button class="card-button"> Details hinzufügen </button>
         </div>
     </div>
 {/if}
 
 
 <style>
-    #ErrorCard {
+    #TrackingCard {
         padding: 2rem;
         background-color: white;
         width: 100%;
@@ -48,6 +47,14 @@
         font-weight: 500;
         margin-bottom: 1.8rem;
         margin-top: 0.5rem;
+    }
+
+    .card-button {
+        background-color: #e9eff3;
+        border-radius: 0.6rem;
+        padding: 0.6rem 1.7rem 0.6rem 1.7rem;
+        font-weight: 500;
+        font-size: 0.9rem;
     }
 
     
