@@ -5,7 +5,6 @@
     let username = "";
     let password = "";
     let errorMessage = "";
-    let enableRegister = false;
 
     async function apiLogin(username : string, password : string) {
         const url = "http://localhost:3000/auth/login";
@@ -32,42 +31,8 @@
             enableTrackingScreen = true;
             enableLoginScreen = false;
             fetchData();
-            console.log("API call 'Login' successful.");
         } else {
             errorMessage = "Login fehlgeschlagen. Bitte überprüfen Sie Ihre Eingaben.";
-        }
-        } catch (error) {
-        console.error("Error:", error);
-        }
-    }
-
-    async function apiRegister(username : string, password : string) {
-        const url = "http://localhost:3000/user/register";
-
-        const data = {
-          nickname: username,
-          password: password
-        };
-
-        const options = {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'accept': 'application/json'
-          },
-          body: JSON.stringify(data)
-        };
-
-        try {
-        const response = await fetch(url, options);
-        const statusCode = response.status;
-        if (statusCode === 201) {
-            const data = await response.json();
-            console.log(data);
-            //TODO: Login after successful registration
-            console.log("API call 'Register' successful.");
-        } else {
-            errorMessage = "Registrieren fehlgeschlagen. Bitte überprüfen Sie Ihre Eingaben.";
         }
         } catch (error) {
         console.error("Error:", error);
@@ -181,43 +146,27 @@
         errorMessage = "";
         apiLogin(username, password);
     };
-    const handleRegister = () => {
-        errorMessage = "";
-        apiRegister(username, password);
+    const register = () => {
+      //TODO: folgendes ist nur platzhalter
+        enableLoginScreen = false;
+        enableTrackingScreen = true;
     };
 </script>
 
-{#if !enableRegister}
-  <div id=LoginScreen>
-    <h1>Login</h1>
-    <div id=LoginFields>
-      <form on:submit|preventDefault={handleLogin}>
-        <input type="text" id="username" bind:value={username} placeholder="Nutzername"/>
-        <input type="password" id="password" bind:value={password} placeholder="Passwort"/>
-        <button type="submit">Login</button>
-        {#if errorMessage}
-        <p id="error">{errorMessage}</p>
-        {/if}
-      </form>
-      <p id="createAccount">Noch keinen Account? <a href="#" on:click|preventDefault={() => enableRegister = true}>Registrieren</a></p>
-    </div>
-  </div>
-{:else}
-  <div id=LoginScreen>
+<div id=LoginScreen>
     <h1>Registrieren</h1>
     <div id=LoginFields>
-      <form on:submit|preventDefault={handleRegister}>
-        <input type="text" id="username" bind:value={username} placeholder="Nutzername"/>
-        <input type="password" id="password" bind:value={password} placeholder="Passwort"/>
-        <button type="submit">Registrieren</button>
-        {#if errorMessage}
-        <p id="error">{errorMessage}</p>
-        {/if}
-      </form>
-      <p id="createAccount">Bereits registriert? <a href="#" on:click|preventDefault={() => enableRegister = false}>Login</a></p>
+        <form on:submit|preventDefault={handleLogin}>
+            <input type="text" id="username" bind:value={username} placeholder="Nutzername"/>
+            <input type="password" id="password" bind:value={password} placeholder="Passwort"/>
+            <button type="submit">Login</button>
+            {#if errorMessage}
+            <p id="error">{errorMessage}</p>
+            {/if}
+        </form>
+        <p id="createAccount">Noch keinen Account? <a href="#" on:click|preventDefault={register}>Registrieren</a></p>
     </div>
-  </div>
-{/if}
+</div>
 
 <style>
 #LoginScreen {
