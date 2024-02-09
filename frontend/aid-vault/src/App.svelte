@@ -4,9 +4,11 @@
   import TrackingScreen from "./views/home/TrackingScreen.svelte";
   import LoginScreen from "./views/login/LoginScreen.svelte";
 
-
-  let enableTrackingScreen : boolean = false, enableHomeScreen : boolean = false, enableLoginScreen : boolean = false, enableNavbar : boolean = false;
-  let enableMessage : boolean = false, enableError : boolean, errorMessage : string;
+  let enableTrackingScreen : boolean = false;
+  let enableLoginScreen : boolean = false;
+  let enableMessage : boolean = false;
+  let enableError : boolean;
+  let errorMessage : string;
 
   onMount(() => {
     enableLoginScreen = true;
@@ -19,10 +21,9 @@
     bind:enableTrackingScreen={enableTrackingScreen}
     bind:enableLoginScreen={enableLoginScreen}>
   </LoginScreen>
-{:else if enableTrackingScreen && !enableLoginScreen}
+{:else if !enableLoginScreen}
   <TrackingScreen
-    bind:enableHomeScreen={enableTrackingScreen}
-    bind:enableNavbar={enableNavbar} 
+    bind:enableTrackingScreen={enableTrackingScreen}
     bind:enableMessage={enableMessage}
     bind:enableError={enableError} 
     errorMessage={errorMessage}>

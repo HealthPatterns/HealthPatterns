@@ -4,12 +4,17 @@
   import Navbar from "./lib/Navbar.svelte";
   import Loader from "./lib/Loader.svelte";
 
-  export let enableHomeScreen, enableNavbar, enableMessage, enableError, errorMessage;
+  export let enableTrackingScreen;
+  export let enableMessage;
+  export let enableError;
+  export let errorMessage;
   let enableAddDetails : boolean = false;
+  let enableNavbar : boolean = false;
+
 
   function toggleDetails () {
     enableAddDetails = !enableAddDetails;
-    enableHomeScreen = !enableHomeScreen;
+    enableTrackingScreen = !enableTrackingScreen;
   }
 </script>
 
@@ -20,13 +25,13 @@
         bind:enableMessage={enableMessage} 
         on:toggle={toggleDetails} 
         bind:navbarEnabled={enableNavbar} 
-        enabled={enableHomeScreen} 
+        enabled={enableTrackingScreen} 
         bind:enableError={enableError} 
         errorMessage={errorMessage}>
     </HomeScreen>
 
     <AddDetails on:toggle={toggleDetails} enabled={enableAddDetails}></AddDetails>
-    {#if !enableAddDetails && !enableHomeScreen }
+    {#if !enableAddDetails && !enableTrackingScreen }
       <Loader></Loader>
     {/if}
 </main>

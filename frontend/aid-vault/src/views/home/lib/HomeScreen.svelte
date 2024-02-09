@@ -11,7 +11,6 @@
     export let navbarEnabled : boolean;
     export let enableMessage : boolean;
     export let enableError : boolean;
-
     export let errorMessage : string;
     
     let timerComponet : Timer;
