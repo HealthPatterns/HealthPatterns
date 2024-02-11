@@ -11,11 +11,10 @@ router = APIRouter(
     tags=["Tooling"]
 )
 
-@router.get("/tracking-generator/", response_model=GeneratedTrackings)
+@router.get("/tracking-generator", response_model=GeneratedTrackings)
 def generate_trackings(amount: int = 1, seed: int | None = None):
     """
-    Generate trackings and return them as JSON. 
-    For random seed input 0.
+    Generate trackings and return them as JSON. Takes amount of trackings to generate and seed as query-parameters. For random seed leave empty.
     """
     if seed is None:
         seed = random.getrandbits(16)
