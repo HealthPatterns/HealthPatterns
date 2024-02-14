@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import { loginData, trackingData, defaultTrackingData } from '../../../store.js';
+  import { loginData, trackingData, defaultTrackingData } from '../store.js';
   import { writable } from 'svelte/store';
   
   let hour: number = 0, minute: number = 0, second: number = 0;

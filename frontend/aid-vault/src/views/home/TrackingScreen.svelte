@@ -1,8 +1,8 @@
 <script lang="ts">
-  import AddDetails from "./lib/AddDetails.svelte";
-  import HomeScreen from "./lib/HomeScreen.svelte";
-  import Navbar from "./lib/Navbar.svelte";
-  import Loader from "./lib/Loader.svelte";
+  import AddDetails from "../../lib/AddDetails.svelte";
+  import HomeScreen from "../../lib/HomeScreen.svelte";
+  import Navbar from "../../lib/Navbar.svelte";
+  import Loader from "../../lib/Loader.svelte";
 
   export let enableHomeScreen, enableNavbar, enableMessage, enableError, errorMessage;
   let enableAddDetails : boolean = false;
