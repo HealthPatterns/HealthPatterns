@@ -1,9 +1,5 @@
-<script lang="ts">
-    import { loginData, trackingData } from '../store.js';
-    import { get } from 'svelte/store';
-</script>
 
-<script lang="ts" context="module">
+import { loginData, trackingData } from '../store.js';
 
   export async function apiLogin(username : string, password : string) {
     const url = "http://localhost:3000/auth/login";
@@ -31,7 +27,10 @@
       if (statusCode === 200) {
         console.log("API call 'Login' successful.");
         const data = await response.json();
-        get(loginData).accessToken = data.access_token;
+        loginData.update((ld) => {
+          ld.accessToken = data.access_token;
+          return ld;
+        });
       } else {
         console.log("Error during API call 'Login'.");
       }
@@ -58,7 +57,10 @@
       if (statusCode === 200) {
         console.log("API call 'GetUsername' successful.");
         const data = await response.json();
-        get(loginData).username =  data.display_name;
+        loginData.update((ld) => {
+          ld.username = data.display_name;
+          return ld;
+        });
       } else {
         console.log("Error during API call 'GetUsername'.");
       }
@@ -86,9 +88,12 @@
           console.log("API call 'GetActiveTracking' successful.");
           const data = await response.json();
           if (data && data.length > 0) {
-            get(trackingData).tracking_id =  data[0].id;
-            get(trackingData).unixtime = data[0].time_start;
-            get(trackingData).isTracking = true;
+            trackingData.update((td) => {
+              td.tracking_id = data[0].id;
+              td.unixtime = data[0].time_start;
+              td.isTracking = true;
+              return td;
+            });
           }
       } else {
         console.log("Error during API call 'GetActiveTracking'.");
@@ -117,10 +122,13 @@
           console.log("API call 'GetDetails' successful.");
           const data = await response.json();
           if (data && data.front_regions !== null){
-            get(trackingData).front_regions = data.front_regions;
-            get(trackingData).back_regions = data.back_regions;
-            get(trackingData).intensity = data.intensity;
-            get(trackingData).diet = data.diet;
+            trackingData.update((td) => {
+              td.front_regions = data.front_regions;
+              td.back_regions = data.back_regions;
+              td.intensity = data.intensity;
+              td.diet = data.diet;
+              return td;
+            });
           }
       } else {
           console.log("Error during API call 'GetDetails'.");
@@ -130,7 +138,13 @@
       }
     }
 
-    export async function apiSetDetails (api_token : string, tracking_id : string, front_regions, back_regions, intensity, diet) {
+    export async function apiSetDetails (
+      api_token : string,
+      tracking_id : string,
+      front_regions: boolean[],
+      back_regions: boolean[],
+      intensity: number,
+      diet: JSON) {
     const url = `http://localhost:3000/trackings/${tracking_id}/details`;
 
     const options = {
@@ -160,4 +174,3 @@
       console.error("Error:", error);
     }
   }
-</script>

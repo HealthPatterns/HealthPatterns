@@ -4,7 +4,7 @@
   import Navbar from "./lib/Navbar.svelte";
   import { onMount } from "svelte";
   import Loader from "./lib/Loader.svelte";
-  import { apiLogin, apiGetUsername, apiGetActiveTracking, apiGetDetails }  from "./lib/ApiFunctions.svelte";
+  import { apiLogin, apiGetUsername, apiGetActiveTracking, apiGetDetails }  from "./lib/ApiFunctions";
   import "./font.css"
   import { loginData, trackingData } from './store.js';
 

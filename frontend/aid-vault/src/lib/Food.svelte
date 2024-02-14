@@ -1,6 +1,6 @@
 <script lang="ts">
     import { trackingData, loginData } from '../store.js';
-    import { apiSetDetails } from './ApiFunctions.svelte';
+    import { apiSetDetails } from './ApiFunctions.js';
 
     function updateFood(foodType: string) {
         $trackingData.diet[foodType] = !$trackingData.diet[foodType];
