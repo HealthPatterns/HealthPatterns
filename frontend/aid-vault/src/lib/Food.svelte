@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { trackingData, loginData } from '../../../store.js';
+    import { trackingData, loginData } from '../store.js';
     import { apiSetDetails } from './ApiSetDetails.svelte';
 
     function updateFood(foodType: string) {

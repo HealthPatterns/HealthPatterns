@@ -1,6 +1,6 @@
 <script lang="ts">
     import { createEventDispatcher } from 'svelte'
-    import { trackingData, loginData } from '../../../store.js';
+    import { trackingData, loginData } from '../store.js';
     const dispatch = createEventDispatcher();
 
     import Timer from "./Timer.svelte"
