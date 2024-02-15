@@ -5,7 +5,6 @@
     import BodyForm from "./BodyForm.svelte";
     import Food from "./Food.svelte";
     import Slider from "./Slider.svelte";
-    import { trackingData, loginData } from '../store.js';
 
     export let enabled : boolean;
 
