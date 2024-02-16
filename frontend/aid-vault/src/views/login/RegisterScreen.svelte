@@ -1,5 +1,5 @@
 <script lang="ts">
-    import {apiLogin, apiRegister, fetchData, apiGetUsername, apiGetActiveTracking, apiGetDetails} from '../../lib/ApiFunctions.js'
+    import {apiLogin } from '../../lib/ApiFunctions.js'
     export let enableTrackingScreen : boolean, enableLoginScreen : boolean;
 
     let username = "";
