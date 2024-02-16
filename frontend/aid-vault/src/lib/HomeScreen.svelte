@@ -1,7 +1,6 @@
 <script lang="ts">
     import { createEventDispatcher } from 'svelte'
-    import { trackingData } from '../store.js';
-    import { loginData } from '../store.js';
+    import { trackingData, loginData } from '../store.js';
     const dispatch = createEventDispatcher();
 
     import Timer from "./Timer.svelte"
@@ -12,7 +11,6 @@
     export let navbarEnabled : boolean;
     export let enableMessage : boolean;
     export let enableError : boolean;
-
     export let errorMessage : string;
     
     let timerComponet : Timer;

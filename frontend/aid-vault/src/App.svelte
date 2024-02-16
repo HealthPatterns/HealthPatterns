@@ -1,71 +1,32 @@
 <script lang="ts">
-  import AddDetails from "./lib/AddDetails.svelte";
-  import HomeScreen from "./lib/HomeScreen.svelte";
-  import Navbar from "./lib/Navbar.svelte";
   import { onMount } from "svelte";
-  import Loader from "./lib/Loader.svelte";
-  import { apiLogin, apiGetUsername, apiGetActiveTracking, apiGetDetails }  from "./lib/ApiFunctions";
   import "./font.css"
-  import { loginData, trackingData } from './store.js';
+  import TrackingScreen from "./views/home/TrackingScreen.svelte";
+  import LoginScreen from "./views/login/LoginScreen.svelte";
 
-  let enableAddDetails : boolean = false, enableHomeScreen : boolean = false, enableNavbar : boolean = false;
-  
-  let enableMessage :boolean = false, enableError : boolean, errorMessage : string;
-
-  function toggleDetails () {
-    enableAddDetails = !enableAddDetails;
-    enableHomeScreen = !enableHomeScreen;
-  }
-
-  async function fetchData() {
-    try {
-      await apiLogin("admin", "admin"); //Testdata
-      await apiGetUsername($loginData.accessToken);
-      await apiGetActiveTracking($loginData.accessToken);
-      if ($trackingData.isTracking){
-        apiGetDetails ($loginData.accessToken, $trackingData.tracking_id)
-      }
-    } catch (error) {
-      console.error("Error fetchData:", error);
-    }
-  }
+  console.log('moin');
+  let enableTrackingScreen : boolean = false;
+  let enableLoginScreen : boolean = false;
+  let enableMessage : boolean = false;
+  let enableError : boolean;
+  let errorMessage : string;
 
   onMount(() => {
-      fetchData().then(() => {
-        enableHomeScreen = true;
-      });
+    enableLoginScreen = true;
+    enableTrackingScreen = false;
 	});
-
 </script>
 
-<main style="background-color: { enableAddDetails ? "#F2F1E8" : "#fff" }">
-  <Navbar bind:enable={enableNavbar}></Navbar>
-  
-  <HomeScreen 
-    bind:enableMessage={enableMessage} 
-    on:toggle={toggleDetails} 
-    bind:navbarEnabled={enableNavbar} 
-    enabled={enableHomeScreen} 
+{#if !enableTrackingScreen && enableLoginScreen}
+  <LoginScreen 
+    bind:enableTrackingScreen={enableTrackingScreen}
+    bind:enableLoginScreen={enableLoginScreen}>
+  </LoginScreen>
+{:else if !enableLoginScreen}
+  <TrackingScreen
+    bind:enableTrackingScreen={enableTrackingScreen}
+    bind:enableMessage={enableMessage}
     bind:enableError={enableError} 
     errorMessage={errorMessage}>
-  </HomeScreen>
-
-  <AddDetails on:toggle={toggleDetails} enabled={enableAddDetails}></AddDetails>
-  {#if !enableAddDetails && !enableHomeScreen }
-    <Loader></Loader>
-  {/if}
-</main>
-
-<style>
-main {
-    display: flex;
-    height: 100%;
-    width: 100%;
-    font-family: 'Montserrat';
-    align-items: center;
-    justify-content: center;
-    background-color: #fff;
-    position: relative;
-}
-
-</style>
+  </TrackingScreen>
+{/if}
