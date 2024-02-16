@@ -8,13 +8,13 @@
     let enableRegister = false;
 
     const handleLogin = () => {
-         apiLogin(username, password).then((result) => {
-          errorMessage = result;
-          enableTrackingScreen = true;
-          enableLoginScreen = false;
-        });
+        errorMessage = "";
+        apiLogin(username, password).then((result) => {errorMessage = result});
+        enableTrackingScreen = true;
+        enableLoginScreen = false;
     };
     const handleRegister = () => {
+        errorMessage = "";
         apiRegister(username, password).then((result) => {errorMessage = result});
     };
 </script>

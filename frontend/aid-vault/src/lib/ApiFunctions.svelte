@@ -5,16 +5,15 @@
 
 <script lang="ts" context="module">
 export async function fetchData() {
-  try {
-    await apiLogin("admin", "admin"); //Testdata
-    await apiGetUsername(get(loginData).accessToken);
-    await apiGetActiveTracking(get(loginData).accessToken);
-    if (get(trackingData).isTracking) {
-      apiGetDetails(get(loginData).accessToken, get(trackingData).tracking_id);
+    try {
+      await apiGetUsername(get(loginData).accessToken);
+      await apiGetActiveTracking(get(loginData).accessToken);
+      if (get(trackingData).isTracking){
+        apiGetDetails (get(loginData).accessToken, get(trackingData).tracking_id)
+      }
+    } catch (error) {
+      console.error("Error fetchData:", error);
     }
-  } catch (error) {
-    console.error("Error fetchData:", error);
-  }
 }
 
 export async function apiLogin(username : string, password : string) {
@@ -183,7 +182,7 @@ export async function apiGetDetails(api_token: string, tracking_id: string) {
   }
 }
 
-export async function apiSetDetails (api_token : string, tracking_id : string, front_regions, back_regions, intensity, diet) {
+export async function apiSetDetails (api_token : string, tracking_id : string, front_regions : boolean[], back_regions : boolean[], intensity : number, diet : Object) {
   const url = `http://localhost:3000/trackings/${tracking_id}/details`;
 
   const options = {
