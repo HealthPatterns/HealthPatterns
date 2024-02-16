@@ -14,42 +14,40 @@ export async function fetchData() {
   }
 }
 
-export async function apiLogin(username: string, password: string) {
+export async function apiLogin(username : string, password : string) {
   const url = "http://localhost:3000/auth/login";
 
   const formData = new URLSearchParams();
-  formData.append("grant_type", "");
-  formData.append("username", username);
-  formData.append("password", password);
-  formData.append("scope", "");
-  formData.append("client_id", "");
-  formData.append("client_secret", "");
+  formData.append('username', username);
+  formData.append('password', password);
 
   const options = {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-      accept: "application/json",
-    },
-    body: formData,
+  method: 'POST',
+  headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'accept': 'application/json'
+  },
+  body: formData
   };
 
   try {
-    const response = await fetch(url, options);
-    const statusCode = response.status;
-    if (statusCode === 200) {
-      console.log("API call 'Login' successful.");
+  const response = await fetch(url, options);
+  const statusCode = response.status;
+  if (statusCode === 200) {
       const data = await response.json();
-      loginData.update((ld) => {
-        ld.accessToken = data.access_token;
-        return ld
-      });
-    } else {
+      get(loginData).accessToken = data.access_token;
+      /*
+      enableTrackingScreen = true;
+      enableLoginScreen = false;
+      */
+      fetchData();
+      console.log("API call 'Login' successful.");
+  } else {
       console.log("Error during API call 'Login'.");
       return "Login failed. Please check your credentials";
-    }
+  }
   } catch (error) {
-    console.error("Error:", error);
+  console.error("Error:", error);
   }
 }
 
