@@ -4,7 +4,6 @@
   import TrackingScreen from "./views/home/TrackingScreen.svelte";
   import LoginScreen from "./views/login/LoginScreen.svelte";
 
-  console.log('moin');
   let enableTrackingScreen : boolean = false;
   let enableLoginScreen : boolean = false;
   let enableMessage : boolean = false;
