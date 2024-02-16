@@ -1,6 +1,6 @@
 <script lang="ts">
   import { trackingData, loginData } from '../store.js';
-  import { apiSetDetails } from './ApiFunctions.js';
+  import { apiSetDetails } from './ApiFunctions.svelte';
 
   function change_color(index:number, back:boolean)  {
     if (back) {

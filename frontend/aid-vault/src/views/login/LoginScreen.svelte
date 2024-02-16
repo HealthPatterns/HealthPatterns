@@ -1,6 +1,6 @@
 <script lang="ts">
-    import {apiLogin, apiRegister } from '../../lib/ApiFunctions.js'
-    //export let enableTrackingScreen : boolean, enableLoginScreen : boolean;
+    import {apiLogin, apiRegister } from '../../lib/ApiFunctions.svelte'
+    export let enableTrackingScreen : boolean, enableLoginScreen : boolean;
 
     let username = "";
     let password = "";
@@ -8,7 +8,11 @@
     let enableRegister = false;
 
     const handleLogin = () => {
-         apiLogin(username, password).then((result) => {errorMessage = result});
+         apiLogin(username, password).then((result) => {
+          errorMessage = result;
+          enableTrackingScreen = true;
+          enableLoginScreen = false;
+        });
     };
     const handleRegister = () => {
         apiRegister(username, password).then((result) => {errorMessage = result});

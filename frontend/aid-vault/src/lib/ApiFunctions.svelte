@@ -1,6 +1,9 @@
-import { loginData, trackingData } from "../store.js";
-import { get } from "svelte/store";
+<script>
+  import { loginData, trackingData } from "../store.js";
+  import { get } from "svelte/store";
+</script>
 
+<script lang="ts" context="module">
 export async function fetchData() {
   try {
     await apiLogin("admin", "admin"); //Testdata
@@ -36,10 +39,6 @@ export async function apiLogin(username : string, password : string) {
   if (statusCode === 200) {
       const data = await response.json();
       get(loginData).accessToken = data.access_token;
-      /*
-      enableTrackingScreen = true;
-      enableLoginScreen = false;
-      */
       fetchData();
       console.log("API call 'Login' successful.");
   } else {
@@ -184,29 +183,22 @@ export async function apiGetDetails(api_token: string, tracking_id: string) {
   }
 }
 
-export async function apiSetDetails(
-  api_token: string,
-  tracking_id: string,
-  front_regions: boolean[],
-  back_regions: boolean[],
-  intensity: number,
-  diet: JSON
-) {
+export async function apiSetDetails (api_token : string, tracking_id : string, front_regions, back_regions, intensity, diet) {
   const url = `http://localhost:3000/trackings/${tracking_id}/details`;
 
   const options = {
-    method: "PUT",
+    method: 'PUT',
     headers: {
-      "Content-Type": "application/json",
-      accept: "application/json",
-      Authorization: "Bearer " + api_token,
+      'Content-Type': 'application/json',
+      'accept': 'application/json',
+      'Authorization': 'Bearer ' + api_token,
     },
     body: JSON.stringify({
-      front_regions: front_regions,
-      back_regions: back_regions,
-      intensity: intensity,
-      diet: diet,
-    }),
+      'front_regions': front_regions,
+      'back_regions': back_regions,
+      'intensity': intensity,
+      'diet': diet
+    })
   };
 
   try {
@@ -221,3 +213,4 @@ export async function apiSetDetails(
     console.error("Error:", error);
   }
 }
+</script>
