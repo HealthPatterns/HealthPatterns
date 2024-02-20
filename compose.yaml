@@ -1,6 +1,6 @@
 services:
-  aid-frontend:
-    container_name: aid-frontend
+  frontend:
+    container_name: frontend
     build:
       context: ./frontend
       args:
@@ -9,21 +9,21 @@ services:
     ports:
       - 80:80
 
-  aid-backend:
-    container_name: aid-backend
+  backend:
+    container_name: backend
     build:
       context: ./backend
       dockerfile: backend.Dockerfile
     volumes: 
-      - ./backend/aid_vault:/code/aid_vault
+      - ./backend/health_patterns:/code/health_patterns
     ports:
       - 3000:3000
     depends_on:
-      aid-db: 
+      db: 
         condition: service_healthy
 
-  aid-db:
-    container_name: aid-db
+  db:
+    container_name: db
     image: postgres
     restart: always
     ports:
@@ -31,11 +31,11 @@ services:
     environment:
       - POSTGRES_PASSWORD=password
       - POSTGRES_USER=name
-      - POSTGRES_DB=aid-db
+      - POSTGRES_DB=db
     volumes:
       - postgresql:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -d aid-db -U name"]
+      test: ["CMD-SHELL", "pg_isready -d db -U name"]
       interval: 5s
       timeout: 5s
       retries: 10

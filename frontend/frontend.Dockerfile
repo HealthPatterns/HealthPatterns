@@ -3,10 +3,10 @@ FROM node:latest AS build
 
 WORKDIR /app
 
-COPY aid-vault/package.json ./
-COPY aid-vault/package-lock.json ./
+COPY health-patterns/package.json ./
+COPY health-patterns/package-lock.json ./
 RUN npm install
-COPY aid-vault/ ./
+COPY health-patterns/ ./
 RUN npx vite build
 
 FROM nginx:1.19-alpine

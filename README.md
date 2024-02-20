@@ -78,12 +78,12 @@ The database is persistent between container up/down. To reset the database do t
 
 2. Remove the database container:
     ```bash
-    docker rm aid-db
+    docker rm db
     ```
 
 3. Remove the database volume:
     ```bash
-    docker volume rm aid-vault_postgresql
+    docker volume rm healthpatterns_postgresql
     ```
 
 4. Restart the app:
@@ -107,6 +107,6 @@ Since all dependencies are installed in the containers there will be error-messa
     + *Optional*: Install [Node](https://nodejs.org/en)
     + dependencies installation:
       ```bash
-      cd frontend/aid-vault
+      cd frontend/health-patterns
       npm install
       ```

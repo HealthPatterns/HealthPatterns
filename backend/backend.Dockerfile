@@ -6,6 +6,6 @@ COPY ./requirements.txt /code/requirements.txt
 
 RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
 
-COPY ./aid_vault /code/aid_vault
+COPY ./health_patterns /code/health_patterns
 
-CMD uvicorn aid_vault.main:app --host 0.0.0.0 --port 3000 --reload
+CMD uvicorn health_patterns.main:app --host 0.0.0.0 --port 3000 --reload
