@@ -6,7 +6,7 @@ from ...common.security import get_password_hash
 from ...common.oauth2 import CurrentUserToken
 
 router = APIRouter(
-    prefix="/user",
+    prefix="/api/user",
     tags=["Users"]
 )
 
