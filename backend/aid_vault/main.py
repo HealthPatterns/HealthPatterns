@@ -14,7 +14,10 @@ db = SessionLocal()
 print(create_test_user(db))
 
 # init app
-app = FastAPI()
+app = FastAPI(title="Health Patterns",
+              description="API for the project Health Patterns",
+              docs_url='/api/docs',
+              openapi_url='/api/openapi.json')
 
 # setup CORS
 app.add_middleware(
