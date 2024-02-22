@@ -8,6 +8,16 @@ services:
       dockerfile: frontend.Dockerfile
     ports:
       - 80:80
+      - 443:443
+    depends_on:
+      - aid-backend
+  
+  # this is a placeholder for when we have a domain
+  # certbot:
+  #   image: certbot/certbot:latest
+  #   volumes:
+  #     - ./certbot/www/:/var/www/certbot/:rw
+  #     - ./certbot/conf/:/etc/letsencrypt/:rw
 
   aid-backend:
     container_name: aid-backend
@@ -16,8 +26,9 @@ services:
       dockerfile: backend.Dockerfile
     volumes: 
       - ./backend/aid_vault:/code/aid_vault
-    ports:
-      - 3000:3000
+    # not needed anymore
+    # ports:
+    #   - 3000:3000
     depends_on:
       aid-db: 
         condition: service_healthy
@@ -26,8 +37,6 @@ services:
     container_name: aid-db
     image: postgres
     restart: always
-    ports:
-      - 5432:5432
     environment:
       - POSTGRES_PASSWORD=password
       - POSTGRES_USER=name

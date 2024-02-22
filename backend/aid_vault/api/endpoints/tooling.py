@@ -7,7 +7,7 @@ from ...common.oauth2 import CurrentUserToken
 from ...common import tooling
 
 router = APIRouter(
-    prefix="/tooling",
+    prefix="/api/tooling",
     tags=["Tooling"]
 )
 

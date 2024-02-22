@@ -15,7 +15,7 @@ from ...common.oauth2 import (
 from ...db.database import SessionInstance
 
 router = APIRouter(
-    prefix="/auth",
+    prefix="/api/auth",
     tags=["Authentication"]
 )
 
