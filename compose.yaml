@@ -9,7 +9,8 @@ services:
     ports:
       - 80:80
       - 443:443
-
+  
+  # this is a placeholder for when we have a domain
   # certbot:
   #   image: certbot/certbot:latest
   #   volumes:
@@ -23,8 +24,9 @@ services:
       dockerfile: backend.Dockerfile
     volumes: 
       - ./backend/aid_vault:/code/aid_vault
-    ports:
-      - 3000:3000
+    # not needed anymore
+    # ports:
+    #   - 3000:3000
     depends_on:
       aid-db: 
         condition: service_healthy
