@@ -35,8 +35,6 @@ services:
     container_name: aid-db
     image: postgres
     restart: always
-    ports:
-      - 5432:5432
     environment:
       - POSTGRES_PASSWORD=password
       - POSTGRES_USER=name
