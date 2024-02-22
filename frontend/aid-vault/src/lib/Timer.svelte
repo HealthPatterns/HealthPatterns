@@ -52,7 +52,7 @@
 
   async function apiStartTracking(api_token: string) {
     const current_time = Math.floor(Date.now() / 1000);
-    const url = "http://localhost:3000/trackings";
+    const url = "https://localhost/api/trackings";
 
     const options = {
       method: 'POST',
@@ -83,7 +83,7 @@
 
   async function apiStopTracking(api_token: string, tracking_id: string) {
     const current_time = Math.floor(Date.now() / 1000);
-    const url = `http://localhost:3000/trackings/${tracking_id}`;
+    const url = `https://localhost/api/trackings/${tracking_id}`;
 
     const options = {
       method: 'PUT',
