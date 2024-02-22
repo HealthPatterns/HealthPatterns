@@ -9,6 +9,8 @@ services:
     ports:
       - 80:80
       - 443:443
+    depends_on:
+      - aid-backend
   
   # this is a placeholder for when we have a domain
   # certbot:
