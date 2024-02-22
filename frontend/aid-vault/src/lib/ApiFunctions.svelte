@@ -212,4 +212,32 @@ export async function apiSetDetails (api_token : string, tracking_id : string, f
     console.error("Error:", error);
   }
 }
+export async function apiGetAllTrackings(api_token: string) {
+  const url = "http://localhost:3000/trackings";
+
+  const options = {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      accept: "application/json",
+      Authorization: "Bearer " + api_token,
+    },
+  };
+
+  try {
+    const response = await fetch(url, options);
+    const statusCode = response.status;
+    if (statusCode === 200) {
+      console.log("API call 'GetAllTrackings' successful.");
+      const data = await response.json();
+      if (data && data.length > 0) {
+        return data;
+      }
+    } else {
+      console.log("Error during API call 'GetAllTrackings'.");
+    }
+  } catch (error) {
+    console.error("Error:", error);
+  }
+}
 </script>
