@@ -6,7 +6,7 @@ from ...db.database import SessionInstance
 from ...common.oauth2 import CurrentUserToken
 
 router = APIRouter(
-    prefix="/trackings",
+    prefix="/api/trackings",
     tags=["Trackings"]
 )
 

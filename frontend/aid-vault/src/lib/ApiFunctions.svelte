@@ -17,7 +17,7 @@ export async function fetchData() {
 }
 
 export async function apiLogin(username : string, password : string) {
-  const url = "http://localhost:3000/auth/login";
+  const url = "https://localhost/api/auth/login";
 
   const formData = new URLSearchParams();
   formData.append('username', username);
@@ -50,7 +50,7 @@ export async function apiLogin(username : string, password : string) {
 }
 
 export async function apiRegister(username : string, password : string) {
-  const url = "http://localhost:3000/user/register";
+  const url = "https://localhost/api/user/register";
 
   const data = {
     nickname: username,
@@ -84,7 +84,7 @@ export async function apiRegister(username : string, password : string) {
 }
 
 export async function apiGetUsername(api_token: string) {
-  const url = "http://localhost:3000/user/name";
+  const url = "https://localhost/api/user/name";
 
   const options = {
     method: "GET",
@@ -114,7 +114,7 @@ export async function apiGetUsername(api_token: string) {
 }
 
 export async function apiGetActiveTracking(api_token: string) {
-  const url = "http://localhost:3000/trackings/active";
+  const url = "https://localhost/api/trackings/active";
 
   const options = {
     method: "GET",
@@ -148,7 +148,7 @@ export async function apiGetActiveTracking(api_token: string) {
 }
 
 export async function apiGetDetails(api_token: string, tracking_id: string) {
-  const url = `http://localhost:3000/trackings/${tracking_id}/details`;
+  const url = `https://localhost/api/trackings/${tracking_id}/details`;
 
   const options = {
     method: "GET",
@@ -183,7 +183,7 @@ export async function apiGetDetails(api_token: string, tracking_id: string) {
 }
 
 export async function apiSetDetails (api_token : string, tracking_id : string, front_regions : boolean[], back_regions : boolean[], intensity : number, diet : Object) {
-  const url = `http://localhost:3000/trackings/${tracking_id}/details`;
+  const url = `https://localhost/api/trackings/${tracking_id}/details`;
 
   const options = {
     method: 'PUT',
