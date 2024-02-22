@@ -8,6 +8,13 @@ services:
       dockerfile: frontend.Dockerfile
     ports:
       - 80:80
+      - 443:443
+
+  # certbot:
+  #   image: certbot/certbot:latest
+  #   volumes:
+  #     - ./certbot/www/:/var/www/certbot/:rw
+  #     - ./certbot/conf/:/etc/letsencrypt/:rw
 
   aid-backend:
     container_name: aid-backend
