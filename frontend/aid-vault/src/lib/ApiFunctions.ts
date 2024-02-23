@@ -1,6 +1,8 @@
 import { loginData, trackingData } from "../store.js";
 import { get } from "svelte/store";
 
+const url = "https://localhost/api";
+
 export async function fetchData() {
   try {
     await apiGetUsername(get(loginData).accessToken);
@@ -14,7 +16,7 @@ export async function fetchData() {
 }
 
 export async function apiLogin(username : string, password : string) {
-const url = "http://localhost:3000/auth/login";
+const api_url = `${url}/auth/login`;
 
 const formData = new URLSearchParams();
 formData.append('username', username);
@@ -30,7 +32,7 @@ body: formData
 };
 
 try {
-const response = await fetch(url, options);
+const response = await fetch(api_url, options);
 const statusCode = response.status;
 if (statusCode === 200) {
     const data = await response.json();
@@ -47,7 +49,7 @@ console.error("Error:", error);
 }
 
 export async function apiRegister(username : string, password : string) {
-const url = "http://localhost:3000/user/register";
+const api_url = `${url}/user/register`;
 
 const data = {
   nickname: username,
@@ -64,7 +66,7 @@ const options = {
 };
 
 try {
-const response = await fetch(url, options);
+const response = await fetch(api_url, options);
 const statusCode = response.status;
 if (statusCode === 201) {
     const data = await response.json();
@@ -81,7 +83,7 @@ console.error("Error:", error);
 }
 
 export async function apiGetUsername(api_token: string) {
-const url = "http://localhost:3000/user/name";
+const api_url = `${url}/user/name`;
 
 const options = {
   method: "GET",
@@ -93,7 +95,7 @@ const options = {
 };
 
 try {
-  const response = await fetch(url, options);
+  const response = await fetch(api_url, options);
   const statusCode = response.status;
   if (statusCode === 200) {
     console.log("API call 'GetUsername' successful.");
@@ -112,7 +114,7 @@ try {
 
 export async function apiStartTracking(api_token: string) {
   const current_time = Math.floor(Date.now() / 1000);
-  const url = "http://localhost:3000/trackings";
+  const api_url = `${url}/trackings`;
 
   const options = {
     method: 'POST',
@@ -127,7 +129,7 @@ export async function apiStartTracking(api_token: string) {
   };
 
   try {
-    const response = await fetch(url, options);
+    const response = await fetch(api_url, options);
     const statusCode = response.status;
     if (statusCode === 201) {
       console.log("API call 'StartTracking' successful.");
@@ -146,7 +148,7 @@ export async function apiStartTracking(api_token: string) {
 
 export async function apiStopTracking(api_token: string, tracking_id: string) {
   const current_time = Math.floor(Date.now() / 1000);
-  const url = `http://localhost:3000/trackings/${tracking_id}`;
+  const api_url = `${url}/trackings/${tracking_id}`;
 
   const options = {
     method: 'PUT',
@@ -161,7 +163,7 @@ export async function apiStopTracking(api_token: string, tracking_id: string) {
   };
 
   try {
-    const response = await fetch(url, options);
+    const response = await fetch(api_url, options);
     const statusCode = response.status;
     if (statusCode === 200) {
       console.log("API call 'StopTracking' successful.");
@@ -174,7 +176,7 @@ export async function apiStopTracking(api_token: string, tracking_id: string) {
 }
 
 export async function apiGetActiveTracking(api_token: string) {
-const url = "http://localhost:3000/trackings/active";
+const api_url = `${url}/trackings/active`;
 
 const options = {
   method: "GET",
@@ -186,7 +188,7 @@ const options = {
 };
 
 try {
-  const response = await fetch(url, options);
+  const response = await fetch(api_url, options);
   const statusCode = response.status;
   if (statusCode === 200) {
     console.log("API call 'GetActiveTracking' successful.");
@@ -208,7 +210,7 @@ try {
 }
 
 export async function apiGetDetails(api_token: string, tracking_id: string) {
-const url = `http://localhost:3000/trackings/${tracking_id}/details`;
+const api_url = `${url}/trackings/${tracking_id}/details`;
 
 const options = {
   method: "GET",
@@ -220,7 +222,7 @@ const options = {
 };
 
 try {
-  const response = await fetch(url, options);
+  const response = await fetch(api_url, options);
   const statusCode = response.status;
   if (statusCode === 200) {
     console.log("API call 'GetDetails' successful.");
@@ -243,7 +245,7 @@ try {
 }
 
 export async function apiSetDetails (api_token : string, tracking_id : string, front_regions : boolean[], back_regions : boolean[], intensity : number, diet : Object) {
-const url = `http://localhost:3000/trackings/${tracking_id}/details`;
+const api_url = `${url}/trackings/${tracking_id}/details`;
 
 const options = {
   method: 'PUT',
@@ -261,7 +263,7 @@ const options = {
 };
 
 try {
-  const response = await fetch(url, options);
+  const response = await fetch(api_url, options);
   const statusCode = response.status;
   if (statusCode === 200) {
     console.log("API call 'SetDetails' successful.");

@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import { loginData, trackingData, defaultTrackingData } from '../store.js';
-  import { apiStartTracking, apiStopTracking } from './ApiFunctions.js'
+  import { apiStartTracking, apiStopTracking } from './ApiFunctions.ts'
   
   let hour: number = 0, minute: number = 0, second: number = 0;
   let hrString: string, minString: string, secString: string;

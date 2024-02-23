@@ -1,5 +1,5 @@
 <script lang="ts">
-    import {apiLogin } from '../../lib/ApiFunctions.svelte'
+    import { apiLogin } from '../../lib/ApiFunctions.ts'
     export let enableTrackingScreen : boolean, enableLoginScreen : boolean;
 
     let username = "";

@@ -1,6 +1,6 @@
 <script>
     import { trackingData, loginData } from '../store.js';
-    import { apiSetDetails } from './ApiFunctions.svelte';
+    import { apiSetDetails } from './ApiFunctions.ts';
 
     function updateIntensity() {
         apiSetDetails ($loginData.accessToken, $trackingData.tracking_id, $trackingData.front_regions, $trackingData.back_regions, $trackingData.intensity, $trackingData.diet)

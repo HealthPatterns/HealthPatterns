@@ -9,11 +9,9 @@ RUN npm install
 COPY aid-vault/ ./
 RUN npx vite build
 
-FROM nginx:1.19-alpine
+FROM nginx:1.19
 RUN mkdir /etc/nginx/ssl
-RUN apk update && \
-    apk add --no-cache openssl && \
-    openssl req -x509 -nodes -days 365 \
+RUN openssl req -x509 -nodes -days 365 \
     -subj  "/C=CA/ST=QC/O=Company Inc/CN=example.com" \
     -newkey rsa:2048 -keyout /etc/nginx/ssl/nginx-selfsigned.key \
     -out /etc/nginx/ssl/nginx-selfsigned.crt
