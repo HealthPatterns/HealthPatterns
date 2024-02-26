@@ -6,10 +6,8 @@ from ...schemas.tooling import GeneratedTrackings
 from ...common.oauth2 import CurrentUserToken
 from ...common import tooling
 
-router = APIRouter(
-    prefix="/api/tooling",
-    tags=["Tooling"]
-)
+router = APIRouter(prefix="/tooling", tags=["Tooling"])
+
 
 @router.get("/tracking-generator", response_model=GeneratedTrackings)
 def generate_trackings(amount: int = 1, seed: int | None = None):
