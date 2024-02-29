@@ -39,6 +39,7 @@ if (statusCode === 200) {
     get(loginData).accessToken = data.access_token;
     fetchData();
     console.log("API call 'Login' successful.");
+    return true;
 } else {
     console.log("Error during API call 'Login'.");
     return "Login failed. Please check your credentials";

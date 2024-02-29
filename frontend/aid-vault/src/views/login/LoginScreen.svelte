@@ -8,10 +8,15 @@
     let enableRegister = false;
 
     const handleLogin = () => {
-        errorMessage = "";
-        apiLogin(username, password).then((result) => {errorMessage = result});
-        enableTrackingScreen = true;
-        enableLoginScreen = false;
+        apiLogin(username, password).then((result) => {
+            if (result === true) {
+                errorMessage = "";
+                enableTrackingScreen = true;
+                enableLoginScreen = false;
+            } else {
+                errorMessage = result;
+            }
+        });
     };
     const handleRegister = () => {
         errorMessage = "";
@@ -31,7 +36,7 @@
         <p id="error">{errorMessage}</p>
         {/if}
       </form>
-      <p id="createAccount">Noch keinen Account? <a href="#" on:click|preventDefault={() => enableRegister = true}>Registrieren</a></p>
+      <p id="createAccount">Noch keinen Account? <a href=" " on:click|preventDefault={() => enableRegister = true}>Registrieren</a></p>
     </div>
   </div>
 {:else}
@@ -46,7 +51,7 @@
         <p id="error">{errorMessage}</p>
         {/if}
       </form>
-      <p id="createAccount">Bereits registriert? <a href="#" on:click|preventDefault={() => enableRegister = false}>Login</a></p>
+      <p id="createAccount">Bereits registriert? <a href=" " on:click|preventDefault={() => enableRegister = false}>Login</a></p>
     </div>
   </div>
 {/if}
