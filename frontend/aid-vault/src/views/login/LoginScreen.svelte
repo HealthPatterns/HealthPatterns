@@ -1,5 +1,5 @@
 <script lang="ts">
-    import {apiLogin, apiRegister } from '../../lib/ApiFunctions.svelte'
+    import { apiLogin, apiRegister } from '../../lib/ApiFunctions.ts'
     export let enableTrackingScreen : boolean, enableLoginScreen : boolean;
 
     let username = "";
@@ -31,7 +31,7 @@
         <p id="error">{errorMessage}</p>
         {/if}
       </form>
-      <p id="createAccount">Noch keinen Account? <a href="#" on:click|preventDefault={() => enableRegister = true}>Registrieren</a></p>
+      <p id="createAccount">Noch keinen Account? <a href=" " on:click|preventDefault={() => enableRegister = true}>Registrieren</a></p>
     </div>
   </div>
 {:else}
@@ -46,7 +46,7 @@
         <p id="error">{errorMessage}</p>
         {/if}
       </form>
-      <p id="createAccount">Bereits registriert? <a href="#" on:click|preventDefault={() => enableRegister = false}>Login</a></p>
+      <p id="createAccount">Bereits registriert? <a href=" " on:click|preventDefault={() => enableRegister = false}>Login</a></p>
     </div>
   </div>
 {/if}

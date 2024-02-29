@@ -5,15 +5,13 @@ from ...db.database import SessionInstance
 from ...common.security import get_password_hash
 from ...common.oauth2 import CurrentUserToken
 
-router = APIRouter(
-    prefix="/user",
-    tags=["Users"]
-)
+router = APIRouter(prefix="/user", tags=["Users"])
+
 
 @router.post(
-        "/register",
-        response_model=schemas.UserComplete,
-        status_code=status.HTTP_201_CREATED
+    "/register",
+    response_model=schemas.UserComplete,
+    status_code=status.HTTP_201_CREATED,
 )
 def register_user(db: SessionInstance, user_in: schemas.UserCreate) -> models.Users:
     """
@@ -26,12 +24,14 @@ def register_user(db: SessionInstance, user_in: schemas.UserCreate) -> models.Us
     new_user = crud.users.create_user(db=db, user=user_in)
     return new_user
 
+
 @router.get("", response_model=schemas.UserComplete)
 def get_user(current_user: CurrentUserToken) -> models.Users:
     """
     Returns currently logged in user.
-    """   
+    """
     return current_user
+
 
 @router.get("/name", response_model=schemas.UserDisplayName)
 def get_user_name(current_user: CurrentUserToken) -> models.Users:
@@ -44,11 +44,12 @@ def get_user_name(current_user: CurrentUserToken) -> models.Users:
     name = schemas.UserDisplayName(display_name=current_user.nickname)
     return name
 
+
 @router.put("", response_model=schemas.UserComplete)
 def update_user_data(
     db: SessionInstance,
     current_user: CurrentUserToken,
-    input_data: schemas.UserForUpdate
+    input_data: schemas.UserForUpdate,
 ) -> models.Users:
     """
     Updates currently logged in user. Fields that get put in as null or omitted will be set to null. If nickname is set to null or omitted it will stay unchanged, as it cannot be deleted.
@@ -59,21 +60,18 @@ def update_user_data(
     if input_data.nickname != current_user.nickname:
         if crud.user_exists_by_nickname(db, input_data.nickname):
             raise HTTPException(
-                status_code=400,
-                detail="User with this username already exists."
+                status_code=400, detail="User with this username already exists."
             )
     if input_data.email != current_user.email:
         if crud.user_exists_by_email(db, input_data.email):
             raise HTTPException(
-                status_code=400,
-                detail="This email-address is already registered."
+                status_code=400, detail="This email-address is already registered."
             )
     updated_user = crud.users.update_user(
-        db=db,
-        update_data=input_data,
-        user_id=current_user.id
+        db=db, update_data=input_data, user_id=current_user.id
     )
     return updated_user
+
 
 @router.delete("", status_code=status.HTTP_204_NO_CONTENT)
 def delete_user(db: SessionInstance, current_user: CurrentUserToken):

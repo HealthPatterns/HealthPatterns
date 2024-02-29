@@ -2,7 +2,7 @@
     import Header from '../../lib/Header.svelte';
     import Loader from '../../lib/Loader.svelte';
     import AddDetails from '../../lib/AddDetails.svelte';
-    import { apiGetAllTrackings } from '../../lib/ApiFunctions.svelte';
+    import { apiGetAllTrackings } from '../../lib/ApiFunctions.ts';
     import { loginData } from '../../store.js';
 
     export let enablePreviousTrackingsScreen : boolean;
@@ -27,7 +27,14 @@
         {#await trackings}
             <Loader></Loader>
         {:then trackingsData}
+          {#if trackingsData === 'NO_TRACKINGS'}
+              <p>Es wurde noch kein Tracking gestartet.</p>
+          {:else if trackingsData === 'ERROR'}
+              <p>Ein Fehler ist aufgetreten.</p>
+          {:else}
             {#each trackingsData as tracking, index}
+                <!-- svelte-ignore a11y-click-events-have-key-events -->
+                <!-- svelte-ignore a11y-no-static-element-interactions-->
                 <div class="row" on:click={() => handleClick(index)}>
                     <div class="column-item">
                         <div class="date">{new Date(tracking.time_start * 1000).toLocaleDateString()}</div>
@@ -45,6 +52,7 @@
                     </div>
                 </div>
             {/each}
+          {/if}
         {/await}
     </div>
     {:else}
@@ -63,6 +71,7 @@
       background-color: #fff;
       position: relative;
   }
+
   #PreviousScreen {
     display: flex;
     height: 90%;
@@ -70,11 +79,11 @@
     flex-direction: column;
     }
 
-    h1 {
+  h1 {
     font-size: x-large;
     font-weight: 500;
-}
-  
+  }
+
   .row {
     display: flex;
     justify-content: space-between;
@@ -97,5 +106,10 @@
 
   .date {
     font-size: x-large;
+  }
+
+  p {
+    text-align: center;
+    margin: auto;
   }
 </style>
