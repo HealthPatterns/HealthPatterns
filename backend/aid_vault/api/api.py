@@ -2,7 +2,8 @@ from fastapi import APIRouter
 
 from .endpoints import users, auth, trackings, tooling
 
-api = APIRouter()
+base_path = "/api"
+api = APIRouter(prefix=base_path)
 
 """
 Routers for different functionalities/endpoint categories go below.

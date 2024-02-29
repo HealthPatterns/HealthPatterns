@@ -8,4 +8,5 @@ RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
 
 COPY ./aid_vault /code/aid_vault
 
-CMD uvicorn aid_vault.main:app --host 0.0.0.0 --port 3000 --reload
+ENTRYPOINT [ "uvicorn", "aid_vault.main:app" ]
+CMD [ "--proxy-headers", "--host", "0.0.0.0", "--port", "3000", "--reload" ]

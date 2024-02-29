@@ -1,0 +1,4 @@
+#exclude certificates
+*.crt
+*.cert
+*.key
