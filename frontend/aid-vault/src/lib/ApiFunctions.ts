@@ -275,3 +275,36 @@ try {
   console.error("Error:", error);
 }
 }
+
+export async function apiGetAllTrackings(api_token: string) {
+  const api_url = `${url}/trackings`;
+
+  const options = {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      accept: "application/json",
+      Authorization: "Bearer " + api_token,
+    },
+  };
+
+  try {
+    const response = await fetch(api_url, options);
+    const statusCode = response.status;
+    if (statusCode === 200) {
+      console.log("API call 'GetAllTrackings' successful.");
+      const data = await response.json();
+      if (data && data.length > 0) {
+        return data;
+      } else {
+        return 'NO_TRACKINGS';
+      }
+    } else {
+      console.log("Error during API call 'GetAllTrackings'.");
+      return 'ERROR';
+    }
+  } catch (error) {
+    console.error("Error:", error);
+    return 'ERROR';
+  }
+}

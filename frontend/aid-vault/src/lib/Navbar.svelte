@@ -2,6 +2,20 @@
     import "../app.css"
 
     export let enable : boolean;
+    export let enableTrackingScreen : boolean;
+    export let enablePreviousTrackingsScreen : boolean;
+
+    function toggleTrackingScreen() {
+        enable = false;
+        enableTrackingScreen = true;
+        enablePreviousTrackingsScreen = false;
+    }
+
+    function togglePreviousTrackingsScreen() {
+        enable = false;
+        enablePreviousTrackingsScreen = true;
+        enableTrackingScreen = false;
+    }
 
 </script>
 
@@ -18,7 +32,8 @@
                 </svg>
             </div>
             <div style="display: flex; flex-direction:column;">
-                <button class="navbutton">Schmerztracking</button>
+                <button class="navbutton" on:click={toggleTrackingScreen}>Schmerztracking</button>
+                <button class="navbutton" on:click={togglePreviousTrackingsScreen}>Trackingeinträge</button>
                 <button class="navbutton">Analyse</button>
                 <button class="navbutton">Daten exportieren</button>
                 <button class="navbutton">Einstellungen</button>
