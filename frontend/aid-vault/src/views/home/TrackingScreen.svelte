@@ -17,7 +17,6 @@
   let enableAddDetails : boolean = false;
   let timerComponet : Timer;
 
-
   function toggleDetails () {
     enableAddDetails = !enableAddDetails;
     enableTrackerView = !enableTrackerView;
@@ -25,7 +24,7 @@
 </script>
 
 <main style="background-color: { enableAddDetails ? "#F2F1E8" : "#fff" }">
-    {#if enableTrackerView}
+    {#if enableTrackerView && $loginData.dataFetched}
     <div id="HomeScreen">
         <Header
           bind:enableTrackingScreen={enableTrackingScreen}
@@ -66,10 +65,9 @@
         <ErrorCard enable={enableError} message={errorMessage}></ErrorCard>
 
     </div>
-    {/if}
-
-    <AddDetails on:toggle={toggleDetails} enabled={enableAddDetails}></AddDetails>
-    {#if !enableAddDetails && !enableTrackingScreen }
+    {:else if enableAddDetails}
+      <AddDetails on:toggle={toggleDetails} enabled={enableAddDetails}></AddDetails>
+    {:else}
       <Loader></Loader>
     {/if}
 </main>

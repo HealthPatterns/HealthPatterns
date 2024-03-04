@@ -10,6 +10,12 @@ export async function fetchData() {
     if (get(trackingData).isTracking){
       apiGetDetails (get(loginData).accessToken, get(trackingData).tracking_id)
     }
+    if (get(loginData).username) {
+      loginData.update((ld) => {
+        ld.dataFetched = true;
+        return ld;
+      });
+    }
   } catch (error) {
     console.error("Error fetchData:", error);
   }
