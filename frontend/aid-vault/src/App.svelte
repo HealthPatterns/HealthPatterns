@@ -19,7 +19,7 @@
 </script>
 
 {#if !enableTrackingScreen && enableLoginScreen}
-  <LoginScreen 
+  <LoginScreen
     bind:enableTrackingScreen={enableTrackingScreen}
     bind:enableLoginScreen={enableLoginScreen}>
   </LoginScreen>
@@ -28,7 +28,7 @@
     bind:enableTrackingScreen={enableTrackingScreen}
     bind:enablePreviousTrackingsScreen={enablePreviousTrackingsScreen}
     bind:enableMessage={enableMessage}
-    bind:enableError={enableError} 
+    bind:enableError={enableError}
     errorMessage={errorMessage}>
   </TrackingScreen>
 {:else if !enableLoginScreen && enablePreviousTrackingsScreen}

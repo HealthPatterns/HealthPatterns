@@ -11,7 +11,7 @@ services:
       - 443:443
     depends_on:
       - aid-backend
-  
+
   # this is a placeholder for when we have a domain
   # certbot:
   #   image: certbot/certbot:latest
@@ -24,13 +24,13 @@ services:
     build:
       context: ./backend
       dockerfile: backend.Dockerfile
-    volumes: 
+    volumes:
       - ./backend/aid_vault:/code/aid_vault
     # not needed anymore
     # ports:
     #   - 3000:3000
     depends_on:
-      aid-db: 
+      aid-db:
         condition: service_healthy
 
   aid-db:
