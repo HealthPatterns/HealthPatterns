@@ -7,23 +7,25 @@
   import ErrorCard from '../../lib/ErrorCard.svelte';
   import Header from '../../lib/Header.svelte';
 
-  export let enableTrackingScreen;
-  export let enablePreviousTrackingsScreen;
-  export let enableMessage;
-  export let enableError;
-  export let errorMessage;
+  export let enableTrackingScreen : boolean;
+  export let enablePreviousTrackingsScreen : boolean;
+  export let enableMessage : boolean;
+  export let enableError : boolean;
+  export let errorMessage : string;
+
+  let enableTrackerView : boolean = true;
   let enableAddDetails : boolean = false;
   let timerComponet : Timer;
 
 
   function toggleDetails () {
     enableAddDetails = !enableAddDetails;
-    enableTrackingScreen = !enableTrackingScreen;
+    enableTrackerView = !enableTrackerView;
   }
 </script>
 
 <main style="background-color: { enableAddDetails ? "#F2F1E8" : "#fff" }">
-    {#if enableTrackingScreen}
+    {#if enableTrackerView}
     <div id="HomeScreen">
         <Header
           bind:enableTrackingScreen={enableTrackingScreen}
@@ -31,12 +33,12 @@
         </Header>
 
         <h1 style="margin-top: 1.4rem;">Guten Morgen {$loginData.username}!</h1>
-        <div class="time"> 
-            
+        <div class="time">
+
             <Timer bind:this={timerComponet}></Timer>
 
         </div>
-        
+
         <div style="display:flex; align-items: center; flex-direction:column; width:100%; margin-top: auto; ">
 
             {#if $trackingData.isTracking}
@@ -71,7 +73,7 @@
       <Loader></Loader>
     {/if}
 </main>
-  
+
 <style>
   main {
       display: flex;
