@@ -8,17 +8,9 @@
 
   createStrings();
 
-  const unsubscripe = trackingData.subscribe(() => {
+  const unsubscribe = trackingData.subscribe(() => {
     stopWatch();
-    console.log("hi");
   })
-
-  // onMount(() => {
-  //   if ($trackingData.isTracking) {
-  //     stopWatch();
-  //     console.log("hi");
-  //   }
-  // })
 
   export function start() {
     $trackingData.unixtime = Math.floor(Date.now() / 1000);
@@ -32,6 +24,9 @@
     apiStopTracking($loginData.accessToken, $trackingData.tracking_id);
     $trackingData = structuredClone($defaultTrackingData);
     $trackingData.unixtime = Math.floor(Date.now() / 1000);
+    hour = 0;
+    minute = 0;
+    second= 0;
     createStrings();
   }
 
@@ -55,7 +50,7 @@
     }
   }
 
-  onDestroy(unsubscripe);
+  onDestroy(unsubscribe);
 
 </script>
 
