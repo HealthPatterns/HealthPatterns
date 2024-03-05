@@ -1,17 +1,15 @@
 <script lang="ts">
-  import { onMount } from "svelte";
+  import { onMount, onDestroy } from "svelte";
   import { loginData, trackingData, defaultTrackingData } from '../store.js';
   import { apiStartTracking, apiStopTracking } from './ApiFunctions.ts'
-  
+
   let hour: number = 0, minute: number = 0, second: number = 0;
   let hrString: string, minString: string, secString: string;
 
   createStrings();
 
-  onMount(() => {
-    if ($trackingData.isTracking) {
-      stopWatch();
-    }
+  const unsubscribe = trackingData.subscribe(() => {
+    stopWatch();
   })
 
   export function start() {
@@ -26,7 +24,9 @@
     apiStopTracking($loginData.accessToken, $trackingData.tracking_id);
     $trackingData = structuredClone($defaultTrackingData);
     $trackingData.unixtime = Math.floor(Date.now() / 1000);
-    $trackingData.count = hour = minute = second = 0;
+    hour = 0;
+    minute = 0;
+    second= 0;
     createStrings();
   }
 
@@ -37,18 +37,21 @@
   }
 
   function stopWatch() {
+
     if ($trackingData.isTracking) {
       const currentTime = Math.floor(Date.now() / 1000);
-      $trackingData.count = currentTime - $trackingData.unixtime;
-      hour = Math.floor($trackingData.count / 3600);
-      $trackingData.count -= hour * 3600;
-      minute = Math.floor($trackingData.count / 60);
-      second = $trackingData.count - minute * 60;
+      let count = currentTime - $trackingData.unixtime;
+      hour = Math.floor(count / 3600);
+      count -= hour * 3600;
+      minute = Math.floor(count / 60);
+      second = count - minute * 60;
       createStrings();
-
       setTimeout(stopWatch, 1000);
     }
   }
+
+  onDestroy(unsubscribe);
+
 </script>
 
 <div class="circle"><p style="font-size: 3rem;">{hrString}:{minString}:{secString}</p></div>
