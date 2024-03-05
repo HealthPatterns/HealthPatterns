@@ -1,14 +1,19 @@
 <script lang="ts">
     import { apiLogin, apiRegister } from '../../lib/ApiFunctions.ts'
+    import Loader from "../../lib/Loader.svelte";
+
     export let enableTrackingScreen : boolean, enableLoginScreen : boolean;
 
+    let isLoading = false;
     let username = "";
     let password = "";
     let errorMessage : string | undefined;
     let enableRegister = false;
 
     const handleLogin = () => {
+        isLoading = true;
         apiLogin(username, password).then((result) => {
+            isLoading = false;
             if (result === true) {
                 errorMessage = "";
                 enableTrackingScreen = true;
@@ -24,6 +29,11 @@
     };
 </script>
 
+{#if isLoading}
+  <div id="Loader">
+    <Loader/>
+  </div>
+{/if}
 {#if !enableRegister}
   <div id=LoginScreen>
     <h1>Login</h1>
@@ -57,6 +67,13 @@
 {/if}
 
 <style>
+#Loader {
+    position: fixed;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.75);
+}
 #LoginScreen {
     display: flex;
     height: 100%;
