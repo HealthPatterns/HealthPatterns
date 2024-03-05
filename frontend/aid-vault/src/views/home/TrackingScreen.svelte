@@ -21,6 +21,14 @@
     enableAddDetails = !enableAddDetails;
     enableTrackerView = !enableTrackerView;
   }
+  function handleTrackingButtonClick() {
+        if ($trackingData.isTracking) {
+            timerComponet.stop_reset();
+            enableMessage = true;
+        } else {
+            timerComponet.start();
+        }
+    }
 </script>
 
 <main style="background-color: { enableAddDetails ? "#F2F1E8" : "#fff" }">
@@ -43,7 +51,7 @@
             {#if $trackingData.isTracking}
             <button class="details-button" on:click={toggleDetails}>Details hinzufügen</button>
             {/if}
-            <button on:click={() => {$trackingData.isTracking ? timerComponet.stop_reset() : timerComponet.start()}} class={$trackingData.isTracking ? "tracking-button tracking-active" : "tracking-button"}>
+            <button on:click={handleTrackingButtonClick} class={$trackingData.isTracking ? "tracking-button tracking-active" : "tracking-button"}>
                 {#if !$trackingData.isTracking}
                 <svg style="margin-right: 0.5rem;" xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-player-play-filled" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -61,7 +69,7 @@
             </button>
         </div>
 
-        <TrackingCard enable={enableMessage}></TrackingCard>
+        <TrackingCard bind:enable={enableMessage}></TrackingCard>
         <ErrorCard enable={enableError} message={errorMessage}></ErrorCard>
 
     </div>
