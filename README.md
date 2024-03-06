@@ -54,13 +54,13 @@ docker compose up
 Once all the Docker containers are running, open your browser and check out your localhost.
 
 ```bash
-http://localhost
+https://localhost
 ```
 
 If you would like to view our api-documentation or test endpoints that have no frontend yet, please use this link:
 
 ```bash
-http://localhost:3000/docs
+https://localhost/api/docs
 ```
 
 Stop Health Patterns with:
