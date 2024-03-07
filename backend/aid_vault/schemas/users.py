@@ -20,6 +20,11 @@ class UserCreate(UserOptionals):
     """
     password: str
 
+class UserPasswordReset(BaseModel):
+    new_password: str
+    nickname: str
+    puk: str
+
 class UserComplete(UserOptionals):
     id: UUID
     is_active: bool

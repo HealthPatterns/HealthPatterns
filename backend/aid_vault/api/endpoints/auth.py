@@ -6,13 +6,14 @@ from fastapi.security import OAuth2PasswordRequestForm
 
 
 from aid_vault import schemas
-from ...common.security import authenticate_user
+from ...common.security import authenticate_user, get_password_hash
 from ...common.oauth2 import (
     create_access_token,
     CurrentUserToken,
     ACCESS_TOKEN_EXPIRE_MINUTES,
 )
 from ...db.database import SessionInstance
+from ...crud.users import read_user_by_nickname
 
 router = APIRouter(prefix="/auth", tags=["Authentication"])
 
@@ -48,3 +49,20 @@ async def test_access_token(current_user: CurrentUserToken):
     Checks if the access token is valid by decoding it and returning the user attached to it.
     """
     return {"message": f"Valid token for user: {current_user.nickname}"}
+
+
+@router.post("/password-recovery", response_model=schemas.Message)
+def reset_password(db: SessionInstance, data: schemas.UserPasswordReset):
+    user = read_user_by_nickname(db, data.nickname)
+
+    if user.puk != data.puk:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Password update failed. Invalid data."
+        )
+    hashed_new_password = get_password_hash(data.new_password)
+    user.password = hashed_new_password
+    db.add(user)
+    db.commit()
+
+    return schemas.Message(message="Password succesfully updated.")
