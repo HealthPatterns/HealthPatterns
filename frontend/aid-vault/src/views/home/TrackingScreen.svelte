@@ -74,7 +74,15 @@
 
     </div>
     {:else if enableAddDetails}
-      <AddDetails on:toggle={toggleDetails} enabled={enableAddDetails}></AddDetails>
+        <AddDetails 
+            on:toggle={toggleDetails}
+            enabled={enableAddDetails}
+            bind:front_regions={$trackingData.front_regions}
+            bind:back_regions={$trackingData.back_regions}
+            bind:intensity={$trackingData.intensity}
+            bind:diet={$trackingData.diet}
+            bind:tracking_id={$trackingData.tracking_id}
+        ></AddDetails>
     {:else}
       <Loader></Loader>
     {/if}

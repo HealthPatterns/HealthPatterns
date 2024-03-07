@@ -1,24 +1,25 @@
 <script lang="ts">
-    import { trackingData, loginData } from '../store.js';
-    import { apiSetDetails } from './ApiFunctions.ts';
+    import { createEventDispatcher } from 'svelte'
+    const dispatch = createEventDispatcher();
+
+    export let diet: Array<string>;
 
     function updateFood(foodType: string) {
-        $trackingData.diet[foodType] = !$trackingData.diet[foodType];
-        apiSetDetails($loginData.accessToken, $trackingData.tracking_id, $trackingData.front_regions, $trackingData.back_regions, $trackingData.intensity, $trackingData.diet);
+        diet[foodType] = !diet[foodType];
+        dispatch('setDetails')
     }
-
 </script>
 
 <div id="Food">
-    <button on:click={() => updateFood("Obst")}><span class={$trackingData.diet["Obst"] ? "tag tag-active" : "tag"}>Obst</span></button>
-    <button on:click={() => updateFood("Gemüse")}><span class={$trackingData.diet["Gemüse"] ? "tag tag-active" : "tag"}>Gemüse</span></button>
-    <button on:click={() => updateFood("Milchprodukte")}><span class={$trackingData.diet["Milchprodukte"] ? "tag tag-active" : "tag"}>Milchprodukte</span></button>
-    <button on:click={() => updateFood("Fleisch")}><span class={$trackingData.diet["Fleisch"] ? "tag tag-active" : "tag"}>Fleisch</span></button>
-    <button on:click={() => updateFood("Fisch")}><span class={$trackingData.diet["Fisch"] ? "tag tag-active" : "tag"}>Fisch</span></button>
-    <button on:click={() => updateFood("Eier")}><span class={$trackingData.diet["Eier"] ? "tag tag-active" : "tag"}>Eier</span></button>
-    <button on:click={() => updateFood("Weißmehl")}><span class={$trackingData.diet["Weißmehl"] ? "tag tag-active" : "tag"}>Weißmehl</span></button>
-    <button on:click={() => updateFood("Vollkorn")}><span class={$trackingData.diet["Vollkorn"] ? "tag tag-active" : "tag"}>Vollkorn</span></button>
-    <button on:click={() => updateFood("Soja")}><span class={$trackingData.diet["Soja"] ? "tag tag-active" : "tag"}>Soja</span></button>
+    <button on:click={() => updateFood("Obst")}><span class={diet["Obst"] ? "tag tag-active" : "tag"}>Obst</span></button>
+    <button on:click={() => updateFood("Gemüse")}><span class={diet["Gemüse"] ? "tag tag-active" : "tag"}>Gemüse</span></button>
+    <button on:click={() => updateFood("Milchprodukte")}><span class={diet["Milchprodukte"] ? "tag tag-active" : "tag"}>Milchprodukte</span></button>
+    <button on:click={() => updateFood("Fleisch")}><span class={diet["Fleisch"] ? "tag tag-active" : "tag"}>Fleisch</span></button>
+    <button on:click={() => updateFood("Fisch")}><span class={diet["Fisch"] ? "tag tag-active" : "tag"}>Fisch</span></button>
+    <button on:click={() => updateFood("Eier")}><span class={diet["Eier"] ? "tag tag-active" : "tag"}>Eier</span></button>
+    <button on:click={() => updateFood("Weißmehl")}><span class={diet["Weißmehl"] ? "tag tag-active" : "tag"}>Weißmehl</span></button>
+    <button on:click={() => updateFood("Vollkorn")}><span class={diet["Vollkorn"] ? "tag tag-active" : "tag"}>Vollkorn</span></button>
+    <button on:click={() => updateFood("Soja")}><span class={diet["Soja"] ? "tag tag-active" : "tag"}>Soja</span></button>
 </div>
 
 <style>

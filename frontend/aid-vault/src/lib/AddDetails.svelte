@@ -1,4 +1,6 @@
 <script lang="ts">
+    import { apiSetDetails } from './ApiFunctions.ts';
+    import { loginData } from '../store.js';
     import { createEventDispatcher } from 'svelte'
     const dispatch = createEventDispatcher();
 
@@ -7,9 +9,18 @@
     import Slider from "./Slider.svelte";
 
     export let enabled : boolean;
+    export let back_regions : Array<boolean>;
+    export let front_regions : Array<boolean>;
+    export let intensity : number;
+    export let diet : Array<string>;
+    export let tracking_id : string;
 
     function toggle() {
         dispatch('toggle')
+    }
+
+    function setDetails() {
+        apiSetDetails ($loginData.accessToken, tracking_id, front_regions, back_regions, intensity, diet);
     }
 
 </script>
@@ -28,17 +39,27 @@
         <h1 style="margin-top: 1rem;">Details hinzufügen</h1>
         <div class="background-container" style="height: 70%;">
             <h2>Körperregionen</h2>
-            <BodyForm></BodyForm>
+            <BodyForm
+                on:setDetails={setDetails}
+                bind:back_regions={back_regions}
+                bind:front_regions={front_regions}
+            ></BodyForm>
         </div>
 
         <div class="background-container">
             <h2>Intensität</h2>
-            <Slider></Slider>
+            <Slider
+                on:setDetails={setDetails}
+                bind:intensity={intensity}
+            ></Slider>
         </div>
         
         <div style="margin-bottom: 0.2rem;" class="background-container">
             <h2>Ernährung</h2>
-            <Food></Food>
+            <Food
+                on:setDetails={setDetails}
+                bind:diet={diet}
+            ></Food>
         </div>
     </div>
 {/if}
