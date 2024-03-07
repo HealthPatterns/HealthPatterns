@@ -90,7 +90,7 @@ def generate_nickname(db: SessionInstance):
 @router.get("/puk", response_model=schemas.UserPUK)
 def generate_puk():
     """
-    Generates an string with 8 single digits.
+    Generates a string with 8 single digits.
     """
     new_puk = schemas.UserPUK(puk=crud.users.generate_puk())
     return new_puk
