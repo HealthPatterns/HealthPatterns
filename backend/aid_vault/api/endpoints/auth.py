@@ -1,16 +1,14 @@
 from typing import Annotated
-from datetime import timedelta
 
 from fastapi import Depends, APIRouter, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
 
 
-from aid_vault import schemas, crud, models
-from ...common.security import authenticate_user, get_password_hash, get_puk_hash, reset_password, verify_password
+from aid_vault import schemas, crud
+from ...common.security import authenticate_user, get_password_hash, get_puk_hash, reset_password
 from ...common.oauth2 import (
     create_access_token,
     CurrentUserToken,
-    ACCESS_TOKEN_EXPIRE_MINUTES,
 )
 from ...db.database import SessionInstance
 
@@ -32,8 +30,8 @@ def register_user(db: SessionInstance, password_in: schemas.UserCreate) -> schem
     new_nickname = crud.users.generate_nickname(db)
     new_puk = crud.users.generate_puk()
     hashed_puk = get_puk_hash(new_puk)
-    new_user = schemas.UserCreateDB(nickname=new_nickname, puk=hashed_puk, password=hashed_password)
-    new_user_db = crud.users.create_user(db=db, user=new_user)
+    user_schema = schemas.UserCreateDB(nickname=new_nickname, puk=hashed_puk, password=hashed_password)
+    new_user_db = crud.users.create_user(db=db, user=user_schema)
     access_token = create_access_token(new_user_db.id)
     token = schemas.Token(access_token=access_token, token_type="bearer")
     new_reg_user = schemas.UserRegistered(nickname=new_user_db.nickname, puk=new_puk, token=token)
@@ -47,29 +45,30 @@ async def login_for_access_token(
     Takes username and password as form data and returns an access token with the
     user-id as subject.
     """
-    user = authenticate_user(db, form_data.username, form_data.password)
-    if not user:
+    user_dict = authenticate_user(db, form_data.username, form_data.password)
+    if not user_dict["result"]:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Incorrect username or password",
+            detail=user_dict["error_message"],
             headers={"WWW-Authenticate": "Bearer"},
         )
-    access_token = create_access_token(user.id)
+    if user_dict["result"]:
+        access_token = create_access_token(user_dict["user"].id)
 
-    token = schemas.Token(access_token=access_token, token_type="bearer")
-    return token
+        token = schemas.Token(access_token=access_token, token_type="bearer")
+        return token
 
 @router.put("/password-reset", response_model=schemas.Message)
 async def reset_password_logged_in(db: SessionInstance, current_user: CurrentUserToken, password: str, new_password: str):
     """
     Requires the user to be logged in. Takes the current password and a new password to change the current one.
     """
-    authenticated_user = authenticate_user(db, current_user.nickname, password)
-    if authenticated_user:
-        reset_password(db, authenticated_user, new_password)
+    authenticated_user_dict = authenticate_user(db, current_user.nickname, password)
+    if authenticated_user_dict["result"]:
+        reset_password(db, authenticated_user_dict["user"], new_password)
         return {"message": f"Password changed successfully for user: {current_user.nickname}"}
-    if not authenticated_user:
-        return {"message": "Password wrong or user doesn't exist."}
+    if not authenticated_user_dict["result"]:
+        return {"message": authenticated_user_dict["error_message"]}
 
 @router.get("/test-token", response_model=schemas.Message)
 async def test_access_token(current_user: CurrentUserToken):
