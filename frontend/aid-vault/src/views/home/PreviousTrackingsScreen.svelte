@@ -3,21 +3,31 @@
     import Loader from '../../lib/Loader.svelte';
     import AddDetails from '../../lib/AddDetails.svelte';
     import { apiGetAllTrackings } from '../../lib/ApiFunctions.ts';
-    import { loginData } from '../../store.js';
+    import { defaultTrackingData, loginData } from '../../store.js';
 
     export let enablePreviousTrackingsScreen : boolean;
     export let enableTrackingScreen : boolean;
     let trackings = apiGetAllTrackings($loginData.accessToken);
     let enableDetails : boolean = false;
+    let front_regions : Array<boolean>;
+    let back_regions : Array<boolean>;
+    let intensity : number;
+    let diet : Array<string>;
+    let tracking_id : string;
 
-  function handleClick(index) {
-    console.log('Clicked on item:', trackings[index]);
+  function toggleDetails(tracking) {
+    enableDetails = !enableDetails;
+    tracking_id = tracking.id;
+    front_regions = tracking.front_regions || $defaultTrackingData.front_regions;
+    back_regions = tracking.back_regions || $defaultTrackingData.back_regions;
+    intensity = tracking.intensity || $defaultTrackingData.intensity;
+    diet = tracking.diet || $defaultTrackingData.diet;
   }
 
 </script>
 
 <main>
-    {#if enablePreviousTrackingsScreen}
+    {#if enablePreviousTrackingsScreen && !enableDetails}
     <div id="PreviousScreen">
         <Header
             bind:enableTrackingScreen={enableTrackingScreen}
@@ -32,10 +42,10 @@
           {:else if trackingsData === 'ERROR'}
               <p>Ein Fehler ist aufgetreten.</p>
           {:else}
-            {#each trackingsData as tracking, index}
+            {#each trackingsData as tracking}
                 <!-- svelte-ignore a11y-click-events-have-key-events -->
                 <!-- svelte-ignore a11y-no-static-element-interactions-->
-                <div class="row" on:click={() => handleClick(index)}>
+                <div class="row" on:click={() => toggleDetails(tracking)}>
                     <div class="column-item">
                         <div class="date">{new Date(tracking.time_start * 1000).toLocaleDateString()}</div>
                         <div class="time">
@@ -55,6 +65,18 @@
           {/if}
         {/await}
     </div>
+    {:else if enableDetails}
+    <div class="details">
+      <AddDetails 
+          on:toggle={toggleDetails}
+          enabled={enableDetails}
+          bind:front_regions={front_regions}
+          bind:back_regions={back_regions}
+          bind:intensity={intensity}
+          bind:diet={diet}
+          bind:tracking_id={tracking_id}
+      ></AddDetails>
+    </div>
     {:else}
         <Loader></Loader>
     {/if}
@@ -71,7 +93,15 @@
       background-color: #fff;
       position: relative;
   }
-
+  .details {
+      background-color: #f2f1e8;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+  }
   #PreviousScreen {
     display: flex;
     height: 90%;
