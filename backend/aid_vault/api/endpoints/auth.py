@@ -29,10 +29,10 @@ def register_user(db: SessionInstance, password_in: schemas.UserCreate) -> schem
     The user still has to login afterwards.
     """
     hashed_password = get_password_hash(password_in.password)    
-    nickname = crud.users.generate_nickname(db)
+    new_nickname = crud.users.generate_nickname(db)
     new_puk = crud.users.generate_puk()
     hashed_puk = get_puk_hash(new_puk)
-    new_user = schemas.UserCreateDB(nickname=nickname, puk=hashed_puk, password=hashed_password)
+    new_user = schemas.UserCreateDB(nickname=new_nickname, puk=hashed_puk, password=hashed_password)
     new_user_db = crud.users.create_user(db=db, user=new_user)
     access_token = create_access_token(new_user_db.id)
     token = schemas.Token(access_token=access_token, token_type="bearer")
@@ -83,8 +83,8 @@ def generate_nickname(db: SessionInstance):
     """
     Generates a new nickname; crud function also checks if that nickname already exists in DB.
     """
-    new_user_nickname = schemas.UserBase(nickname=crud.users.generate_nickname(db))
-    return new_user_nickname
+    new_nickname = schemas.UserBase(nickname=crud.users.generate_nickname(db))
+    return new_nickname
 
 @router.get("/puk", response_model=schemas.UserPUK)
 def generate_puk():
