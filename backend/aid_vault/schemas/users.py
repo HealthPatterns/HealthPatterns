@@ -27,10 +27,13 @@ class UserCreateAdmin(BaseModel):
     gender: str
     password: str
 
-class UserCreate(UserBase): 
+class UserCreate(BaseModel): 
     """
     Contains password, so this is only used for creation of a new user and should NEVER be used as a response_model!
     """
+    password: str
+
+class UserCreateDB(UserBase):
     puk: str
     password: str
 

@@ -21,23 +21,22 @@ router = APIRouter(prefix="/auth", tags=["Authentication"])
     response_model=schemas.UserRegistered,
     status_code=status.HTTP_201_CREATED,
 )
-def register_user(db: SessionInstance, user_in: schemas.UserCreate) -> schemas.UserRegistered:
+def register_user(db: SessionInstance, password_in: schemas.UserCreate) -> schemas.UserRegistered:
     """
     Creates a user from the input data, hashes the plaintext password and saves
     the user into the database. Also generates a new nickname that does not yet exist
-    and a new PUK. Returns the new user from the database.
+    and a new PUK. Returns the new user and its token from the database.
     The user still has to login afterwards.
     """
-    hashed_password = get_password_hash(user_in.password)
-    user_in.password = hashed_password
-    user_in.nickname = crud.users.generate_nickname(db)
+    hashed_password = get_password_hash(password_in.password)    
+    nickname = crud.users.generate_nickname(db)
     new_puk = crud.users.generate_puk()
     hashed_puk = get_puk_hash(new_puk)
-    user_in.puk = hashed_puk
-    new_user = crud.users.create_user(db=db, user=user_in)
-    access_token = create_access_token(new_user.id)
+    new_user = schemas.UserCreateDB(nickname=nickname, puk=hashed_puk, password=hashed_password)
+    new_user_db = crud.users.create_user(db=db, user=new_user)
+    access_token = create_access_token(new_user_db.id)
     token = schemas.Token(access_token=access_token, token_type="bearer")
-    new_reg_user = schemas.UserRegistered(nickname=new_user.nickname, puk=new_puk, token=token)
+    new_reg_user = schemas.UserRegistered(nickname=new_user_db.nickname, puk=new_puk, token=token)
     return new_reg_user
 
 @router.post("/login", response_model=schemas.Token)

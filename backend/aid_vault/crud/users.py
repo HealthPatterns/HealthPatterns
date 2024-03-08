@@ -5,7 +5,7 @@ from fastapi.encoders import jsonable_encoder
 from sqlalchemy.orm import Session
 
 from ..models.users import Users
-from ..schemas.users import UserForUpdate, UserCreate
+from ..schemas.users import UserForUpdate, UserCreateDB
 
 import random, string
 
@@ -36,7 +36,7 @@ def user_exists_by_email(db: Session, email: str) -> bool:
 
     return result if email is not None else False
 
-def create_user(db: Session, user: UserCreate) -> Users:
+def create_user(db: Session, user: UserCreateDB) -> Users:
     new_user = Users(**jsonable_encoder(user))
     db.add(new_user)
     db.commit()
