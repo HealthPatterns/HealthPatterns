@@ -1,6 +1,6 @@
 from typing import Annotated
 
-from fastapi import Depends, APIRouter, HTTPException, status
+from fastapi import Depends, APIRouter, HTTPException, status, Form
 from fastapi.security import OAuth2PasswordRequestForm
 
 
@@ -8,6 +8,7 @@ from aid_vault import schemas, crud
 from ...common.security import authenticate_user, get_password_hash, get_puk_hash, reset_password
 from ...common.oauth2 import (
     create_access_token,
+    get_current_active_user,
     CurrentUserToken,
 )
 from ...db.database import SessionInstance
@@ -23,8 +24,8 @@ def register_user(db: SessionInstance, password_in: schemas.UserCreate) -> schem
     """
     Creates a user from the input data, hashes the plaintext password and saves
     the user into the database. Also generates a new nickname that does not yet exist
-    and a new PUK. Returns the new user and its token from the database.
-    The user still has to login afterwards.
+    and a new PUK. Returns the new user from the database, its token and its newly
+    created puk in plain text so the user can write it down.
     """
     hashed_password = get_password_hash(password_in.password)    
     new_nickname = crud.users.generate_nickname(db)
@@ -45,30 +46,29 @@ async def login_for_access_token(
     Takes username and password as form data and returns an access token with the
     user-id as subject.
     """
-    user_dict = authenticate_user(db, form_data.username, form_data.password)
-    if not user_dict["result"]:
+    user = authenticate_user(db, form_data.username, form_data.password)
+    if not user:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail=user_dict["error_message"],
+            detail="Incorrect username or password!",
             headers={"WWW-Authenticate": "Bearer"},
         )
-    if user_dict["result"]:
-        access_token = create_access_token(user_dict["user"].id)
-
-        token = schemas.Token(access_token=access_token, token_type="bearer")
-        return token
+    
+    access_token = create_access_token(user.id)
+    token = schemas.Token(access_token=access_token, token_type="bearer")
+    return token
 
 @router.put("/password-reset", response_model=schemas.Message)
-async def reset_password_logged_in(db: SessionInstance, current_user: CurrentUserToken, password: str, new_password: str):
+async def reset_password_logged_in(db: SessionInstance, current_user: CurrentUserToken, form_data: schemas.PasswordReset = Depends()):
     """
     Requires the user to be logged in. Takes the current password and a new password to change the current one.
     """
-    authenticated_user_dict = authenticate_user(db, current_user.nickname, password)
-    if authenticated_user_dict["result"]:
-        reset_password(db, authenticated_user_dict["user"], new_password)
+    authenticated_user = authenticate_user(db, current_user.nickname, form_data.current_password)
+    if authenticated_user:
+        reset_password(db, authenticated_user, form_data.new_password)
         return {"message": f"Password changed successfully for user: {current_user.nickname}"}
-    if not authenticated_user_dict["result"]:
-        return {"message": authenticated_user_dict["error_message"]}
+    if not authenticated_user:
+        return {"message": f"Current password is wrong for user: {current_user.nickname}"}
 
 @router.get("/test-token", response_model=schemas.Message)
 async def test_access_token(current_user: CurrentUserToken):
@@ -76,6 +76,12 @@ async def test_access_token(current_user: CurrentUserToken):
     Checks if the access token is valid by decoding it and returning the user attached to it.
     """
     return {"message": f"Valid token for user: {current_user.nickname}"}
+
+@router.get("/users/me/", response_model=schemas.UserOptionals)
+async def read_users_me(
+    current_user: Annotated[schemas.UserOptionals, Depends(get_current_active_user)]
+):
+    return current_user
 
 @router.get("/nickname", response_model=schemas.UserBase)
 def generate_nickname(db: SessionInstance):

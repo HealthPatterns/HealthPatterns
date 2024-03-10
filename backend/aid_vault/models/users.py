@@ -13,6 +13,6 @@ class Users(Base):
     age = Column(Integer, unique=False, nullable=True)
     gender = Column(String, unique=False, nullable=True)
     password = Column(String, unique=False, nullable=False)
-    puk= Column(String, unique=True, nullable=False)
+    puk= Column(String, unique=False, nullable=False)
     email = Column(String, unique=True, nullable=True)
     is_active = Column(Boolean, default=True)

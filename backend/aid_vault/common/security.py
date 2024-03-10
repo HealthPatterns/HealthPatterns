@@ -20,12 +20,11 @@ def verify_puk(plain_puk, hashed_puk):
 
 def authenticate_user(db: Session, username: str, password: str):
     user = read_user_by_nickname(db, username)
-    data = {"result": True, "user": user}
     if not user:
-        data = {"result": False, "error_message": "User not found!"}
+        return False
     if not verify_password(plain_password=password, hashed_password=user.password):
-        data = {"result": False, "error_message": "Wrong Password!"}
-    return data
+        return False
+    return user
 
 def reset_password(db: Session, user: Users, password: str):
     hashed_password = get_password_hash(password)

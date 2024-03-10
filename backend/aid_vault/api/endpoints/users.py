@@ -14,13 +14,6 @@ def get_user(current_user: CurrentUserToken) -> models.Users:
     """
     return current_user
 
-@router.get("/all_users", response_model=list[schemas.UserComplete])
-def get_users(db: SessionInstance, current_user: CurrentUserToken) -> list[models.Users]:
-    """
-    Returns all users from DB.
-    """
-    return crud.users.read_all_users(db=db)
-
 
 @router.get("/name", response_model=schemas.UserDisplayName)
 def get_user_name(current_user: CurrentUserToken) -> models.Users:
