@@ -1,17 +1,22 @@
 from typing import Annotated
 
-from fastapi import Depends, APIRouter, HTTPException, status, Form
+from fastapi import Depends, APIRouter, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
 
 
 from aid_vault import schemas, crud
-from ...common.security import authenticate_user, get_password_hash, get_puk_hash, change_password, authenticate_puk
+from ...common.security import (
+    authenticate_user, 
+    get_password_hash,
+    get_puk_hash,
+    change_password,
+    authenticate_puk,
+)
 from ...common.oauth2 import (
     create_access_token,
     CurrentUserToken,
 )
 from ...db.database import SessionInstance
-from ...crud.users import read_user_by_nickname
 
 router = APIRouter(prefix="/auth", tags=["Authentication"])
 

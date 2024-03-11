@@ -26,7 +26,7 @@ def authenticate_user(db: Session, username: str, password: str):
         return False
     return user
 
-def authenticate_puk(db: Session, username:str, puk: str):
+def authenticate_puk(db: Session, username: str, puk: str):
     user = read_user_by_nickname(db, username)
     if not user:
         return False
