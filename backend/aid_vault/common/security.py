@@ -26,7 +26,15 @@ def authenticate_user(db: Session, username: str, password: str):
         return False
     return user
 
-def reset_password(db: Session, user: Users, password: str):
+def authenticate_puk(db: Session, username:str, puk: str):
+    user = read_user_by_nickname(db, username)
+    if not user:
+        return False
+    if not verify_puk(plain_puk=puk, hashed_puk=user.puk):
+        return False
+    return user
+
+def change_password(db: Session, user: Users, password: str):
     hashed_password = get_password_hash(password)
     user.password = hashed_password
     db.commit()

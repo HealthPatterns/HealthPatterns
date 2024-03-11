@@ -34,10 +34,14 @@ class UserCreate(BaseModel):
     """
     password: str
 
-class UserPasswordReset(BaseModel):
+class PasswordRecovery(BaseModel):
+    """
+    Contains new password, so this is only used for password recovery and should NEVER be used as a response_model
+    """
     new_password: str
     nickname: str
     puk: str
+
 class PasswordReset(BaseModel):
     """
     Contains the current and new password, so this is only used for resetting the user password should NEVER be used as a response_model!
