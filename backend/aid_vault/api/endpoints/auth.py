@@ -77,11 +77,6 @@ async def test_access_token(current_user: CurrentUserToken):
     """
     return {"message": f"Valid token for user: {current_user.nickname}"}
 
-@router.get("/users/me/", response_model=schemas.UserOptionals)
-async def read_users_me(
-    current_user: Annotated[schemas.UserOptionals, Depends(get_current_active_user)]
-):
-    return current_user
 
 @router.get("/nickname", response_model=schemas.UserBase)
 def generate_nickname(db: SessionInstance):
