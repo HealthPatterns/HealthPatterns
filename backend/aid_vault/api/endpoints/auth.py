@@ -5,10 +5,15 @@ from fastapi.security import OAuth2PasswordRequestForm
 
 
 from aid_vault import schemas, crud
-from ...common.security import authenticate_user, get_password_hash, get_puk_hash, reset_password
+from ...common.security import (
+    authenticate_user, 
+    get_password_hash,
+    get_puk_hash,
+    change_password,
+    authenticate_puk,
+)
 from ...common.oauth2 import (
     create_access_token,
-    get_current_active_user,
     CurrentUserToken,
 )
 from ...db.database import SessionInstance
@@ -20,14 +25,14 @@ router = APIRouter(prefix="/auth", tags=["Authentication"])
     response_model=schemas.UserRegistered,
     status_code=status.HTTP_201_CREATED,
 )
-def register_user(db: SessionInstance, password_in: schemas.UserCreate) -> schemas.UserRegistered:
+def register_user(db: SessionInstance, password_in: Annotated[str, Form()]) -> schemas.UserRegistered:
     """
     Creates a user from the input data, hashes the plaintext password and saves
     the user into the database. Also generates a new nickname that does not yet exist
     and a new PUK. Returns the new user from the database, its token and its newly
     created puk in plain text so the user can write it down.
     """
-    hashed_password = get_password_hash(password_in.password)    
+    hashed_password = get_password_hash(password_in)    
     new_nickname = crud.users.generate_nickname(db)
     new_puk = crud.users.generate_puk()
     hashed_puk = get_puk_hash(new_puk)
@@ -37,6 +42,7 @@ def register_user(db: SessionInstance, password_in: schemas.UserCreate) -> schem
     token = schemas.Token(access_token=access_token, token_type="bearer")
     new_reg_user = schemas.UserRegistered(nickname=new_user_db.nickname, puk=new_puk, token=token)
     return new_reg_user
+
 
 @router.post("/login", response_model=schemas.Token)
 async def login_for_access_token(
@@ -58,17 +64,47 @@ async def login_for_access_token(
     token = schemas.Token(access_token=access_token, token_type="bearer")
     return token
 
+
 @router.put("/password-reset", response_model=schemas.Message)
-async def reset_password_logged_in(db: SessionInstance, current_user: CurrentUserToken, form_data: schemas.PasswordReset = Depends()):
+async def reset_password_logged_in(
+    db: SessionInstance,
+    current_user: CurrentUserToken,
+    current_password: Annotated[str, Form()],
+    new_password: Annotated[str, Form()]
+):
     """
     Requires the user to be logged in. Takes the current password and a new password to change the current one.
     """
-    authenticated_user = authenticate_user(db, current_user.nickname, form_data.current_password)
+    authenticated_user = authenticate_user(db, current_user.nickname, current_password)
     if authenticated_user:
-        reset_password(db, authenticated_user, form_data.new_password)
+        change_password(db, authenticated_user, new_password)
         return {"message": f"Password changed successfully for user: {current_user.nickname}"}
     if not authenticated_user:
-        return {"message": f"Current password is wrong for user: {current_user.nickname}"}
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail=f"Current password is wrong for user: {current_user.nickname}"
+        )
+
+
+@router.post("/password-recovery", response_model=schemas.Message)
+def recover_password_with_puk(
+    db: SessionInstance,
+    nickname: Annotated[str, Form()],
+    puk: Annotated[str, Form()],
+    new_password: Annotated[str, Form()]
+):
+    """
+    Takes username, puk and new password to change the current password.
+    """
+    user = authenticate_puk(db, nickname, puk)
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Password update failed. Invalid data."
+        )
+    change_password(db, user, new_password)
+    return schemas.Message(message="Password succesfully updated.")
+
 
 @router.get("/test-token", response_model=schemas.Message)
 async def test_access_token(current_user: CurrentUserToken):
@@ -85,6 +121,7 @@ def generate_nickname(db: SessionInstance):
     """
     new_nickname = schemas.UserBase(nickname=crud.users.generate_nickname(db))
     return new_nickname
+
 
 @router.get("/puk", response_model=schemas.UserPUK)
 def generate_puk():
