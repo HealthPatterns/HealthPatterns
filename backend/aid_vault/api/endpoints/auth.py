@@ -1,6 +1,6 @@
 from typing import Annotated
 
-from fastapi import Depends, APIRouter, HTTPException, status
+from fastapi import Depends, APIRouter, HTTPException, status, Form
 from fastapi.security import OAuth2PasswordRequestForm
 
 
@@ -25,14 +25,14 @@ router = APIRouter(prefix="/auth", tags=["Authentication"])
     response_model=schemas.UserRegistered,
     status_code=status.HTTP_201_CREATED,
 )
-def register_user(db: SessionInstance, password_in: schemas.UserCreate) -> schemas.UserRegistered:
+def register_user(db: SessionInstance, password_in: Annotated[str, Form()]) -> schemas.UserRegistered:
     """
     Creates a user from the input data, hashes the plaintext password and saves
     the user into the database. Also generates a new nickname that does not yet exist
     and a new PUK. Returns the new user from the database, its token and its newly
     created puk in plain text so the user can write it down.
     """
-    hashed_password = get_password_hash(password_in.password)    
+    hashed_password = get_password_hash(password_in)    
     new_nickname = crud.users.generate_nickname(db)
     new_puk = crud.users.generate_puk()
     hashed_puk = get_puk_hash(new_puk)
@@ -66,13 +66,18 @@ async def login_for_access_token(
 
 
 @router.put("/password-reset", response_model=schemas.Message)
-async def reset_password_logged_in(db: SessionInstance, current_user: CurrentUserToken, form_data: schemas.PasswordReset = Depends()):
+async def reset_password_logged_in(
+    db: SessionInstance,
+    current_user: CurrentUserToken,
+    current_password: Annotated[str, Form()],
+    new_password: Annotated[str, Form()]
+):
     """
     Requires the user to be logged in. Takes the current password and a new password to change the current one.
     """
-    authenticated_user = authenticate_user(db, current_user.nickname, form_data.current_password)
+    authenticated_user = authenticate_user(db, current_user.nickname, current_password)
     if authenticated_user:
-        change_password(db, authenticated_user, form_data.new_password)
+        change_password(db, authenticated_user, new_password)
         return {"message": f"Password changed successfully for user: {current_user.nickname}"}
     if not authenticated_user:
         raise HTTPException(
@@ -82,17 +87,22 @@ async def reset_password_logged_in(db: SessionInstance, current_user: CurrentUse
 
 
 @router.post("/password-recovery", response_model=schemas.Message)
-def recover_password_with_puk(db: SessionInstance, data: schemas.PasswordRecovery):
+def recover_password_with_puk(
+    db: SessionInstance,
+    nickname: Annotated[str, Form()],
+    puk: Annotated[str, Form()],
+    new_password: Annotated[str, Form()]
+):
     """
     Takes username, puk and new password to change the current password.
     """
-    user = authenticate_puk(db, data.nickname, data.puk)
+    user = authenticate_puk(db, nickname, puk)
     if not user:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Password update failed. Invalid data."
         )
-    change_password(db, user, data.new_password)
+    change_password(db, user, new_password)
     return schemas.Message(message="Password succesfully updated.")
 
 

@@ -1,3 +1,5 @@
+from typing import Annotated
+
 from pydantic import BaseModel
 from uuid import UUID
 from fastapi import Form
@@ -27,28 +29,6 @@ class UserCreateAdmin(BaseModel):
     puk: str
     gender: str
     password: str
-
-class UserCreate(BaseModel): 
-    """
-    Contains password, so this is only used for creation of a new user and should NEVER be used as a response_model!
-    """
-    password: str
-
-class PasswordRecovery(BaseModel):
-    """
-    Contains new password, so this is only used for password recovery and should NEVER be used as a response_model
-    """
-    new_password: str
-    nickname: str
-    puk: str
-
-class PasswordReset(BaseModel):
-    """
-    Contains the current and new password, so this is only used for resetting the user password should NEVER be used as a response_model!
-    """
-    current_password: str = Form(...)
-    new_password: str = Form(...)
-    new_password2: str = Form(...)
 
 class UserCreateDB(UserBase):
     puk: str
