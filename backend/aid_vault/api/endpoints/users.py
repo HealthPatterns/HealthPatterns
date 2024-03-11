@@ -2,27 +2,9 @@ from fastapi import APIRouter, status, HTTPException
 
 from aid_vault import crud, schemas, models
 from ...db.database import SessionInstance
-from ...common.security import get_password_hash
 from ...common.oauth2 import CurrentUserToken
 
 router = APIRouter(prefix="/user", tags=["Users"])
-
-
-@router.post(
-    "/register",
-    response_model=schemas.UserComplete,
-    status_code=status.HTTP_201_CREATED,
-)
-def register_user(db: SessionInstance, user_in: schemas.UserCreate) -> models.Users:
-    """
-    Creates a user from the input data, hashes the plaintext password and saves
-    the user into the database. Returns the new user from the database.
-    The user still has to login afterwards.
-    """
-    hashed_password = get_password_hash(user_in.password)
-    user_in.password = hashed_password
-    new_user = crud.users.create_user(db=db, user=user_in)
-    return new_user
 
 
 @router.get("", response_model=schemas.UserComplete)

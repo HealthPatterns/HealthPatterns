@@ -1,4 +1,4 @@
-from typing import Annotated
+from typing import Annotated, Any
 from datetime import datetime, timedelta
 from uuid import UUID
 
@@ -23,19 +23,17 @@ SECRET_KEY = "3e7cde7fed126b5f15eefe7aac3895ac14c6c8cfa171743e9aefe29cd135579c"
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
-
-def create_access_token(data: dict, expires_delta: timedelta | None = None) -> str:
+def create_access_token(subject: str | Any, expires_delta: timedelta | None = None) -> str:
     """
-    Creates an access-token. The jwt payload should be fed as data: dict.
+    Creates an access-token. Subject is the user_id of the authenticating user.
     Main purpose is for creating an access-token after the "/auth/login" endpoint
     has been called.
     """
-    data_to_encode = data.copy()
     if expires_delta:
         expire = datetime.utcnow() + expires_delta
     else:
-        expire = datetime.utcnow() + timedelta(minutes=15)
-    data_to_encode.update({"exp": expire})
+        expire = datetime.utcnow() + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+    data_to_encode = {"exp": expire, "sub": str(subject)}
     encoded_jwt = jwt.encode(data_to_encode, SECRET_KEY, ALGORITHM)
     return encoded_jwt
 
