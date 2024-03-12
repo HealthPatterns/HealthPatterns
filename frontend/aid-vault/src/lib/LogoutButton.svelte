@@ -11,8 +11,8 @@
 
 <style>
     .logout-button {
-        background-color: #e34234;
-        color: #f2f1e8;
+        background-color: var(--accent-color);
+        color: var(--secondary-background-color);
         border: 0;
         border-radius: 0.4rem;
         font-size: x-large;

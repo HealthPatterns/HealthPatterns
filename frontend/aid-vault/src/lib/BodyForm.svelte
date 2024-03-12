@@ -21,7 +21,7 @@
   <svg height="75%" viewBox="204 70 264 634">
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <!-- svelte-ignore a11y-no-static-element-interactions-->
-    <path on:click={() => change_color(0, false)} fill={front_regions[0] ? "#0D698B" : "#C2D3DB"} opacity="1.000000" stroke="none" d="
+    <path on:click={() => change_color(0, false)} fill={front_regions[0] ? "var(--primary-100-color)" : "var(--primary-25-color)"} opacity="1.000000" stroke="none" d="
       M388.832275,501.107483
       C384.932373,502.180145 381.444489,503.635468 377.858795,503.940460
       C368.248077,504.757904 361.548523,509.943817 355.966339,517.230713
@@ -41,7 +41,7 @@
     z"/>
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <!-- svelte-ignore a11y-no-static-element-interactions-->
-    <path on:click={() => change_color(1, false)} fill={front_regions[1] ? "#0D698B" : "#C2D3DB"} opacity="1.000000" stroke="none" d="
+    <path on:click={() => change_color(1, false)} fill={front_regions[1] ? "var(--primary-100-color)" : "var(--primary-25-color)"} opacity="1.000000" stroke="none" d="
       M330.639282,430.945007
       C330.650909,444.636108 325.831696,457.141327 324.358124,470.168335
       C322.528137,486.346222 321.007721,502.559052 319.339844,518.755371
@@ -60,7 +60,7 @@
     z"/>
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <!-- svelte-ignore a11y-no-static-element-interactions-->
-    <path on:click={() => change_color(2, false)} fill={front_regions[2] ? "#0D698B" : "#C2D3DB"} opacity="1.000000" stroke="none" d="
+    <path on:click={() => change_color(2, false)} fill={front_regions[2] ? "var(--primary-100-color)" : "var(--primary-25-color)"} opacity="1.000000" stroke="none" d="
       M383.148560,684.058350
       C386.872986,691.022156 385.114410,694.789856 377.766663,695.108521
       C369.119507,695.483643 360.438812,695.399719 351.783325,695.147583
@@ -81,7 +81,7 @@
     z"/>
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <!-- svelte-ignore a11y-no-static-element-interactions-->
-    <path on:click={() => change_color(3, false)} fill={front_regions[3] ? "#0D698B" : "#C2D3DB"} opacity="1.000000" stroke="none" d="
+    <path on:click={() => change_color(3, false)} fill={front_regions[3] ? "var(--primary-100-color)" : "var(--primary-25-color)"} opacity="1.000000" stroke="none" d="
       M318.064697,566.108582
       C319.508759,575.081787 321.250854,583.571411 322.189606,592.148987
       C323.424774,603.435486 322.453186,614.665588 320.435059,625.872314
@@ -102,7 +102,7 @@
     z"/>
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <!-- svelte-ignore a11y-no-static-element-interactions-->
-    <path on:click={() => change_color(4, false)} fill={front_regions[4] ? "#0D698B" : "#C2D3DB"} opacity="1.000000" stroke="none" d="
+    <path on:click={() => change_color(4, false)} fill={front_regions[4] ? "var(--primary-100-color)" : "var(--primary-25-color)"} opacity="1.000000" stroke="none" d="
       M344.716675,252.032318
       C330.420807,252.765152 316.667023,251.773193 302.920166,250.441315
       C296.067291,249.777344 290.846649,246.159195 287.367188,240.708694
@@ -118,7 +118,7 @@
     z"/>
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <!-- svelte-ignore a11y-no-static-element-interactions-->
-    <path on:click={() => change_color(5, false)} fill={front_regions[5] ? "#0D698B" : "#C2D3DB"} opacity="1.000000" stroke="none" d="
+    <path on:click={() => change_color(5, false)} fill={front_regions[5] ? "var(--primary-100-color)" : "var(--primary-25-color)"} opacity="1.000000" stroke="none" d="
       M351.513916,155.602417
       C341.174561,162.919281 330.583160,163.445999 319.590302,158.324036
       C314.898315,156.137863 312.583649,151.828995 310.499603,147.432205
@@ -135,7 +135,7 @@
     z"/>
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <!-- svelte-ignore a11y-no-static-element-interactions-->
-    <path on:click={() => change_color(6, false)} fill={front_regions[6] ? "#0D698B" : "#C2D3DB"} opacity="1.000000" stroke="none" d="
+    <path on:click={() => change_color(6, false)} fill={front_regions[6] ? "var(--primary-100-color)" : "var(--primary-25-color)"} opacity="1.000000" stroke="none" d="
       M352.651398,319.690735
       C354.604279,319.603485 356.099854,319.539795 357.592255,319.431854
       C360.690369,319.207764 362.215607,320.507172 362.249634,323.738251
@@ -151,7 +151,7 @@
     z"/>
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <!-- svelte-ignore a11y-no-static-element-interactions-->
-    <path on:click={() => change_color(7, false)} fill={front_regions[7] ? "#0D698B" : "#C2D3DB"} opacity="1.000000" stroke="none" d="
+    <path on:click={() => change_color(7, false)} fill={front_regions[7] ? "var(--primary-100-color)" : "var(--primary-25-color)"} opacity="1.000000" stroke="none" d="
       M356.482300,254.595764
       C359.024963,254.372589 361.108887,253.228409 363.488281,254.570755
       C363.726532,258.870911 361.754486,262.850739 361.135803,267.057922
@@ -165,7 +165,7 @@
     z"/>
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <!-- svelte-ignore a11y-no-static-element-interactions-->
-    <path on:click={() => change_color(8, false)} fill={front_regions[8] ? "#0D698B" : "#C2D3DB"} opacity="1.000000" stroke="none" d="
+    <path on:click={() => change_color(8, false)} fill={front_regions[8] ? "var(--primary-100-color)" : "var(--primary-25-color)"} opacity="1.000000" stroke="none" d="
       M406.860626,288.203979
       C406.065582,286.232452 404.417572,284.973236 404.807190,282.537842
       C409.971191,283.282043 414.291901,286.305328 419.206940,287.501862
@@ -185,7 +185,7 @@
     z"/>
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <!-- svelte-ignore a11y-no-static-element-interactions-->
-    <path on:click={() => change_color(9, false)} fill={front_regions[9] ? "#0D698B" : "#C2D3DB"} opacity="1.000000" stroke="none" d="
+    <path on:click={() => change_color(9, false)} fill={front_regions[9] ? "var(--primary-100-color)" : "var(--primary-25-color)"} opacity="1.000000" stroke="none" d="
       M247.593048,287.456726
       C253.494812,285.213989 259.023987,283.077026 264.551575,280.940643
       C264.816132,281.561798 265.130859,281.956604 265.036987,282.129272
@@ -205,7 +205,7 @@
     z"/>
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <!-- svelte-ignore a11y-no-static-element-interactions-->
-    <path on:click={() => change_color(10, false)} fill={front_regions[10] ? "#0D698B" : "#C2D3DB"} opacity="1.000000" stroke="none" d="
+    <path on:click={() => change_color(10, false)} fill={front_regions[10] ? "var(--primary-100-color)" : "var(--primary-25-color)"} opacity="1.000000" stroke="none" d="
       M384.750244,237.954651
       C386.328888,235.228851 388.109833,235.007996 388.001801,238.075180
       C387.663544,247.681000 390.726044,257.673767 384.779419,266.735870
@@ -222,7 +222,7 @@
     z"/>
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <!-- svelte-ignore a11y-no-static-element-interactions-->
-    <path on:click={() => change_color(11, false)} fill={front_regions[11] ? "#0D698B" : "#C2D3DB"}  opacity="1.000000" stroke="none" d="
+    <path on:click={() => change_color(11, false)} fill={front_regions[11] ? "var(--primary-100-color)" : "var(--primary-25-color)"}  opacity="1.000000" stroke="none" d="
       M299.536926,357.873993
       C298.131836,360.961121 296.776337,359.523926 295.742798,358.165985
       C290.805023,351.678406 285.956116,345.123199 281.076172,338.591675
@@ -240,7 +240,7 @@
     z"/>
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <!-- svelte-ignore a11y-no-static-element-interactions-->
-    <path on:click={() => change_color(12, false)} fill={front_regions[12] ? "#0D698B" : "#C2D3DB"} opacity="1.000000" stroke="none" d="
+    <path on:click={() => change_color(12, false)} fill={front_regions[12] ? "var(--primary-100-color)" : "var(--primary-25-color)"} opacity="1.000000" stroke="none" d="
       M426.204346,242.866302
       C430.825592,251.710251 432.195099,260.086273 427.293121,269.137787
       C425.303040,272.812500 425.101196,277.463776 424.135162,281.682037
@@ -254,7 +254,7 @@
     z"/>
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <!-- svelte-ignore a11y-no-static-element-interactions-->
-    <path on:click={() => change_color(13, false)} fill={front_regions[13] ? "#0D698B" : "#C2D3DB"} opacity="1.000000" stroke="none" d="
+    <path on:click={() => change_color(13, false)} fill={front_regions[13] ? "var(--primary-100-color)" : "var(--primary-25-color)"} opacity="1.000000" stroke="none" d="
       M253.899567,238.929840
       C259.578064,231.754486 265.378540,225.226334 273.815338,220.708755
       C276.029480,224.840744 275.939301,229.084366 275.997375,233.010757
@@ -270,7 +270,7 @@
     z"/>
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <!-- svelte-ignore a11y-no-static-element-interactions-->
-    <path on:click={() => change_color(14, false)} fill={front_regions[14] ? "#0D698B" : "#C2D3DB"} opacity="1.000000" stroke="none" d="
+    <path on:click={() => change_color(14, false)} fill={front_regions[14] ? "var(--primary-100-color)" : "var(--primary-25-color)"} opacity="1.000000" stroke="none" d="
       M419.975464,226.501434
       C418.455688,229.835770 417.032013,232.775513 415.596619,235.739471
       C412.766235,235.005203 411.901154,232.565247 410.218140,231.064301
@@ -283,7 +283,7 @@
     z"/>
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <!-- svelte-ignore a11y-no-static-element-interactions-->
-    <path on:click={() => change_color(15, false)} fill={front_regions[15] ? "#0D698B" : "#C2D3DB"} opacity="1.000000" stroke="none" d="
+    <path on:click={() => change_color(15, false)} fill={front_regions[15] ? "var(--primary-100-color)" : "var(--primary-25-color)"} opacity="1.000000" stroke="none" d="
       M264.227448,191.993195
       C274.065338,186.529922 283.637360,187.660751 293.308289,191.539398
       C293.233185,193.998047 290.979736,194.134354 289.543243,194.949478
@@ -296,7 +296,7 @@
     z"/>
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <!-- svelte-ignore a11y-no-static-element-interactions-->
-    <path on:click={() => change_color(16, false)} fill={front_regions[16] ? "#0D698B" : "#C2D3DB"} opacity="1.000000" stroke="none" d="
+    <path on:click={() => change_color(16, false)} fill={front_regions[16] ? "var(--primary-100-color)" : "var(--primary-25-color)"} opacity="1.000000" stroke="none" d="
       M317.841949,186.034073
       C315.858978,177.465439 312.557068,169.374496 316.741699,160.169525
       C328.528290,166.542694 340.435730,166.330154 352.116455,158.613663
@@ -308,7 +308,7 @@
     z"/>
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <!-- svelte-ignore a11y-no-static-element-interactions-->
-    <path on:click={() => change_color(17, false)} fill={front_regions[17] ? "#0D698B" : "#C2D3DB"} opacity="1.000000" stroke="none" d="
+    <path on:click={() => change_color(17, false)} fill={front_regions[17] ? "var(--primary-100-color)" : "var(--primary-25-color)"} opacity="1.000000" stroke="none" d="
       M353.490723,179.577011
       C354.192322,176.817352 354.253204,174.262802 356.245605,171.796860
       C365.004059,175.916748 372.884796,181.714569 382.059875,185.431046
@@ -318,7 +318,7 @@
     z"/>
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <!-- svelte-ignore a11y-no-static-element-interactions-->
-    <path on:click={() => change_color(18, false)} fill={front_regions[18] ? "#0D698B" : "#C2D3DB"} opacity="1.000000" stroke="none" d="
+    <path on:click={() => change_color(18, false)} fill={front_regions[18] ? "var(--primary-100-color)" : "var(--primary-25-color)"} opacity="1.000000" stroke="none" d="
       M298.088440,188.952209
       C293.951721,187.822159 289.806732,188.413177 285.079376,185.510391
       C294.653320,181.682877 302.727875,177.147812 311.035553,172.519211
@@ -332,7 +332,7 @@
   <svg height="75%" viewBox="564 70 264 634">
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <!-- svelte-ignore a11y-no-static-element-interactions-->
-    <path on:click={() => change_color(0, true)} fill={back_regions[0] ? "#0D698B" : "#C2D3DB"} opacity="1.000000" stroke="none" d="
+    <path on:click={() => change_color(0, true)} fill={back_regions[0] ? "var(--primary-100-color)" : "var(--primary-25-color)"} opacity="1.000000" stroke="none" d="
       M646.013062,331.754547
       C661.977844,326.556732 674.800720,331.911560 686.159119,342.328735
       C693.734619,349.276489 693.630676,349.374847 701.247620,342.222351
@@ -354,7 +354,7 @@
     z"/>
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <!-- svelte-ignore a11y-no-static-element-interactions-->
-    <path on:click={() => change_color(1, true)} fill={back_regions[1] ? "#0D698B" : "#C2D3DB"} opacity="1.000000" stroke="none" d="
+    <path on:click={() => change_color(1, true)} fill={back_regions[1] ? "var(--primary-100-color)" : "var(--primary-25-color)"} opacity="1.000000" stroke="none" d="
       M707.008972,683.167114
       C711.349121,660.956421 711.434570,639.192200 707.570251,617.280762
       C705.328430,604.569275 706.304565,591.753906 708.885498,579.076660
@@ -373,7 +373,7 @@
     z"/>
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <!-- svelte-ignore a11y-no-static-element-interactions-->
-    <path on:click={() => change_color(2, true)} fill={back_regions[2] ? "#0D698B" : "#C2D3DB"} opacity="1.000000" stroke="none" d="
+    <path on:click={() => change_color(2, true)} fill={back_regions[2] ? "var(--primary-100-color)" : "var(--primary-25-color)"} opacity="1.000000" stroke="none" d="
       M651.098389,649.760620
       C650.402588,638.769958 647.632690,628.601318 644.700317,618.601685
       C638.200500,596.436829 633.528503,574.148254 634.443176,550.849365
@@ -393,7 +393,7 @@
     z"/>
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <!-- svelte-ignore a11y-no-static-element-interactions-->
-    <path on:click={() => change_color(3, true)} fill={back_regions[3] ? "#0D698B" : "#C2D3DB"} opacity="1.000000" stroke="none" d="
+    <path on:click={() => change_color(3, true)} fill={back_regions[3] ? "var(--primary-100-color)" : "var(--primary-25-color)"} opacity="1.000000" stroke="none" d="
       M697.367981,421.598480
       C696.946899,418.076416 696.603210,414.990540 696.190369,411.283478
       C700.921692,412.892822 704.843201,414.741486 708.968140,415.542175
@@ -411,7 +411,7 @@
     z"/>
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <!-- svelte-ignore a11y-no-static-element-interactions-->
-    <path on:click={() => change_color(4, true)} fill={back_regions[4] ? "#0D698B" : "#C2D3DB"} opacity="1.000000" stroke="none" d="
+    <path on:click={() => change_color(4, true)} fill={back_regions[4] ? "var(--primary-100-color)" : "var(--primary-25-color)"} opacity="1.000000" stroke="none" d="
       M686.487183,458.559021
       C682.174561,484.156830 681.274963,509.740387 677.669434,534.998657
       C675.167480,535.051025 674.651611,533.213989 673.672729,531.987061
@@ -428,7 +428,7 @@
     z"/>
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <!-- svelte-ignore a11y-no-static-element-interactions-->
-    <path on:click={() => change_color(5, true)} fill={back_regions[5] ? "#0D698B" : "#C2D3DB"} opacity="1.000000" stroke="none" d="
+    <path on:click={() => change_color(5, true)} fill={back_regions[5] ? "var(--primary-100-color)" : "var(--primary-25-color)"} opacity="1.000000" stroke="none" d="
       M714.923828,150.865021
       C711.534363,155.222198 707.235229,157.170227 702.223694,157.661713
       C696.407532,158.232101 690.596497,158.114853 684.770386,157.565460
@@ -445,7 +445,7 @@
     z"/>
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <!-- svelte-ignore a11y-no-static-element-interactions-->
-    <path on:click={() => change_color(6, true)} fill={back_regions[6] ? "#0D698B" : "#C2D3DB"} opacity="1.000000" stroke="none" d="
+    <path on:click={() => change_color(6, true)} fill={back_regions[6] ? "var(--primary-100-color)" : "var(--primary-25-color)"} opacity="1.000000" stroke="none" d="
       M724.377258,195.385132
       C717.592468,204.268539 714.846375,214.336899 713.336548,224.789764
       C711.331482,238.671677 704.089783,250.365997 697.806641,262.432068
@@ -468,7 +468,7 @@
     z"/>
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <!-- svelte-ignore a11y-no-static-element-interactions-->
-    <path on:click={() => change_color(7, true)} fill={back_regions[7] ? "#0D698B" : "#C2D3DB"} opacity="1.000000" stroke="none" d="
+    <path on:click={() => change_color(7, true)} fill={back_regions[7] ? "var(--primary-100-color)" : "var(--primary-25-color)"} opacity="1.000000" stroke="none" d="
       M750.739563,227.534760
       C749.452759,237.536652 748.008301,247.089096 748.531189,256.773895
       C748.636230,258.719360 748.115967,260.483368 747.169006,262.003601
@@ -488,7 +488,7 @@
     z"/>
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <!-- svelte-ignore a11y-no-static-element-interactions-->
-    <path on:click={() => change_color(8, true)} fill={back_regions[8] ? "#0D698B" : "#C2D3DB"} opacity="1.000000" stroke="none" d="
+    <path on:click={() => change_color(8, true)} fill={back_regions[8] ? "var(--primary-100-color)" : "var(--primary-25-color)"} opacity="1.000000" stroke="none" d="
       M672.916748,233.111420
       C675.413635,243.534348 680.814270,252.241013 685.505981,261.219147
       C687.787415,265.584930 687.774780,269.121216 686.012390,273.802643
@@ -508,7 +508,7 @@
     z"/>
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <!-- svelte-ignore a11y-no-static-element-interactions-->
-    <path on:click={() => change_color(9, true)} fill={back_regions[9] ? "#0D698B" : "#C2D3DB"} opacity="1.000000" stroke="none" d="
+    <path on:click={() => change_color(9, true)} fill={back_regions[9] ? "var(--primary-100-color)" : "var(--primary-25-color)"} opacity="1.000000" stroke="none" d="
       M568.721436,353.767426
       C573.002747,341.257385 576.100037,328.824432 578.788391,316.299561
       C581.260376,304.782959 586.530701,294.515350 592.070984,283.608765
@@ -524,7 +524,7 @@
     z"/>
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <!-- svelte-ignore a11y-no-static-element-interactions-->
-    <path on:click={() => change_color(10, true)} fill={back_regions[10] ? "#0D698B" : "#C2D3DB"} opacity="1.000000" stroke="none" d="
+    <path on:click={() => change_color(10, true)} fill={back_regions[10] ? "var(--primary-100-color)" : "var(--primary-25-color)"} opacity="1.000000" stroke="none" d="
       M806.202515,302.005005
       C811.308716,315.473206 812.840332,329.508514 817.243103,342.769043
       C819.024353,348.133972 820.579590,353.591705 822.698975,358.820190
@@ -540,7 +540,7 @@
     z"/>
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <!-- svelte-ignore a11y-no-static-element-interactions-->
-    <path on:click={() => change_color(11, true)} fill={back_regions[11] ? "#0D698B" : "#C2D3DB"} opacity="1.000000" stroke="none" d="
+    <path on:click={() => change_color(11, true)} fill={back_regions[11] ? "var(--primary-100-color)" : "var(--primary-25-color)"} opacity="1.000000" stroke="none" d="
       M711.965454,331.003204
       C706.467896,333.634399 702.115723,337.252594 697.975586,341.107758
       C695.127869,343.759399 692.477783,343.840881 689.652893,341.250824
@@ -555,7 +555,7 @@
     z"/>
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <!-- svelte-ignore a11y-no-static-element-interactions-->
-    <path on:click={() => change_color(12, true)} fill={back_regions[12] ? "#0D698B" : "#C2D3DB"} opacity="1.000000" stroke="none" d="
+    <path on:click={() => change_color(12, true)} fill={back_regions[12] ? "var(--primary-100-color)" : "var(--primary-25-color)"} opacity="1.000000" stroke="none" d="
       M600.919434,293.091095
       C600.005554,291.268677 599.519958,289.543701 598.448608,288.340179
       C590.892090,279.851532 593.078491,270.522858 595.901428,261.114136
@@ -570,7 +570,7 @@
     z"/>
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <!-- svelte-ignore a11y-no-static-element-interactions-->
-    <path on:click={() => change_color(13, true)} fill={back_regions[13] ? "#0D698B" : "#C2D3DB"} opacity="1.000000" stroke="none" d="
+    <path on:click={() => change_color(13, true)} fill={back_regions[13] ? "var(--primary-100-color)" : "var(--primary-25-color)"} opacity="1.000000" stroke="none" d="
       M761.780823,278.096375
       C759.623230,273.548584 757.782166,269.251068 755.573486,265.151642
       C749.896790,254.615524 750.987793,243.768814 753.344971,232.935089
@@ -584,7 +584,7 @@
     z"/>
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <!-- svelte-ignore a11y-no-static-element-interactions-->
-    <path on:click={() => change_color(14, true)} fill={back_regions[14] ? "#0D698B" : "#C2D3DB"} opacity="1.000000" stroke="none" d="
+    <path on:click={() => change_color(14, true)} fill={back_regions[14] ? "var(--primary-100-color)" : "var(--primary-25-color)"} opacity="1.000000" stroke="none" d="
       M743.493286,205.508453
       C739.167236,202.141388 735.121948,198.995728 730.987244,195.780518
       C732.530273,192.652496 735.426697,192.478683 737.742798,191.515396
@@ -598,7 +598,7 @@
     z"/>
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <!-- svelte-ignore a11y-no-static-element-interactions-->
-    <path on:click={() => change_color(15, true)} fill={back_regions[15] ? "#0D698B" : "#C2D3DB"} opacity="1.000000" stroke="none" d="
+    <path on:click={() => change_color(15, true)} fill={back_regions[15] ? "var(--primary-100-color)" : "var(--primary-25-color)"} opacity="1.000000" stroke="none" d="
       M614.523438,201.743790
       C624.290649,186.501099 642.209900,185.524902 655.896118,194.868866
       C655.726318,197.172668 653.705994,197.998718 652.232666,199.204315
@@ -613,7 +613,7 @@
     z"/>
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <!-- svelte-ignore a11y-no-static-element-interactions-->
-    <path on:click={() => change_color(16, true)} fill={back_regions[16] ? "#0D698B" : "#C2D3DB"} opacity="1.000000" stroke="none" d="
+    <path on:click={() => change_color(16, true)} fill={back_regions[16] ? "var(--primary-100-color)" : "var(--primary-25-color)"} opacity="1.000000" stroke="none" d="
       M722.383789,325.220093
       C725.458862,314.947449 731.062500,306.811066 739.774292,299.321045
       C741.289246,310.330566 745.345764,319.703064 747.217529,329.682953
@@ -623,7 +623,7 @@
     z"/>
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <!-- svelte-ignore a11y-no-static-element-interactions-->
-    <path on:click={() => change_color(17, true)} fill={back_regions[17] ? "#0D698B" : "#C2D3DB"} opacity="1.000000" stroke="none" d="
+    <path on:click={() => change_color(17, true)} fill={back_regions[17] ? "var(--primary-100-color)" : "var(--primary-25-color)"} opacity="1.000000" stroke="none" d="
       M643.578979,323.523071
       C645.444275,316.087585 648.217957,309.304230 649.347717,301.085846
       C657.858704,308.105774 662.701111,316.313416 665.677185,327.145508

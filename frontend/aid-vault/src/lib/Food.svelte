@@ -31,6 +31,10 @@
     height: fit-content;
 }
 
+button {
+    background-color: var(--primary-background-color);
+}
+
 .tag {
     display: inline-block;
     padding: .2em .5em .3em;
@@ -39,12 +43,12 @@
     border-radius: 8px;
     font-weight: 400;
     border: 2px #e6f0f3 solid;
-    background-color: #e6f0f3;
+    background-color: var(--primary-25-color);
 }
 
 .tag-active {
-    border: 2px #0D698B solid;
-    background-color: #fff;
+    border: 2px var(--primary-100-color) solid;
+    background-color: var(--primary-background-color);
 }
 
 

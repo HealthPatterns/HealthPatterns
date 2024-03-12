@@ -48,7 +48,7 @@
 
 <style>
     #Navbar {
-        background-color: white;
+        background-color: var(--secondary-background-color);
         width: 80%;
         height: 100%;
         position: absolute;
@@ -59,7 +59,7 @@
         text-align: left;
         margin-left: 1.5rem;
         font-size: x-large;
-    } 
+    }
     #lower-button {
         position: absolute;
         bottom: 2.5rem;
