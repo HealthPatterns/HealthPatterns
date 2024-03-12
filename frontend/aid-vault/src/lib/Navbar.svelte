@@ -1,4 +1,5 @@
 <script lang="ts">
+    import LogoutButton from "./LogoutButton.svelte";
     import "../app.css"
 
     export let enable : boolean;
@@ -38,6 +39,9 @@
                 <button class="navbutton">Daten exportieren</button>
                 <button class="navbutton">Einstellungen</button>
             </div>
+            <div id="lower-button">
+                <LogoutButton></LogoutButton>
+            </div>
         </div>
     </div>
 {/if}
@@ -56,4 +60,13 @@
         margin-left: 1.5rem;
         font-size: x-large;
     } 
+    #lower-button {
+        position: absolute;
+        bottom: 2.5rem;
+        width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+        left: 0;
+        right: 0;
+    }
 </style>
