@@ -1,5 +1,6 @@
 import { loginData, trackingData } from "../store.js";
 import { get } from "svelte/store";
+import Cookies from 'js-cookie';
 
 const url = "https://localhost/api";
 
@@ -43,6 +44,7 @@ const statusCode = response.status;
 if (statusCode === 200) {
     const data = await response.json();
     get(loginData).accessToken = data.access_token;
+    Cookies.set('HealthPatterns', data.access_token, {expires: 1/48});
     fetchData();
     console.log("API call 'Login' successful.");
     return true;

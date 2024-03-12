@@ -71,8 +71,8 @@
     <h1>Login</h1>
     <div id=LoginFields>
       <form on:submit|preventDefault={handleLogin}>
-        <input type="text" id="username" bind:value={username} placeholder="Nutzername"/>
-        <input type="password" id="password" bind:value={password} placeholder="Passwort"/>
+        <input type="text" required autocomplete="username" id="username" bind:value={username} placeholder="Nutzername"/>
+        <input type="password" required autocomplete="current-password" id="password" bind:value={password} placeholder="Passwort"/>
         <button type="submit">Login</button>
         {#if errorMessage}
         <p id="error">{errorMessage}</p>
@@ -86,7 +86,7 @@
     <h1>Registrieren</h1>
     <div id=LoginFields>
       <form on:submit|preventDefault={handleRegister}>
-        <input type="password" id="password" bind:value={password} placeholder="Passwort" on:focus={() => {errorMessage = ""}}/>
+        <input type="password" required autocomplete="new-password" id="password" bind:value={password} placeholder="Passwort" on:focus={() => {errorMessage = ""}}/>
         <ul id="passwordRequirements">
           <li class:valid={hasEightChars(password)}>Mindestens 8 Zeichen lang</li>
           <li class:valid={hasUpperCase(password)}>Mindestens 1 Großbuchstaben (A-Z)</li>
@@ -94,7 +94,7 @@
           <li class:valid={hasNumber(password)}>Mindestens 1 Zahl (0-9)</li>
           <li class:valid={hasSpecialChar(password)}>Mindestens 1 Sonderzeichen (@-$)</li>
         </ul>
-        <input type="password" id="password" bind:value={password2} placeholder="Passwort wiederholen" on:focus={() => {errorMessage = ""}}/>
+        <input type="password" required autocomplete="new-password" id="password" bind:value={password2} placeholder="Passwort wiederholen" on:focus={() => {errorMessage = ""}}/>
         <button type="submit">Registrieren</button>
         {#if errorMessage}
         <p id="error">{errorMessage}</p>
