@@ -45,7 +45,7 @@ def read_trackings(db: Session, current_user_id: UUID):
     """
     Filters the trackings by given User ID and selects all their trackings.
     """
-    return db.query(Trackings).filter(Trackings.user_id == current_user_id).all()
+    return db.query(Trackings).filter(Trackings.user_id == current_user_id).order_by(Trackings.time_end.desc()).all()
 
 def set_tracking_end(db: Session, tracking_id: UUID, tracking_input: TrackingStop):
     """
