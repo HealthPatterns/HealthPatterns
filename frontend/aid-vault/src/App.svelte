@@ -7,10 +7,12 @@
   import TrackingScreen from "./views/home/TrackingScreen.svelte";
   import PreviousTrackingsScreen from "./views/home/PreviousTrackingsScreen.svelte";
   import LoginScreen from "./views/login/LoginScreen.svelte";
+  import SettingsScreen from "./views/home/SettingsScreen.svelte";
 
   let enableTrackingScreen : boolean = false;
   let enablePreviousTrackingsScreen : boolean = false;
   let enableLoginScreen : boolean = false;
+  let enableSettingsScreen : boolean = false;
   let enableMessage : boolean = false;
   let enableRegisterMessage : boolean = false;
   let enableError : boolean;
@@ -40,6 +42,7 @@
   <TrackingScreen
     bind:enableTrackingScreen={enableTrackingScreen}
     bind:enablePreviousTrackingsScreen={enablePreviousTrackingsScreen}
+    bind:enableSettingsScreen={enableSettingsScreen}
     bind:enableMessage={enableMessage}
     bind:enableRegisterMessage={enableRegisterMessage}
     bind:enableError={enableError}
@@ -48,6 +51,13 @@
 {:else if !enableLoginScreen && enablePreviousTrackingsScreen}
   <PreviousTrackingsScreen
     bind:enableTrackingScreen={enableTrackingScreen}
-    bind:enablePreviousTrackingsScreen={enablePreviousTrackingsScreen}>
+    bind:enablePreviousTrackingsScreen={enablePreviousTrackingsScreen}
+    bind:enableSettingsScreen={enableSettingsScreen}>
   </PreviousTrackingsScreen>
+{:else if !enableLoginScreen && enableSettingsScreen}
+  <SettingsScreen
+    bind:enableTrackingScreen={enableTrackingScreen}
+    bind:enablePreviousTrackingsScreen={enablePreviousTrackingsScreen}
+    bind:enableSettingsScreen={enableSettingsScreen}>
+  </SettingsScreen>
 {/if}

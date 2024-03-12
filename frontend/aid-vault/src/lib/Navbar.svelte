@@ -5,19 +5,28 @@
     export let enable : boolean;
     export let enableTrackingScreen : boolean;
     export let enablePreviousTrackingsScreen : boolean;
+    export let enableSettingsScreen : boolean;
 
     function toggleTrackingScreen() {
         enable = false;
         enableTrackingScreen = true;
         enablePreviousTrackingsScreen = false;
+        enableSettingsScreen = false;
     }
 
     function togglePreviousTrackingsScreen() {
         enable = false;
         enablePreviousTrackingsScreen = true;
         enableTrackingScreen = false;
+        enableSettingsScreen = false;
     }
 
+    function toggleSettingsScreen() {
+        enable = false;
+        enablePreviousTrackingsScreen = false;
+        enableTrackingScreen = false;
+        enableSettingsScreen = true;
+    }
 </script>
 
 {#if enable}
@@ -37,7 +46,7 @@
                 <button class="navbutton" on:click={togglePreviousTrackingsScreen}>Trackingeinträge</button>
                 <button class="navbutton">Analyse</button>
                 <button class="navbutton">Daten exportieren</button>
-                <button class="navbutton">Einstellungen</button>
+                <button class="navbutton" on:click={toggleSettingsScreen}>Einstellungen</button>
             </div>
             <div id="lower-button">
                 <LogoutButton></LogoutButton>

@@ -95,6 +95,39 @@ console.error("Error:", error);
 }
 }
 
+export async function apiResetPassword(api_token: string, current_password: string, new_password: string) {
+  const api_url = `${url}/auth/password-reset`;
+
+  const formData = new URLSearchParams();
+  formData.append('current_password', current_password);
+  formData.append('new_password', new_password);
+
+  const options = {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'accept': 'application/json',
+      'Authorization': 'Bearer ' + api_token,
+    },
+    body: formData
+  };
+
+  try {
+    const response = await fetch(api_url, options);
+    const statusCode = response.status;
+    if (statusCode === 200) {
+      console.log("API call 'ResetPassword' successful.");
+      return true;
+    } else {
+      console.log("Error during API call 'ResetPassword'.");
+      return false;
+    }
+  } catch (error) {
+    console.error("Error:", error);
+    return false;
+  }
+}
+
 export async function apiGetUsername(api_token: string) {
 const api_url = `${url}/user/name`;
 

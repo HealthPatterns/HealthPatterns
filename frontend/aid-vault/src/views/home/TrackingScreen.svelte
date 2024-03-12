@@ -10,6 +10,7 @@ import RegisterCard from '../../lib/RegisterCard.svelte';
 
   export let enableTrackingScreen : boolean;
   export let enablePreviousTrackingsScreen : boolean;
+  export let enableSettingsScreen : boolean;
   export let enableMessage : boolean;
   export let enableRegisterMessage : boolean;
   export let enableError : boolean;
@@ -38,7 +39,8 @@ import RegisterCard from '../../lib/RegisterCard.svelte';
     <div id="HomeScreen">
         <Header
           bind:enableTrackingScreen={enableTrackingScreen}
-          bind:enablePreviousTrackingsScreen={enablePreviousTrackingsScreen}>
+          bind:enablePreviousTrackingsScreen={enablePreviousTrackingsScreen}
+          bind:enableSettingsScreen={enableSettingsScreen}>
         </Header>
 
         <h1 style="margin-top: 1.4rem;">Guten Morgen!</h1>

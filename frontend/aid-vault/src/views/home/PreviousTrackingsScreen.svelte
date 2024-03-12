@@ -7,6 +7,7 @@
 
     export let enablePreviousTrackingsScreen : boolean;
     export let enableTrackingScreen : boolean;
+    export let enableSettingsScreen : boolean;
     let trackings = apiGetAllTrackings($loginData.accessToken);
     let enableDetails : boolean = false;
     let front_regions : Array<boolean>;
@@ -31,7 +32,8 @@
     <div id="PreviousScreen">
         <Header
             bind:enableTrackingScreen={enableTrackingScreen}
-            bind:enablePreviousTrackingsScreen={enablePreviousTrackingsScreen}>
+            bind:enablePreviousTrackingsScreen={enablePreviousTrackingsScreen}
+            bind:enableSettingsScreen={enableSettingsScreen}>
         </Header>
         <h1 style="margin-top: 1.4rem; margin-bottom: 1.4rem">Trackingeinträge</h1>
         {#await trackings}
