@@ -55,21 +55,19 @@ console.error("Error:", error);
 }
 }
 
-export async function apiRegister(username : string, password : string) {
-const api_url = `${url}/user/register`;
+export async function apiRegister(password : string) {
+const api_url = `${url}/auth/register`;
 
-const data = {
-  nickname: username,
-  password: password
-};
+const formData = new URLSearchParams();
+formData.append('password_in', password);
 
 const options = {
   method: 'POST',
   headers: {
-    'Content-Type': 'application/json',
+    'Content-Type': 'application/x-www-form-urlencoded',
     'accept': 'application/json'
   },
-  body: JSON.stringify(data)
+  body: formData
 };
 
 try {
@@ -77,12 +75,18 @@ const response = await fetch(api_url, options);
 const statusCode = response.status;
 if (statusCode === 201) {
     const data = await response.json();
-    console.log(data);
-    //TODO: Login after successful registration
+    loginData.update((ld) => {
+      ld.username = data.nickname;
+      ld.accessToken = data.token.access_token;
+      ld.puk = data.puk;
+      ld.dataFetched = true;
+      return ld;
+    });
     console.log("API call 'Register' successful.");
+    return true;
 } else {
     console.log("Error during API call 'Register'.");
-    return "Registration failed. Please check your credentials";
+    return "Registration failed.";
 }
 } catch (error) {
 console.error("Error:", error);

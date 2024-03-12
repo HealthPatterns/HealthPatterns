@@ -6,10 +6,12 @@
   import TrackingCard from '../../lib/TrackingCard.svelte';
   import ErrorCard from '../../lib/ErrorCard.svelte';
   import Header from '../../lib/Header.svelte';
+import RegisterCard from '../../lib/RegisterCard.svelte';
 
   export let enableTrackingScreen : boolean;
   export let enablePreviousTrackingsScreen : boolean;
   export let enableMessage : boolean;
+  export let enableRegisterMessage : boolean;
   export let enableError : boolean;
   export let errorMessage : string;
 
@@ -39,7 +41,7 @@
           bind:enablePreviousTrackingsScreen={enablePreviousTrackingsScreen}>
         </Header>
 
-        <h1 style="margin-top: 1.4rem;">Guten Morgen {$loginData.username}!</h1>
+        <h1 style="margin-top: 1.4rem;">Guten Morgen!</h1>
         <div class="time">
 
             <Timer bind:this={timerComponet}></Timer>
@@ -70,6 +72,7 @@
         </div>
 
         <TrackingCard bind:enable={enableMessage}></TrackingCard>
+        <RegisterCard bind:enable={enableRegisterMessage}></RegisterCard>
         <ErrorCard enable={enableError} message={errorMessage}></ErrorCard>
 
     </div>
