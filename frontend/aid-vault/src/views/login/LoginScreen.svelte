@@ -111,7 +111,7 @@
     z-index: 2;
     width: 100%;
     height: 100%;
-    background-color: rgba(255, 255, 255, 0.75);
+    background-color: rgba(77, 77, 77, 0.184);
 }
 #LoginScreen {
     display: flex;
@@ -139,8 +139,8 @@ h1 {
     height: 30%;
 }
 button {
-    background-color: #0d698b;
-    color: #f2f1e8;
+    background-color: var(--primary-100-color);
+    color: var(--secondary-background-color);
     border: 0;
     border-radius: 0.4rem;
     font-size: x-large;
@@ -153,7 +153,7 @@ button {
     display: flex;
 }
 input {
-    background-color: #E9EFF3;
+    background-color: var(--primary-10-color);
     border: 0;
     border-radius: 0.4rem;
     font-weight: 500;
@@ -164,22 +164,29 @@ input {
     justify-content: center;
     display: flex;
 }
+
 input::placeholder {
     color: #8e9294;
 }
+
 input:focus {
-    outline-color: #0D698B;
+    outline-color: var(--primary-100-color);
 }
+
+input:autofill {
+  background-color: var(--primary-100-color);
+}
+
 p {
     margin-top: 1rem;
     margin-bottom: 2.5rem;
     text-align: center;
 }
 #error {
-    color: #e34234;
+    color: var(--accent-color);
 }
 a {
-    color: #0D698B;
+    color: var(--primary-100-color);
     text-decoration: none;
 }
 
@@ -193,8 +200,8 @@ a {
     color: red;
 }
 
-#passwordRequirements li.valid {
+/* #passwordRequirements li.valid {
     list-style-type: "\2705";
     color: green;
-}
+} */
 </style>

@@ -87,7 +87,7 @@ h2 {
 }
 
 .background-container {
-    background-color: #fff;
+    background-color: var(--primary-background-color);
     margin-bottom: 0.6rem;
     border-radius: 0.2rem;
     padding: 0.5rem;

@@ -34,7 +34,7 @@ import RegisterCard from '../../lib/RegisterCard.svelte';
     }
 </script>
 
-<main style="background-color: { enableAddDetails ? "#F2F1E8" : "#fff" }">
+<main style="background-color: { enableAddDetails ? "var(--secondary-background-color)" : "var(--primary-background-color)" }">
     {#if enableTrackerView && $loginData.dataFetched}
     <div id="HomeScreen">
         <Header
@@ -101,10 +101,10 @@ import RegisterCard from '../../lib/RegisterCard.svelte';
       font-family: 'Montserrat';
       align-items: center;
       justify-content: center;
-      background-color: #fff;
+      background-color: var(--primary-background-color);
       position: relative;
   }
-  
+
 #HomeScreen {
     display: flex;
     height: 90%;
@@ -130,8 +130,8 @@ h1 {
 }
 
 .tracking-button {
-    background-color: #0d698b;
-    color: #f2f1e8;
+    background-color: var(--primary-100-color);
+    color: var(--secondary-background-color);
     border: 0;
     border-radius: 0.4rem;
     font-size: x-large;
@@ -146,7 +146,7 @@ h1 {
 .details-button {
     border: 0;
     border-radius: 2rem;
-    background-color: #c2d3db;
+    background-color: var(--primary-25-color);
     font-size: medium;
     margin-bottom: 1.3rem;
     width: fit-content;
@@ -157,6 +157,6 @@ h1 {
 }
 
 .tracking-active {
-    background-color: #e34234;
+    background-color: var(--accent-color);
 }
 </style>
