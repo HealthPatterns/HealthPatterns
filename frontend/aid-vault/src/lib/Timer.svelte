@@ -57,7 +57,7 @@
 
 <style>
   .circle {
-    background-color: #F2F1E8;
+    background-color: var(--secondary-background-color);
     height: 50%;
     aspect-ratio: 1 / 1;
     border-radius: 50%;

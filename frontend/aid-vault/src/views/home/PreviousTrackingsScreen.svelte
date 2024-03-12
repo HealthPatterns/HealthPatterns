@@ -81,7 +81,7 @@
         <Loader></Loader>
     {/if}
 </main>
-  
+
 <style>
   main {
       display: flex;
@@ -90,11 +90,11 @@
       font-family: 'Montserrat';
       align-items: center;
       justify-content: center;
-      background-color: #fff;
+      background-color: var(--primary-background-color);
       position: relative;
   }
   .details {
-      background-color: #f2f1e8;
+      background-color: var(--secondary-background-color);
       position: relative;
       display: flex;
       justify-content: center;

@@ -2,20 +2,28 @@
 @tailwind components;
 @tailwind utilities;
 
-
 @font-face{
   font-family: 'Montserrat';
   src: url('/fonts/Montserrat.ttf') format('truetype');
 }
 
 :root {
+
+  /*color vars*/
+  --text-color: #ffffff;
+  --primary-background-color: #121212;
+  --secondary-background-color: #1a1a1a;
+  --accent-color: #fa9c89;
+  --primary-100-color: #86a9bd;
+  --primary-25-color: #282828;
+  --primary-10-color: #3f3f3f;
+
   font-family: Montserrat;
   line-height: 1.5;
   font-weight: 400;
 
   /*color-scheme: light dark;*/
-  color: #213547;
-  background-color: #ffffff;
+  background-color: var(--main-background-color);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -30,7 +38,8 @@ html ,body {
   place-items: center;
   height: 100%;
   width: 100%;
-  color: #050533;
+  color: var(--text-color);
+  background-color: var(--primary-background-color);
 }
 
 #app {
@@ -39,25 +48,25 @@ html ,body {
   width: 100%;
 }
 
-/* @media (prefers-color-scheme: light) {
+@media (prefers-color-scheme: light) {
   :root {
-    color: #213547;
-    background-color: #ffffff;
+  --text-color: #050533;
+  --primary-background-color: #ffffff;
+  --secondary-background-color: #f2f1e8;
+  --accent-color: #e34234;
+  --primary-100-color: #0d698b;
+  --primary-25-color: #c2d3db;
+  --primary-10-color: #e9eff3;
   }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
-} */
+}
 
 a:hover {
   color: #747bff;
 }
 
 button {
-  background-color: #f9f9f9;
+  /*background-color: #f9f9f9;*/
+  background-color: var(--secondary-background-color);
 }
 
 .BackgroundFilter {
