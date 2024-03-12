@@ -42,8 +42,8 @@ button {
     font-size: 1em;
     border-radius: 8px;
     font-weight: 400;
-    border: 2px #e6f0f3 solid;
-    background-color: var(--primary-25-color);
+    border: 2px var(--primary-background-color) solid;
+    background-color: var(--primary-10-color);
 }
 
 .tag-active {
