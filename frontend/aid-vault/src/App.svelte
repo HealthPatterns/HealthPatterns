@@ -1,5 +1,8 @@
 <script lang="ts">
   import { onMount } from "svelte";
+  import Cookies from 'js-cookie';
+  import { fetchData } from "./lib/ApiFunctions";
+  import { loginData } from "./store.js";
   import "./font.css"
   import TrackingScreen from "./views/home/TrackingScreen.svelte";
   import PreviousTrackingsScreen from "./views/home/PreviousTrackingsScreen.svelte";
@@ -13,8 +16,16 @@
   let errorMessage : string;
 
   onMount(() => {
-    enableLoginScreen = true;
-    enableTrackingScreen = false;
+    let cookieValue = Cookies.get('HealthPatterns');
+    if (cookieValue) {
+      $loginData.accessToken = cookieValue;
+      fetchData();
+      enableLoginScreen = false;
+      enableTrackingScreen = true;
+    } else {
+      enableLoginScreen = true;
+      enableTrackingScreen = false;
+    }
 	});
 </script>
 
