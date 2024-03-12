@@ -39,8 +39,8 @@
     <h1>Login</h1>
     <div id=LoginFields>
       <form on:submit|preventDefault={handleLogin}>
-        <input type="text" id="username" bind:value={username} placeholder="Nutzername"/>
-        <input type="password" id="password" bind:value={password} placeholder="Passwort"/>
+        <input type="text" required autocomplete="username" id="username" bind:value={username} placeholder="Nutzername"/>
+        <input type="password" required autocomplete="current-password" id="password" bind:value={password} placeholder="Passwort"/>
         <button type="submit">Login</button>
         {#if errorMessage}
         <p id="error">{errorMessage}</p>
@@ -55,7 +55,7 @@
     <div id=LoginFields>
       <form on:submit|preventDefault={handleRegister}>
         <input type="text" id="username" bind:value={username} placeholder="Nutzername"/>
-        <input type="password" id="password" bind:value={password} placeholder="Passwort"/>
+        <input type="password" required autocomplete="new-password" id="password" bind:value={password} placeholder="Passwort"/>
         <button type="submit">Registrieren</button>
         {#if errorMessage}
         <p id="error">{errorMessage}</p>
