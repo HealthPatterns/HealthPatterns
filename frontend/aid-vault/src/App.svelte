@@ -12,6 +12,7 @@
   let enablePreviousTrackingsScreen : boolean = false;
   let enableLoginScreen : boolean = false;
   let enableMessage : boolean = false;
+  let enableRegisterMessage : boolean = false;
   let enableError : boolean;
   let errorMessage : string;
 
@@ -32,13 +33,15 @@
 {#if !enableTrackingScreen && enableLoginScreen}
   <LoginScreen
     bind:enableTrackingScreen={enableTrackingScreen}
-    bind:enableLoginScreen={enableLoginScreen}>
+    bind:enableLoginScreen={enableLoginScreen}
+    bind:enableRegisterMessage={enableRegisterMessage}>
   </LoginScreen>
 {:else if !enableLoginScreen && enableTrackingScreen}
   <TrackingScreen
     bind:enableTrackingScreen={enableTrackingScreen}
     bind:enablePreviousTrackingsScreen={enablePreviousTrackingsScreen}
     bind:enableMessage={enableMessage}
+    bind:enableRegisterMessage={enableRegisterMessage}
     bind:enableError={enableError}
     errorMessage={errorMessage}>
   </TrackingScreen>

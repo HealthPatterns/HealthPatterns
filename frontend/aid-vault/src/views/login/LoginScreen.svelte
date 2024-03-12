@@ -2,11 +2,14 @@
     import { apiLogin, apiRegister } from '../../lib/ApiFunctions.ts'
     import Loader from "../../lib/Loader.svelte";
 
-    export let enableTrackingScreen : boolean, enableLoginScreen : boolean;
+    export let enableTrackingScreen : boolean
+    export let enableLoginScreen : boolean;
+    export let enableRegisterMessage : boolean;
 
     let isLoading = false;
     let username = "";
     let password = "";
+    let password2 = "";
     let errorMessage : string | undefined;
     let enableRegister = false;
 
@@ -23,9 +26,38 @@
             }
         });
     };
+
+    const hasUpperCase = (password: string) => /[A-Z]/.test(password);
+    const hasLowerCase = (password: string) => /[a-z]/.test(password);
+    const hasNumber = (password: string) => /[0-9]/.test(password);
+    const hasSpecialChar = (password: string) => /[!@#$%^&*]/.test(password);
+    const hasEightChars = (password: string) => password.length >= 8;
+
     const handleRegister = () => {
         errorMessage = "";
-        apiRegister(username, password).then((result) => {errorMessage = result});
+        isLoading = true;
+        if (password !== password2) {
+            isLoading = false;
+            errorMessage = "Passwörter stimmen nicht überein";
+            return;
+        } else {
+          if (hasUpperCase(password) && hasLowerCase(password) && hasNumber(password) && hasSpecialChar(password) && hasEightChars(password)) {
+            apiRegister(password).then((result) => {
+              isLoading = false;
+              if (result === true) {
+                  errorMessage = "";
+                  enableTrackingScreen = true;
+                  enableRegisterMessage = true;
+                  enableLoginScreen = false;
+              } else {
+                  errorMessage = result;
+              }
+            });
+          } else {
+            isLoading = false;
+            errorMessage = "Passwort muss mindestens 8 Zeichen, 1 Groß-, 1 Kleinbuchstaben und 1 Sonderzeichen haben.";
+          }
+        }
     };
 </script>
 
@@ -54,8 +86,15 @@
     <h1>Registrieren</h1>
     <div id=LoginFields>
       <form on:submit|preventDefault={handleRegister}>
-        <input type="text" id="username" bind:value={username} placeholder="Nutzername"/>
-        <input type="password" required autocomplete="new-password" id="password" bind:value={password} placeholder="Passwort"/>
+        <input type="password" required autocomplete="new-password" id="password" bind:value={password} placeholder="Passwort" on:focus={() => {errorMessage = ""}}/>
+        <ul id="passwordRequirements">
+          <li class:valid={hasEightChars(password)}>Mindestens 8 Zeichen lang</li>
+          <li class:valid={hasUpperCase(password)}>Mindestens 1 Großbuchstaben (A-Z)</li>
+          <li class:valid={hasLowerCase(password)}>Mindestens 1 Kleinbuchstaben (a-z)</li>
+          <li class:valid={hasNumber(password)}>Mindestens 1 Zahl (0-9)</li>
+          <li class:valid={hasSpecialChar(password)}>Mindestens 1 Sonderzeichen (@-$)</li>
+        </ul>
+        <input type="password" required autocomplete="new-password" id="password" bind:value={password2} placeholder="Passwort wiederholen" on:focus={() => {errorMessage = ""}}/>
         <button type="submit">Registrieren</button>
         {#if errorMessage}
         <p id="error">{errorMessage}</p>
@@ -142,5 +181,20 @@ p {
 a {
     color: #0D698B;
     text-decoration: none;
+}
+
+#passwordRequirements {
+    list-style-position: inside;;
+    margin-top: 1rem;
+}
+
+#passwordRequirements li {
+    list-style-type: "\274C";
+    color: red;
+}
+
+#passwordRequirements li.valid {
+    list-style-type: "\2705";
+    color: green;
 }
 </style>

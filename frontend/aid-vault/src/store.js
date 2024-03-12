@@ -3,6 +3,7 @@ import { writable, readable } from 'svelte/store';
 export const loginData = writable({
     username: "",
     accessToken: "",
+    puk: "",
     dataFetched: false,
 });
 
