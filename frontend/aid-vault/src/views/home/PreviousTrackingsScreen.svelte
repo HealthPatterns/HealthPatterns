@@ -43,6 +43,7 @@
               <p>Ein Fehler ist aufgetreten.</p>
           {:else}
             {#each trackingsData as tracking}
+              {#if tracking.time_end}
                 <!-- svelte-ignore a11y-click-events-have-key-events -->
                 <!-- svelte-ignore a11y-no-static-element-interactions-->
                 <div class="row" on:click={() => toggleDetails(tracking)}>
@@ -61,6 +62,7 @@
                       </svg>
                     </div>
                 </div>
+              {/if}
             {/each}
           {/if}
         {/await}
