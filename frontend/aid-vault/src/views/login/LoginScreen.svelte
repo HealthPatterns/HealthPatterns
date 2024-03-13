@@ -200,8 +200,8 @@ a {
     color: red;
 }
 
-/* #passwordRequirements li.valid {
+#passwordRequirements li.valid {
     list-style-type: "\2705";
     color: green;
-} */
+}
 </style>
