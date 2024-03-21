@@ -3,10 +3,12 @@
 > [!IMPORTANT]
 > Not all features described are implemented. Please have a look at the roadmap section.
 
-Health Patterns is designed to allow users to easily track pain events. Details can be provided for further analysis and to discover the user's own patterns. Data can be exported as a PDF for offline storage or to show to healthcare professionals. The user system is completely anonymous if desired and it's possible to encrypt one's data.
+Health Patterns is designed to allow users to easily track pain events. Details can be provided for further analysis and to discover the user's own patterns. Data can be exported as a PDF for offline storage or to show to healthcare professionals. The user system is completely anonymous and it's possible to encrypt one's data.
 
 
 ## Roadmap
+
+We are currently rebuilding Health Patterns to run natively and offline on mobile devices with local storage and sync with the backend. The goal is to eventually be able to ship an app for IOS/Android.
 
 | **Feature**   | **Frontend**                    | **Backend**                      |
 |---------------|---------------------------------|----------------------------------|
@@ -14,8 +16,9 @@ Health Patterns is designed to allow users to easily track pain events. Details 
 | Analysis      | :x: Not implemented             | :x: Not  implemented             |
 | PDF export    | :x: Not  implemented            | :x: Not  implemented             |
 | Encryption    | :x: Not  implemented            | :x: Not  implemented             |
-| User System   | :hammer: Partially implemented  | :white_check_mark: Implemented   |
-
+| User System   | :white_check_mark: Implemented  | :white_check_mark: Implemented   |
+| Native App    | :hammer: Under construction     | :x: Not relevant                 |
+| Sync Function | :x: Not implemented             | :x: Not implemented              |
 
 
 ## Installation
@@ -52,7 +55,7 @@ Launch health patterns with:
 docker compose up
 ```
 Once all the Docker containers are running, open your browser and check out your localhost.
-
+- you will be asked to accept the unsafe connection because we are using a self-signed certificate for local development
 ```bash
 https://localhost
 ```
@@ -70,6 +73,8 @@ docker compose down
 ```
 
 The database is persistent between container up/down. To reset the database do the following:
+- this is an issue if you still have an old version's database on your system
+- if there are database errors this is a good first troubleshooting step
 
 1. Stop the app:
     ```bash
