@@ -23,7 +23,8 @@ We are currently rebuilding Health Patterns to run natively and offline on mobil
 
 ## Installation
 
-Make sure you have [docker](https://docs.docker.com/engine/install/) and [docker compose](https://docs.docker.com/compose/install/) installed on your system.
+Make sure you have the latest versions of [docker](https://docs.docker.com/engine/install/) and [docker compose](https://docs.docker.com/compose/install/) installed on your system.
+Alternatively install the latest version of [Docker Desktop](https://docs.docker.com/desktop/).
 
 ### Via GitHub
 
